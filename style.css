@@ -13,10 +13,12 @@ body {
   text-align: center;
 }
 
-.banner-img {
+.banner img {
   width: 100%;
-  max-height: 250px;   /* limita altura */
-  object-fit: cover;   /* recorta sin deformar */
+  height: auto;
+  object-fit: cover;
+  display: block;
+  margin: 0 auto;
 }
 
 .banner-text {
@@ -169,4 +171,27 @@ body {
 .footer a {
   color: white;
   text-decoration: none;
+}
+
+/* --- Ajustes responsive --- */
+
+/* En pantallas grandes (PC) */
+@media (min-width: 1024px) {
+  .banner img {
+    max-height: 300px;   /* limita altura en PC */
+  }
+}
+
+/* En pantallas medianas (tablets) */
+@media (min-width: 601px) and (max-width: 1023px) {
+  .banner img {
+    max-height: 220px;
+  }
+}
+
+/* En pantallas chicas (celulares) */
+@media (max-width: 600px) {
+  .banner img {
+    max-height: 150px;   /* más compacto en móvil */
+  }
 }

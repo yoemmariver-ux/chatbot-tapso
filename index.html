@@ -6,13 +6,18 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <!-- Banner con imagen representativa -->
+  <div class="banner">
+    <img src="images/banner-tapso.jpg" alt="Vista de Tapso" class="banner-img">
+    <div class="banner-text">
+      <h1>Municipio de Tapso</h1>
+      <h2>Asistente Virtual</h2>
+    </div>
+  </div>
+
   <header class="header">
     <div class="header-content">
       <img src="images/logo-tapso.png" alt="Logo Municipio de Tapso" class="logo">
-      <div>
-        <h1>Municipio de Tapso</h1>
-        <h2>Asistente Virtual</h2>
-      </div>
       <div class="social">
         <a href="https://www.facebook.com/municipalidadetapso/about?locale=es_LA" target="_blank" class="facebook-btn">
           Facebook Oficial
@@ -22,8 +27,28 @@
   </header>
 
   <main class="chat-container">
+    <!-- Mensaje de bienvenida -->
+    <div class="welcome">
+      <h3>Bienvenido al Asistente Virtual del Municipio de Tapso</h3>
+      <p>Podés consultar información sobre autoridades, población, distritos y eventos.</p>
+    </div>
+
+    <!-- Chat -->
     <div id="chat" class="chat-box"></div>
-    <div id="estado" class="estado"></div>
+
+    <!-- Consultas sugeridas -->
+    <div class="suggestions">
+      <h4>Consultas sugeridas:</h4>
+      <ul>
+        <li>¿Quién es el intendente?</li>
+        <li>¿Cuántos habitantes tiene Tapso?</li>
+        <li>¿Qué fiestas se celebran?</li>
+        <li>¿Cuáles son los distritos?</li>
+        <li>¿Hubo sismos en Tapso?</li>
+      </ul>
+    </div>
+
+    <!-- Área de entrada -->
     <div class="input-area">
       <input type="text" id="entrada" placeholder="Escribe tu mensaje...">
       <button onclick="enviarMensaje()">Enviar</button>
@@ -33,6 +58,7 @@
 
   <footer class="footer">
     <p>© 2026 Municipio de Tapso | Asistente Virtual</p>
+    <p>Teléfono: (03834) 123456 | Dirección: Tapso, Catamarca</p>
     <p>
       Síguenos en 
       <a href="https://www.facebook.com/municipalidadetapso/about?locale=es_LA" target="_blank">

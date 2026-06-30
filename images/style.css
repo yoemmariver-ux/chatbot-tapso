@@ -1,0 +1,51 @@
+.social {
+  display: flex;
+  gap: 20px;
+}
+
+.social-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.social-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 24px;
+  text-decoration: none;
+  transition: transform 0.3s ease;
+}
+
+.social-icon:hover {
+  transform: scale(1.1);
+}
+
+/* Texto debajo del ícono */
+.social-text {
+  margin-top: 6px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+/* Colores oficiales */
+.social-icon.facebook {
+  background: #1877f2;
+}
+
+.social-text.facebook-text {
+  color: #1877f2;
+}
+
+.social-icon.instagram {
+  background: #e1306c;
+}
+
+.social-text.instagram-text {
+  color: #e1306c;
+}

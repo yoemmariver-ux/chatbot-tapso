@@ -1,133 +1,51 @@
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  background: #f4f6f9;
-  color: #333;
+.social {
+  display: flex;
+  gap: 20px;
 }
 
-/* Banner */
-.banner {
-  position: relative;
-  width: 100%;
-  height: 250px;
-  overflow: hidden;
+.social-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.banner-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.banner-text {
-  position: absolute;
-  bottom: 20px;
-  left: 30px;
-  color: white;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
-}
-
-.banner-text h1 {
-  margin: 0;
-  font-size: 32px;
-}
-
-.banner-text h2 {
-  margin: 0;
-  font-size: 20px;
-}
-
-/* Header */
-.header {
-  background: #004080;
-  color: white;
-  padding: 10px;
-}
-
-.header-content {
+.social-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-}
-
-.logo {
-  height: 60px;
-}
-
-.facebook-btn {
-  background: #1877f2;
+  justify-content: center;
   color: white;
-  padding: 8px 12px;
-  border-radius: 4px;
+  font-size: 24px;
   text-decoration: none;
+  transition: transform 0.3s ease;
 }
 
-.facebook-btn:hover {
-  background: #145dbf;
+.social-icon:hover {
+  transform: scale(1.1);
 }
 
-/* Chat */
-.chat-container {
-  max-width: 800px;
-  margin: 20px auto;
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+/* Texto debajo del ícono */
+.social-text {
+  margin-top: 6px;
+  font-size: 12px;
+  font-weight: bold;
 }
 
-.welcome {
-  background: #e6f0ff;
-  padding: 10px;
-  border-radius: 6px;
-  margin-bottom: 15px;
+/* Colores oficiales */
+.social-icon.facebook {
+  background: #1877f2;
 }
 
-.suggestions {
-  background: #fff8e6;
-  padding: 10px;
-  border-radius: 6px;
-  margin: 15px 0;
+.social-text.facebook-text {
+  color: #1877f2;
 }
 
-.chat-box {
-  border: 1px solid #ccc;
-  height: 250px;
-  overflow-y: auto;
-  padding: 10px;
-  margin-bottom: 15px;
+.social-icon.instagram {
+  background: #e1306c;
 }
 
-.user-msg {
-  background: #d4edda;
-  padding: 8px;
-  margin: 5px 0;
-  border-radius: 6px;
-  text-align: right;
+.social-text.instagram-text {
+  color: #e1306c;
 }
-
-.bot-msg {
-  background: #f1f1f1;
-  padding: 8px;
-  margin: 5px 0;
-  border-radius: 6px;
-  text-align: left;
-}
-
-.input-area {
-  display: flex;
-  gap: 10px;
-}
-
-.input-area input {
-  flex: 1;
-  padding: 8px;
-}
-
-.input-area button {
-  background: #004080;
-  color: white;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 4px;
-  cursor

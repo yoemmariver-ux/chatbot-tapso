@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <title>Municipio de Tapso - Asistente Virtual</title>
   <link rel="stylesheet" href="style.css">
+  <!-- Font Awesome para íconos -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
   <!-- Banner con imagen representativa -->
@@ -19,24 +21,30 @@
     <div class="header-content">
       <img src="images/logo-tapso.png" alt="Logo Municipio de Tapso" class="logo">
       <div class="social">
-        <a href="https://www.facebook.com/municipalidadetapso/about?locale=es_LA" target="_blank" class="facebook-btn">
-          Facebook Oficial
-        </a>
+        <div class="social-block">
+          <a href="https://www.facebook.com/municipalidadetapso/about?locale=es_LA" target="_blank" class="social-icon facebook">
+            <i class="fab fa-facebook-f"></i>
+          </a>
+          <span class="social-text facebook-text">Facebook Oficial</span>
+        </div>
+        <div class="social-block">
+          <a href="https://www.instagram.com/tapsocultura/" target="_blank" class="social-icon instagram">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <span class="social-text instagram-text">Instagram Cultura</span>
+        </div>
       </div>
     </div>
   </header>
 
   <main class="chat-container">
-    <!-- Mensaje de bienvenida -->
     <div class="welcome">
       <h3>Bienvenido al Asistente Virtual del Municipio de Tapso</h3>
       <p>Podés consultar información sobre autoridades, población, distritos y eventos.</p>
     </div>
 
-    <!-- Chat -->
     <div id="chat" class="chat-box"></div>
 
-    <!-- Consultas sugeridas -->
     <div class="suggestions">
       <h4>Consultas sugeridas:</h4>
       <ul>
@@ -48,7 +56,6 @@
       </ul>
     </div>
 
-    <!-- Área de entrada -->
     <div class="input-area">
       <input type="text" id="entrada" placeholder="Escribe tu mensaje...">
       <button onclick="enviarMensaje()">Enviar</button>
@@ -59,12 +66,20 @@
   <footer class="footer">
     <p>© 2026 Municipio de Tapso | Asistente Virtual</p>
     <p>Teléfono: (03834) 123456 | Dirección: Tapso, Catamarca</p>
-    <p>
-      Síguenos en 
-      <a href="https://www.facebook.com/municipalidadetapso/about?locale=es_LA" target="_blank">
-        Facebook Oficial
-      </a>
-    </p>
+    <div class="social">
+      <div class="social-block">
+        <a href="https://www.facebook.com/municipalidadetapso/about?locale=es_LA" target="_blank" class="social-icon facebook">
+          <i class="fab fa-facebook-f"></i>
+        </a>
+        <span class="social-text facebook-text">Facebook Oficial</span>
+      </div>
+      <div class="social-block">
+        <a href="https://www.instagram.com/tapsocultura/" target="_blank" class="social-icon instagram">
+          <i class="fab fa-instagram"></i>
+        </a>
+        <span class="social-text instagram-text">Instagram Cultura</span>
+      </div>
+    </div>
   </footer>
 
   <script src="script.js"></script>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>TapsoBot - Asistente Virtual</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Encabezado con logo y enlace a Facebook -->
+  <header class="header">
+    <div class="header-content">
+      <img src="images/logo-tapso.png" alt="Logo Municipio de Tapso" class="logo">
+      <div>
+        <h1>Municipio de Tapso</h1>
+        <h2>Asistente Virtual</h2>
+      </div>
+      <div class="social">
+        <a href="https://www.facebook.com/municipiodetapso" target="_blank" class="facebook-btn">
+          Facebook Oficial
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Área del chat -->
+  <main class="chat-container">
+    <div id="chat" class="chat-box"></div>
+    <div id="estado" class="estado"></div>
+    <div class="input-area">
+      <input type="text" id="entrada" placeholder="Escribe tu mensaje...">
+      <button onclick="enviarMensaje()">Enviar</button>
+      <button onclick="document.getElementById('chat').innerHTML=''">Limpiar</button>
+    </div>
+  </main>
+
+  <!-- Pie de página con enlace a Facebook -->
+  <footer class="footer">
+    <p>© 2026 Municipio de Tapso | Asistente Virtual</p>
+    <p>
+      Síguenos en 
+      <a href="https://www.facebook.com/municipiodetapso" target="_blank">
+        Facebook Oficial
+      </a>
+    </p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

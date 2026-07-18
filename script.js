@@ -54,5 +54,6 @@ function enviarMensaje() {
   chat.innerHTML += `<div class="user-msg">${entrada}</div>`;
   chat.innerHTML += `<div class="bot-msg">${respuesta}</div>`;
 
+  // Limpiar el campo de entrada
   document.getElementById("entrada").value = "";
 }

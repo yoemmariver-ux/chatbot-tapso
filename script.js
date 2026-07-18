@@ -1,4 +1,3 @@
-console.log("TapsoBot cargado correctamente");
 function enviarMensaje() {
   const entrada = document.getElementById("entrada").value.toLowerCase().trim();
   const chat = document.getElementById("chat");

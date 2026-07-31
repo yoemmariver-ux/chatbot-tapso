@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>TapsoBot</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Banner superior completo -->
+  <header class="banner">
+    <img src="images/banner-tapso.png" alt="Banner Tapso" class="banner-img">
+    <div class="banner-text">
+      <h1>TapsoBot</h1>
+      <p>Asistente virtual del Municipio de Tapso</p>
+    </div>
+  </header>
+
+  <!-- Logo municipal centrado -->
+  <div class="logo">
+    <img src="images/logo-tapso.png" alt="Logo Municipalidad de Tapso" class="logo-img">
+  </div>
+
+  <!-- Íconos sociales debajo del logo -->
+  <div class="social-icons">
+    <a href="https://www.facebook.com/municipalidadetapso/?locale=es_LA" target="_blank">
+      <img src="images/facebook.png" alt="Facebook" width="60" height="60">
+    </a>
+    <a href="https://www.instagram.com/tapsocultura/" target="_blank">
+      <img src="images/instagram.png" alt="Instagram" width="60" height="60">
+    </a>
+    <a href="https://wa.me/549383xxxxxxx" target="_blank">
+      <img src="images/watsapp.png" alt="WhatsApp" width="60" height="60">
+    </a>
+    <a href="https://www.google.com/maps/place/Tapso,+Catamarca" target="_blank">
+      <img src="images/ubicacion.png" alt="Ubicación" width="60" height="60">
+    </a>
+  </div>
+
+  <!-- Botón modo claro/oscuro -->
+  <div class="modo">
+    <button id="toggleModo">Cambiar modo</button>
+  </div>
+
+  <!-- Área del chat -->
+  <div id="chat" class="chat"></div>
+
+  <!-- Entrada de texto y botones -->
+  <div class="entrada">
+    <input type="text" id="entrada" placeholder="Escribe tu mensaje...">
+    <button id="btnEnviar">Enviar</button>
+    <button id="btnLimpiar">Limpiar</button>
+  </div>
+
+  <!-- Script externo -->
+  <script src="script.js"></script>
+</body>
+</html>

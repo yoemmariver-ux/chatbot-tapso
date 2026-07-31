@@ -112,4 +112,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     const saludo = document.createElement("div");
     saludo.className = "mensaje-bot";
-    saludo.textContent = "Encantado de atenderte,
+    saludo.textContent = "Encantado de atenderte, " + nombreUsuario + ". ¿En qué puedo ayudarte?";
+    chat.appendChild(saludo);
+  });
+});

@@ -106,4 +106,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   btnLimpiar.addEventListener("click", () => {
     chat.innerHTML = "";
-    nombreUsuario = prompt("¡Hola! Soy el asist
+    nombreUsuario = prompt("¡Hola! Soy el asistente virtual de Tapso. ¿Cuál es tu nombre?");
+    if (!nombreUsuario || nombreUsuario.trim() === "") {
+      nombreUsuario = "Usuario";
+    }
+    const saludo = document.createElement("div");
+    saludo.className = "mensaje-bot";
+    saludo.textContent = "Encantado de atenderte,

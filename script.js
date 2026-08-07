@@ -81,7 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
     else if (mensaje.includes("punto digital") || mensaje.includes("digital") || mensaje.includes("tecnologia") || mensaje.includes("tic") || mensaje.includes("internet")) {
       respuesta.textContent = "El Punto Digital de Tapso pertenece al programa impulsado por la Secretaría de Innovación Pública.";
     }
-    // 🔧 Nueva condición: cualquier variante que pregunte por distritos/localidades/lugares/info
+    // 🔧 Variantes para distritos/localidades/lugares/info
     else if (
       mensaje.includes("distritos") || 
       mensaje.includes("localidades") || 
@@ -95,51 +95,4 @@ document.addEventListener("DOMContentLoaded", () => {
       mensaje.includes("dame info") || 
       mensaje.includes("tapso")
     ) {
-      respuesta.textContent = "La jurisdicción de Tapso comprende: Tapso, Achalco, Ayapaso, Simogasta, Colonia Achalco, Los Morteros, Choya Viejo, La Calera, La Chilca, La Puerta de Molle Yaco, Pozo Grande y Albigasta.";
-    }
-    // 🔧 Bloque de saludos ampliado
-    else if (
-      mensaje.includes("hola") || 
-      mensaje.includes("buenas") || 
-      mensaje.includes("buen dia") || 
-      mensaje.includes("buenos dias") || 
-      mensaje.includes("buenas tardes") || 
-      mensaje.includes("buenas noches") || 
-      mensaje.includes("saludos") || 
-      mensaje.includes("hey") || 
-      mensaje.includes("qué tal") || 
-      mensaje.includes("como va") || 
-      mensaje.includes("como estas") || 
-      mensaje.includes("que onda")
-    ) {
-      respuesta.textContent = "¡Hola! Encantado de charlar contigo. ¿Querés saber algo sobre Tapso?";
-    }
-    else {
-      respuesta.textContent = respuestasNoInfo[Math.floor(Math.random() * respuestasNoInfo.length)];
-    }
-
-    chat.appendChild(respuesta);
-    entrada.value = "";
-    chat.scrollTop = chat.scrollHeight;
-  }
-
-  btnEnviar.addEventListener("click", enviarMensaje);
-  entrada.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      enviarMensaje();
-    }
-  });
-
-  btnLimpiar.addEventListener("click", () => {
-    chat.innerHTML = "";
-    nombreUsuario = prompt("¡Hola! Soy el asistente virtual de Tapso. ¿Cuál es tu nombre?");
-    if (!nombreUsuario || nombreUsuario.trim() === "") {
-      nombreUsuario = "Usuario";
-    }
-    const saludo = document.createElement("div");
-    saludo.className = "mensaje-bot";
-    saludo.textContent = "Encantado de atenderte, " + nombreUsuario + ". ¿En qué puedo ayudarte?";
-    chat.appendChild(saludo);
-  });
-});
+      respuesta.textContent = "La jurisdicción de Tapso comprende

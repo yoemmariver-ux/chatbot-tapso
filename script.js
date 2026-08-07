@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
     else if (mensaje.includes("aniversario") || mensaje.includes("cumpleaños")) {
       respuesta.textContent = "Tapso celebra su aniversario cada 12 de agosto.";
     }
-    else if (mensaje.includes("ubicacion") || mensaje.includes("donde esta") || mensaje.includes("mapa") || mensaje.includes("provincia") || mensaje.includes("lugar")) {
+    else if (mensaje.includes("ubicacion") || mensaje.includes("donde esta") || mensaje.includes("mapa") || mensaje.includes("provincia")) {
       respuesta.textContent = "Tapso está ubicado en el límite entre Catamarca y Santiago del Estero.";
     }
     else if (mensaje.includes("intendente")) {
@@ -81,7 +81,20 @@ document.addEventListener("DOMContentLoaded", () => {
     else if (mensaje.includes("punto digital") || mensaje.includes("digital") || mensaje.includes("tecnologia") || mensaje.includes("tic") || mensaje.includes("internet")) {
       respuesta.textContent = "El Punto Digital de Tapso pertenece al programa impulsado por la Secretaría de Innovación Pública.";
     }
-    else if (mensaje.includes("distritos") || mensaje.includes("localidades") || mensaje.includes("lugares") || mensaje.includes("tapso")) {
+    // 🔧 Nueva condición: cualquier variante que pregunte por distritos/localidades/lugares/info
+    else if (
+      mensaje.includes("distritos") || 
+      mensaje.includes("localidades") || 
+      mensaje.includes("lugares") || 
+      mensaje.includes("cuales son") || 
+      mensaje.includes("nombrame") || 
+      mensaje.includes("lista") || 
+      mensaje.includes("info") || 
+      mensaje.includes("informacion") || 
+      mensaje.includes("que lugares tiene") || 
+      mensaje.includes("dame info") || 
+      mensaje.includes("tapso")
+    ) {
       respuesta.textContent = "La jurisdicción de Tapso comprende: Tapso, Achalco, Ayapaso, Simogasta, Colonia Achalco, Los Morteros, Choya Viejo, La Calera, La Chilca, La Puerta de Molle Yaco, Pozo Grande y Albigasta.";
     }
     else {

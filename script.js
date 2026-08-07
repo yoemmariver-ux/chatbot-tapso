@@ -97,6 +97,23 @@ document.addEventListener("DOMContentLoaded", () => {
     ) {
       respuesta.textContent = "La jurisdicción de Tapso comprende: Tapso, Achalco, Ayapaso, Simogasta, Colonia Achalco, Los Morteros, Choya Viejo, La Calera, La Chilca, La Puerta de Molle Yaco, Pozo Grande y Albigasta.";
     }
+    // 🔧 Bloque de saludos ampliado
+    else if (
+      mensaje.includes("hola") || 
+      mensaje.includes("buenas") || 
+      mensaje.includes("buen dia") || 
+      mensaje.includes("buenos dias") || 
+      mensaje.includes("buenas tardes") || 
+      mensaje.includes("buenas noches") || 
+      mensaje.includes("saludos") || 
+      mensaje.includes("hey") || 
+      mensaje.includes("qué tal") || 
+      mensaje.includes("como va") || 
+      mensaje.includes("como estas") || 
+      mensaje.includes("que onda")
+    ) {
+      respuesta.textContent = "¡Hola! Encantado de charlar contigo. ¿Querés saber algo sobre Tapso?";
+    }
     else {
       respuesta.textContent = respuestasNoInfo[Math.floor(Math.random() * respuestasNoInfo.length)];
     }

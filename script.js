@@ -81,10 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
     else if (mensaje.includes("punto digital") || mensaje.includes("digital") || mensaje.includes("tecnologia") || mensaje.includes("tic") || mensaje.includes("internet")) {
       respuesta.textContent = "El Punto Digital de Tapso pertenece al programa impulsado por la Secretaría de Innovación Pública.";
     }
-    else if (mensaje.includes("distrito") || mensaje.includes("localidad") || mensaje.includes("barrios") || mensaje.includes("zonas") || mensaje.includes("lugares")) {
-      respuesta.textContent = "Tapso cuenta con varios distritos, localidades y lugares que forman parte de su comunidad.";
-    }
-    else if ((mensaje.includes("cuales son") || mensaje.includes("nombres") || mensaje.includes("lista") || mensaje.includes("nombralos")) && (mensaje.includes("distritos") || mensaje.includes("localidades") || mensaje.includes("lugares") || mensaje.includes("tapso"))) {
+    else if (mensaje.includes("distritos") || mensaje.includes("localidades") || mensaje.includes("lugares") || mensaje.includes("tapso")) {
       respuesta.textContent = "La jurisdicción de Tapso comprende: Tapso, Achalco, Ayapaso, Simogasta, Colonia Achalco, Los Morteros, Choya Viejo, La Calera, La Chilca, La Puerta de Molle Yaco, Pozo Grande y Albigasta.";
     }
     else {

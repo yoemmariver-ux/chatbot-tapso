@@ -41,7 +41,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const respuesta = document.createElement("div");
     respuesta.className = "mensaje-bot";
 
-    // Ejemplo de respuestas
     if (mensaje.includes("fundacion") || mensaje.includes("origen") || mensaje.includes("historia")) {
       respuesta.textContent = "Tapso fue fundado en 1826.";
     }

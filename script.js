@@ -32,12 +32,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // Función de distancia de Levenshtein
   function distancia(a, b) {
     const matrix = [];
-    for (let i = 0; i <= b.length; i++) {
-      matrix[i] = [i];
-    }
-    for (let j = 0; j <= a.length; j++) {
-      matrix[0][j] = j;
-    }
+    for (let i = 0; i <= b.length; i++) matrix[i] = [i];
+    for (let j = 0; j <= a.length; j++) matrix[0][j] = j;
     for (let i = 1; i <= b.length; i++) {
       for (let j = 1; j <= a.length; j++) {
         if (b.charAt(i - 1) === a.charAt(j - 1)) {
@@ -152,13 +148,4 @@ document.addEventListener("DOMContentLoaded", () => {
       respuesta.textContent = "La Calera es conocida por su producción de cal.";
     }
     else if (coincide(mensaje, ["la chilca"])) {
-      respuesta.textContent = "La Chilca es un área rural dentro de la jurisdicción.";
-    }
-    else if (coincide(mensaje, ["la puerta de molle yaco"])) {
-      respuesta.textContent = "La Puerta de Molle Yaco es un acceso a parajes serranos.";
-    }
-    else if (coincide(mensaje, ["pozo grande"])) {
-      respuesta.textContent = "Pozo Grande es una comunidad rural de Tapso.";
-    }
-    else if (coincide(mensaje, ["albigasta"])) {
-      respuesta.textContent = "Albigasta es una localidad
+      respuesta.textContent =

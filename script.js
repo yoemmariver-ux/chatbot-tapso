@@ -63,4 +63,66 @@ document.addEventListener("DOMContentLoaded", () => {
     else if (mensaje.includes("escuela") || mensaje.includes("colegio") || mensaje.includes("educacion") || mensaje.includes("instituto") || mensaje.includes("cole")) {
       respuesta.textContent = "Tapso cuenta con la Escuela Primaria N° 277 'Nicolás Avellaneda' y la Escuela Secundaria N° 71 'Dr. Miguel Ángel Arévalo'.";
     }
-    else if (mensaje.includes("hospital") || mensaje.includes("salud
+    else if (mensaje.includes("hospital") || mensaje.includes("salud") || mensaje.includes("clinica") || mensaje.includes("hosp")) {
+      respuesta.textContent = "El hospital local brinda atención médica básica y emergencias.";
+    }
+    else if (mensaje.includes("comisaria") || mensaje.includes("policia") || mensaje.includes("seguridad") || mensaje.includes("comi")) {
+      respuesta.textContent = "La Comisaría de Tapso se encuentra en el centro del pueblo, cerca de la Municipalidad.";
+    }
+    else if (mensaje.includes("fiesta") || mensaje.includes("patronal") || mensaje.includes("festival") || mensaje.includes("celebracion")) {
+      respuesta.textContent = "Tapso celebra la Fiesta Patronal en honor a San Roque.";
+    }
+    else if (mensaje.includes("habitantes") || mensaje.includes("poblacion") || mensaje.includes("cantidad de gente")) {
+      respuesta.textContent = "Tapso tiene alrededor de 882 habitantes según el censo 2010.";
+    }
+    else if (mensaje.includes("hosteria") || mensaje.includes("hotel") || mensaje.includes("alojamiento") || mensaje.includes("hospedaje") || mensaje.includes("posada")) {
+      respuesta.textContent = "La Hostería de Tapso en Catamarca es un alojamiento ubicado en la localidad de Tapso, en el departamento El Alto.";
+    }
+    else if (mensaje.includes("punto digital") || mensaje.includes("digital") || mensaje.includes("tecnologia") || mensaje.includes("tic") || mensaje.includes("internet")) {
+      respuesta.textContent = "El Punto Digital de Tapso pertenece al programa impulsado por la Secretaría de Innovación Pública.";
+    }
+    else if (
+      mensaje.includes("distritos") || 
+      mensaje.includes("localidades") || 
+      mensaje.includes("lugares") || 
+      mensaje.includes("cuales son") || 
+      mensaje.includes("nombrame") || 
+      mensaje.includes("lista") || 
+      mensaje.includes("info") || 
+      mensaje.includes("informacion") || 
+      mensaje.includes("que lugares tiene") || 
+      mensaje.includes("dame info") || 
+      mensaje.includes("tapso")
+    ) {
+      respuesta.textContent = "La jurisdicción de Tapso comprende varias localidades y parajes rurales cercanos.";
+    }
+    else {
+      // Respuesta alternativa si no hay coincidencia
+      respuesta.textContent = respuestasNoInfo[Math.floor(Math.random() * respuestasNoInfo.length)];
+    }
+
+    chat.appendChild(respuesta);
+    entrada.value = "";
+    chat.scrollTop = chat.scrollHeight;
+  }
+
+  btnEnviar.addEventListener("click", enviarMensaje);
+  entrada.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      enviarMensaje();
+    }
+  });
+
+  btnLimpiar.addEventListener("click", () => {
+    chat.innerHTML = "";
+    nombreUsuario = prompt("¡Hola! Soy el asistente virtual de Tapso. ¿Cuál es tu nombre?");
+    if (!nombreUsuario || nombreUsuario.trim() === "") {
+      nombreUsuario = "Usuario";
+    }
+    const saludo = document.createElement("div");
+    saludo.className = "mensaje-bot";
+    saludo.textContent = "Encantado de atenderte, " + nombreUsuario + ". ¿En qué puedo ayudarte?";
+    chat.appendChild(saludo);
+  });
+});

@@ -157,7 +157,4 @@ document.addEventListener("DOMContentLoaded", () => {
       respuesta.textContent = "Pozo Grande es una comunidad rural de Tapso.";
     }
     else if (coincide(mensaje, ["albigasta"])) {
-      respuesta.textContent = "Albigasta es una localidad cercana con vínculos históricos con Tapso.";
-    }
-    else {
-      respuesta.textContent = respuestasNoInfo[Math.floor(Math.random() * respuestasNoInfo.length)];
+      respuesta.textContent = "Albigasta es

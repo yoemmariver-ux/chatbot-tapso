@@ -71,6 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const respuesta = document.createElement("div");
     respuesta.className = "mensaje-bot";
 
+    // Respuestas con variantes
     if (coincide(mensaje, ["fundacion","origen","historia"])) {
       respuesta.textContent = "Tapso fue fundado en 1826.";
     }
@@ -81,4 +82,83 @@ document.addEventListener("DOMContentLoaded", () => {
       respuesta.textContent = "Tapso está ubicado en el límite entre Catamarca y Santiago del Estero.";
     }
     else if (coincide(mensaje, ["intendente"])) {
-      respuesta.textContent = "El intendente actual de Tapso es el Dr. Mario Alberto S
+      respuesta.textContent = "El intendente actual de Tapso es el Dr. Mario Alberto Sosa.";
+    }
+    else if (coincide(mensaje, ["autoridades","gobierno","funcionarios"])) {
+      respuesta.textContent = "Las autoridades de Tapso son el intendente Dr. Mario Alberto Sosa y el Secretario de Gobierno Pedro 'Dante' Villalba.";
+    }
+    else if (coincide(mensaje, ["municipalidad","ayuntamiento","municipio","muni"])) {
+      respuesta.textContent = "La Municipalidad de Tapso está frente a la plaza principal.";
+    }
+    else if (coincide(mensaje, ["escuela","colegio","educacion","instituto","cole"])) {
+      respuesta.textContent = "Tapso cuenta con la Escuela Primaria N° 277 'Nicolás Avellaneda' y la Escuela Secundaria N° 71 'Dr. Miguel Ángel Arévalo'.";
+    }
+    else if (coincide(mensaje, ["hospital","salud","clinica","hosp"])) {
+      respuesta.textContent = "El hospital local brinda atención médica básica y emergencias.";
+    }
+    else if (coincide(mensaje, ["comisaria","policia","seguridad","comi"])) {
+      respuesta.textContent = "La Comisaría de Tapso se encuentra en el centro del pueblo, cerca de la Municipalidad.";
+    }
+    else if (coincide(mensaje, ["fiesta","patronal","festival","celebracion"])) {
+      respuesta.textContent = "Tapso celebra la Fiesta Patronal en honor a San Roque.";
+    }
+    else if (coincide(mensaje, ["habitantes","poblacion","cantidad de gente"])) {
+      respuesta.textContent = "Tapso tiene alrededor de 882 habitantes según el censo 2010.";
+    }
+    else if (coincide(mensaje, ["hosteria","hotel","alojamiento","hospedaje","posada"])) {
+      respuesta.textContent = "La Hostería de Tapso en Catamarca es un alojamiento ubicado en la localidad de Tapso, en el departamento El Alto.";
+    }
+    else if (coincide(mensaje, ["punto digital","digital","tecnologia","tic","internet"])) {
+      respuesta.textContent = "El Punto Digital de Tapso pertenece al programa impulsado por la Secretaría de Innovación Pública.";
+    }
+    else if (coincide(mensaje, [
+      "distritos","localidades","lugares","cuales son","nombrame","lista",
+      "info","informacion","que lugares tiene","dame info","tapso"
+    ])) {
+      respuesta.textContent = 
+        "La jurisdicción de Tapso comprende:\n" +
+        "- Tapso: cabecera municipal, centro administrativo.\n" +
+        "- Achalco: zona rural con producción agrícola.\n" +
+        "- Ayapaso: pequeño paraje con tradición ganadera.\n" +
+        "- Simogasta: localidad con historia cultural.\n" +
+        "- Colonia Achalco: asentamiento agrícola.\n" +
+        "- Los Morteros: comunidad rural.\n" +
+        "- Choya Viejo: paraje histórico.\n" +
+        "- La Calera: zona vinculada a la producción de cal.\n" +
+        "- La Chilca: área rural.\n" +
+        "- La Puerta de Molle Yaco: acceso a parajes serranos.\n" +
+        "- Pozo Grande: comunidad rural.\n" +
+        "- Albigasta: localidad cercana con vínculos históricos.";
+    }
+    else if (coincide(mensaje, ["tapso"])) {
+      respuesta.textContent = "Tapso es la cabecera municipal, donde se concentran las principales instituciones y servicios.";
+    }
+    else if (coincide(mensaje, ["achalco","colonia achalco"])) {
+      respuesta.textContent = "Achalco es una zona rural dedicada a la agricultura; Colonia Achalco es un asentamiento agrícola cercano.";
+    }
+    else if (coincide(mensaje, ["ayapaso"])) {
+      respuesta.textContent = "Ayapaso es un paraje con tradición ganadera.";
+    }
+    else if (coincide(mensaje, ["simogasta"])) {
+      respuesta.textContent = "Simogasta es una localidad con historia cultural dentro de la jurisdicción.";
+    }
+    else if (coincide(mensaje, ["los morteros"])) {
+      respuesta.textContent = "Los Morteros es una comunidad rural de Tapso.";
+    }
+    else if (coincide(mensaje, ["choya viejo"])) {
+      respuesta.textContent = "Choya Viejo es un paraje histórico de la zona.";
+    }
+    else if (coincide(mensaje, ["la calera"])) {
+      respuesta.textContent = "La Calera es conocida por su producción de cal.";
+    }
+    else if (coincide(mensaje, ["la chilca"])) {
+      respuesta.textContent = "La Chilca es un área rural dentro de la jurisdicción.";
+    }
+    else if (coincide(mensaje, ["la puerta de molle yaco"])) {
+      respuesta.textContent = "La Puerta de Molle Yaco es un acceso a parajes serranos.";
+    }
+    else if (coincide(mensaje, ["pozo grande"])) {
+      respuesta.textContent = "Pozo Grande es una comunidad rural de Tapso.";
+    }
+    else if (coincide(mensaje, ["albigasta"])) {
+      respuesta.textContent = "Albigasta es una localidad

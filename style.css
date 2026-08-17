@@ -3,6 +3,23 @@ body {
   background-color: #f4f4f4;
   margin: 0;
   padding: 0;
+  text-align: center;
+}
+
+header.banner {
+  position: relative;
+}
+
+.banner-img {
+  width: 100%;
+  height: auto;
+}
+
+.banner-text {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  color: #fff;
 }
 
 #chat {
@@ -14,6 +31,7 @@ body {
   margin: 20px auto;
   padding: 10px;
   background-color: #fff;
+  text-align: left;
 }
 
 .mensaje-usuario {
@@ -75,12 +93,12 @@ body.oscuro .mensaje-bot {
 
 /* 🔧 Ajuste del logo del municipio */
 #logo-municipio {
-  max-width: 150px;   /* ancho máximo */
-  max-height: 150px;  /* alto máximo */
+  max-width: 150px;   /* ancho máximo en PC */
+  max-height: 150px;  /* alto máximo en PC */
   width: auto;
   height: auto;
   display: block;
-  margin: 10px auto;  /* centrado */
+  margin: 10px auto;
 }
 
 /* 🔧 Responsive para celulares */
@@ -102,7 +120,7 @@ body.oscuro .mensaje-bot {
     margin-left: 2px;
   }
   #logo-municipio {
-    max-width: 100px;
+    max-width: 100px;  /* más chico en celular */
     max-height: 100px;
   }
 }

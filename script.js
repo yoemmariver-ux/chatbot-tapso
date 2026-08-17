@@ -109,7 +109,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     else if (coincide(mensaje, [
       "distritos","localidades","lugares","cuales son","nombrame","lista",
-      "info","informacion","que lugares tiene","dame info","tapso"
+      "info","informacion","que lugares tiene","dame info"
     ])) {
       respuesta.textContent = 
         "La jurisdicción de Tapso comprende:\n" +
@@ -148,4 +148,16 @@ document.addEventListener("DOMContentLoaded", () => {
       respuesta.textContent = "La Calera es conocida por su producción de cal.";
     }
     else if (coincide(mensaje, ["la chilca"])) {
-      respuesta.textContent =
+      respuesta.textContent = "La Chilca es un área rural dentro de la jurisdicción.";
+    }
+    else if (coincide(mensaje, ["la puerta de molle yaco"])) {
+      respuesta.textContent = "La Puerta de Molle Yaco es un acceso a parajes serranos.";
+    }
+    else if (coincide(mensaje, ["pozo grande"])) {
+      respuesta.textContent = "Pozo Grande es una comunidad rural de Tapso.";
+    }
+    else if (coincide(mensaje, ["albigasta"])) {
+      respuesta.textContent = "Albigasta es una localidad cercana con vínculos históricos con Tapso.";
+    }
+    else {
+      respuesta.textContent = respuestasNoInfo[Math.floor(Math.random() * respuestasNoInfo.length)];

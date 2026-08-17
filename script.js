@@ -1,10 +1,10 @@
-// Preguntar nombre al inicio
-let nombreUsuario = prompt("¡Hola! Soy el asistente virtual de Tapso. ¿Cuál es tu nombre?");
-if (!nombreUsuario || nombreUsuario.trim() === "") {
-  nombreUsuario = "Usuario";
-}
-
 document.addEventListener("DOMContentLoaded", () => {
+  // Preguntar nombre al inicio
+  let nombreUsuario = prompt("¡Hola! Soy el asistente virtual de Tapso. ¿Cuál es tu nombre?");
+  if (!nombreUsuario || nombreUsuario.trim() === "") {
+    nombreUsuario = "Usuario";
+  }
+
   const chat = document.getElementById("chat");
   const entrada = document.getElementById("entrada");
   const btnEnviar = document.getElementById("btnEnviar");
@@ -41,6 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const respuesta = document.createElement("div");
     respuesta.className = "mensaje-bot";
 
+    // Respuestas con variantes
     if (mensaje.includes("fundacion") || mensaje.includes("origen") || mensaje.includes("historia")) {
       respuesta.textContent = "Tapso fue fundado en 1826.";
     }
@@ -50,32 +51,16 @@ document.addEventListener("DOMContentLoaded", () => {
     else if (mensaje.includes("ubicacion") || mensaje.includes("donde esta") || mensaje.includes("mapa") || mensaje.includes("provincia")) {
       respuesta.textContent = "Tapso está ubicado en el límite entre Catamarca y Santiago del Estero.";
     }
-    else {
-      respuesta.textContent = respuestasNoInfo[Math.floor(Math.random() * respuestasNoInfo.length)];
+    else if (mensaje.includes("intendente")) {
+      respuesta.textContent = "El intendente actual de Tapso es el Dr. Mario Alberto Sosa.";
     }
-
-    chat.appendChild(respuesta);
-    entrada.value = "";
-    chat.scrollTop = chat.scrollHeight;
-  }
-
-  btnEnviar.addEventListener("click", enviarMensaje);
-  entrada.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      enviarMensaje();
+    else if (mensaje.includes("autoridades") || mensaje.includes("gobierno") || mensaje.includes("funcionarios")) {
+      respuesta.textContent = "Las autoridades de Tapso son el intendente Dr. Mario Alberto Sosa y el Secretario de Gobierno Pedro 'Dante' Villalba.";
     }
-  });
-
-  btnLimpiar.addEventListener("click", () => {
-    chat.innerHTML = "";
-    nombreUsuario = prompt("¡Hola! Soy el asistente virtual de Tapso. ¿Cuál es tu nombre?");
-    if (!nombreUsuario || nombreUsuario.trim() === "") {
-      nombreUsuario = "Usuario";
+    else if (mensaje.includes("municipalidad") || mensaje.includes("ayuntamiento") || mensaje.includes("municipio") || mensaje.includes("muni")) {
+      respuesta.textContent = "La Municipalidad de Tapso está frente a la plaza principal.";
     }
-    const saludo = document.createElement("div");
-    saludo.className = "mensaje-bot";
-    saludo.textContent = "Encantado de atenderte, " + nombreUsuario + ". ¿En qué puedo ayudarte?";
-    chat.appendChild(saludo);
-  });
-});
+    else if (mensaje.includes("escuela") || mensaje.includes("colegio") || mensaje.includes("educacion") || mensaje.includes("instituto") || mensaje.includes("cole")) {
+      respuesta.textContent = "Tapso cuenta con la Escuela Primaria N° 277 'Nicolás Avellaneda' y la Escuela Secundaria N° 71 'Dr. Miguel Ángel Arévalo'.";
+    }
+    else if (mensaje.includes("hospital") || mensaje.includes("salud

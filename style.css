@@ -93,8 +93,8 @@ body.oscuro .mensaje-bot {
 
 /* 🔧 Ajuste del logo del municipio */
 #logo-municipio {
-  max-width: 250px;   /* más grande en PC */
-  max-height: 250px;
+  max-width: 350px;   /* tamaño intermedio en PC */
+  max-height: 350px;
   width: auto;
   height: auto;
   display: block;
@@ -120,7 +120,7 @@ body.oscuro .mensaje-bot {
     margin-left: 2px;
   }
   #logo-municipio {
-    max-width: 150px;  /* más grande en celular que antes */
-    max-height: 150px;
+    max-width: 250px;  
+    max-height: 250px;
   }
 }

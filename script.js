@@ -1,16 +1,4 @@
-function login() {
-  let nombre = document.getElementById("nombre").value;
-  alert("Bienvenido " + nombre);
-  document.getElementById("loginModal").style.display = "none";
-}
-
-// Simulación login Gmail
-document.getElementById("gmailLogin").addEventListener("click", () => {
-  alert("Login con Gmail exitoso (simulado)");
-  document.getElementById("loginModal").style.display = "none";
-});
-
-// Respuestas precargadas
+// Diccionario de respuestas
 const respuestas = {
   "hola": "¡Hola! Encantado de ayudarte.",
   "muni": "Encantado de ayudarte desde la Municipalidad.",
@@ -19,7 +7,7 @@ const respuestas = {
 };
 
 function enviar() {
-  let mensaje = document.getElementById("mensaje").value.toLowerCase();
+  let mensaje = document.getElementById("mensaje").value.toLowerCase().trim();
   let chatBox = document.getElementById("chatBox");
   let respuesta = respuestas[mensaje] || "No entiendo, ¿podés repetir?";
   chatBox.innerHTML += "<p>👤 " + mensaje + "</p>";

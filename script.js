@@ -66,4 +66,26 @@ function mostrarMensaje(texto, tipo) {
   div.className = tipo === "usuario" ? "mensaje-usuario" : "mensaje-bot";
   div.textContent = texto;
   chat.appendChild(div);
-  chat.scrollTop = chat.scrollHeight
+  chat.scrollTop = chat.scrollHeight;
+}
+
+// Mostrar información de Explora Tapso
+function mostrarInfo(seccion) {
+  let info = "";
+  if (seccion === "tapsofc") {
+    info = "⚽ Tapso FC: equipo local con gran historia deportiva.";
+  } else if (seccion === "festival") {
+    info = "🎉 Festival Unión de Pueblos: evento cultural en junio.";
+  } else if (seccion === "hosteria") {
+    info = "🏨 Hostería Tapso: alojamiento cómodo en el centro del pueblo.";
+  }
+  infoExtra.textContent = info;
+  infoModal.style.display = "block";
+}
+
+// Cerrar modal de info al hacer clic afuera
+window.addEventListener("click", (e) => {
+  if (e.target === infoModal) {
+    infoModal.style.display = "none";
+  }
+});

@@ -36,7 +36,7 @@ body {
 
 .contenedor {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   margin: 20px;
 }
 
@@ -80,7 +80,7 @@ button:hover {
 
 .galeria {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 15px;
 }
 

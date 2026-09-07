@@ -40,6 +40,10 @@ body {
   margin: 20px;
 }
 
+#explora-section, #calendario-section {
+  flex: 1;
+}
+
 #chat-section {
   flex: 1;
   max-width: 400px;
@@ -105,3 +109,4 @@ button:hover {
   background: #222;
   color: #eee;
 }
+

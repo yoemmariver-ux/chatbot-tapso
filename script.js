@@ -67,10 +67,27 @@ document.addEventListener("DOMContentLoaded", () => {
     const respuesta = document.createElement("div");
     respuesta.className = "mensaje-bot";
 
-    // Ejemplos de respuestas
+    // Historia del municipio
     if (coincide(mensaje, ["fundacion","origen","historia"])) {
-      respuesta.textContent = "Tapso fue fundado en 1826.";
+      respuesta.textContent = "Tapso fue fundado el 15 de junio de 1826. Se ubica entre Catamarca y Santiago del Estero, con una rica tradición cultural y comunitaria.";
     }
+    // Información general del municipio
+    else if (coincide(mensaje, ["info","informacion","municipio","tapso"])) {
+      respuesta.textContent = "Tapso es un municipio del departamento El Alto, Catamarca, con alrededor de 1.001 habitantes. El intendente actual es Mario Sosa. La municipalidad está en Av. Virgen del Valle 4234. Se celebran fiestas patronales en honor a San Roque y festivales folclóricos como la Fiesta de la Quebrada y el Festival Unión de Pueblos.";
+    }
+    // Hostería de Tapso
+    else if (coincide(mensaje, ["hosteria","alojamiento","hotel","hospedaje"])) {
+      respuesta.textContent = "La Hostería Tapso se encuentra en Av. Virgen del Valle 4234. 🕒 Horarios: Check-in desde las 14:00, check-out hasta las 10:00. 🚫 No se admiten mascotas. Ofrece habitaciones cómodas y entorno rural tranquilo, ideal para familias y visitantes. Está cerca de atractivos culturales como la Iglesia de La Quebrada y el Museo Histórico Cultural. Es una opción con buena relación calidad-precio para descansar y conocer la zona.";
+    }
+    // Eventos y festivales
+    else if (coincide(mensaje, ["fiesta","festival","evento","celebracion"])) {
+      respuesta.textContent = "Tapso celebra la Fiesta Patronal en honor a San Roque cada agosto. Además, en enero se realiza la Fiesta de la Quebrada y en junio el Festival Unión de Pueblos, con música folclórica, danza y gastronomía típica.";
+    }
+    // Turismo y atractivos
+    else if (coincide(mensaje, ["turismo","atractivos","lugares","visitar","que ver"])) {
+      respuesta.textContent = "En Tapso podés visitar la Iglesia de La Quebrada, el Museo Histórico Cultural abierto todos los días de 8:00 a 20:00, y disfrutar de la naturaleza en la zona serrana de Molle Yaco. También se realizan actividades culturales y ferias artesanales durante los festivales.";
+    }
+    // Otros bloques que ya tenías
     else if (coincide(mensaje, ["aniversario","cumpleaños"])) {
       respuesta.textContent = "Tapso celebra su aniversario cada 12 de agosto.";
     }
@@ -86,15 +103,10 @@ document.addEventListener("DOMContentLoaded", () => {
     else if (coincide(mensaje, ["hospital","salud","clinica","hosp"])) {
       respuesta.textContent = "El hospital local brinda atención médica básica y emergencias.";
     }
-    else if (coincide(mensaje, ["fiesta","patronal","festival","celebracion"])) {
-      respuesta.textContent = "Tapso celebra la Fiesta Patronal en honor a San Roque.";
-    }
     else if (coincide(mensaje, ["habitantes","poblacion"])) {
       respuesta.textContent = "Tapso tiene alrededor de 882 habitantes según el censo 2010.";
     }
-    else if (coincide(mensaje, [
-      "localidades","distritos","lugares","lista","info","informacion"
-    ])) {
+    else if (coincide(mensaje, ["localidades","distritos","lugares","lista","info","informacion"])) {
       respuesta.textContent =
         "La jurisdicción de Tapso comprende:\n" +
         "- Tapso: cabecera municipal.\n" +
@@ -142,4 +154,4 @@ document.addEventListener("DOMContentLoaded", () => {
     saludo.textContent = "Encantado de atenderte, " + nombreUsuario + ". ¿En qué puedo ayudarte?";
     chat.appendChild(saludo);
   });
-}); // ← cierre de DOMContentLoaded
+});

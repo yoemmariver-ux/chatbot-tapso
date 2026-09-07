@@ -1,183 +1,185 @@
-/* --- ESTILO ORIGINAL --- */
+/* Estilos generales */
 body {
   font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
   margin: 0;
   padding: 0;
-  text-align: center;
+  background: #f9f9f9;
+  color: #333;
+  transition: background 0.3s, color 0.3s;
 }
 
-header.banner {
+/* Modo oscuro */
+body.oscuro {
+  background: #121212;
+  color: #f1f1f1;
+}
+
+/* Banner */
+.banner {
   position: relative;
+  text-align: center;
+  color: white;
 }
 
 .banner-img {
   width: 100%;
-  height: auto;
+  height: 200px;
+  object-fit: cover;
 }
 
 .banner-text {
   position: absolute;
-  top: 20px;
-  left: 20px;
-  color: #fff;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 32px;
+  font-weight: bold;
+  background: rgba(0,0,0,0.5);
+  padding: 10px 20px;
+  border-radius: 8px;
+}
+
+/* Logo */
+#logo-municipio {
+  display: block;
+  margin: 20px auto;
+  width: 120px;
+  height: auto;
+}
+
+/* Chat */
+#chat-section {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 10px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+body.oscuro #chat-section {
+  background: #1e1e1e;
 }
 
 #chat {
-  width: 100%;
-  max-width: 600px;
-  height: 400px;
+  height: 300px;
   overflow-y: auto;
   border: 1px solid #ccc;
-  margin: 20px auto;
   padding: 10px;
-  background-color: #fff;
-  text-align: left;
+  margin-bottom: 10px;
+  background: #fafafa;
+}
+
+body.oscuro #chat {
+  background: #2a2a2a;
+  border-color: #444;
 }
 
 .mensaje-usuario {
-  background-color: #d1ffd1;
+  background: #d4f1c5;
   padding: 8px;
-  margin: 5px;
-  border-radius: 5px;
+  margin: 5px 0;
+  border-radius: 8px;
   text-align: right;
 }
 
 .mensaje-bot {
-  background-color: #e0e0e0;
+  background: #e0e0e0;
   padding: 8px;
-  margin: 5px;
-  border-radius: 5px;
+  margin: 5px 0;
+  border-radius: 8px;
   text-align: left;
 }
 
+/* Inputs y botones */
 #entrada {
   width: 70%;
   padding: 8px;
-  margin: 10px 0;
+  border-radius: 6px;
+  border: 1px solid #ccc;
 }
 
-#btnEnviar, #btnLimpiar {
-  width: 14%;
-  padding: 8px;
-  margin-left: 2px;
+button {
+  padding: 8px 12px;
+  margin: 5px;
+  border: none;
+  border-radius: 6px;
   cursor: pointer;
+  background: #4CAF50;
+  color: white;
+  transition: background 0.3s;
 }
 
-#toggleModo {
-  display: block;
-  margin: 10px auto;
-  padding: 8px;
-  cursor: pointer;
+button:hover {
+  background: #45a049;
 }
 
-/* --- MODO OSCURO --- */
-body.oscuro {
-  background-color: #222;
-  color: #fff;
-  transition: background-color 0.5s ease, color 0.5s ease; /* transición suave */
+/* Galería */
+.galeria {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin: 20px;
 }
 
-body.oscuro #chat {
-  background-color: #333;
-  border-color: #555;
-}
-
-body.oscuro .mensaje-usuario {
-  background-color: #4caf50;
-  color: #fff;
-}
-
-body.oscuro .mensaje-bot {
-  background-color: #555;
-  color: #fff;
-}
-
-/* --- LOGO MUNICIPIO --- */
-#logo-municipio {
-  max-width: 350px;
-  max-height: 350px;
-  width: auto;
+.galeria img {
+  width: 200px;
   height: auto;
-  display: block;
-  margin: 10px auto;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* --- RESPONSIVE --- */
-@media (max-width: 600px) {
-  #chat {
-    height: 300px;
-    font-size: 14px;
-    padding: 8px;
-  }
-  #entrada {
-    width: 60%;
-    font-size: 14px;
-    padding: 6px;
-  }
-  #btnEnviar, #btnLimpiar {
-    width: 18%;
-    font-size: 12px;
-    padding: 6px;
-    margin-left: 2px;
-  }
-  #logo-municipio {
-    max-width: 250px;
-    max-height: 250px;
-  }
-}
-
-/* --- ANIMACIONES --- */
-
-/* ✨ Logo aparece con zoom */
-#logo-municipio {
-  opacity: 0;
-  transform: scale(0.8);
-  animation: aparecerLogo 1.5s ease-out forwards;
-}
-@keyframes aparecerLogo {
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-/* 🎯 Botones con rebote */
-#btnEnviar, #btnLimpiar, #toggleModo {
-  transition: transform 0.3s ease, background-color 0.3s ease;
-}
-#btnEnviar:hover, #btnLimpiar:hover, #toggleModo:hover {
+.galeria img:hover {
   transform: scale(1.1);
-  background-color: #ddd;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
 }
 
-/* 🌈 Texto del banner desliza */
-.banner-text {
-  animation: deslizarTexto 2s ease-out forwards;
-  opacity: 0;
-}
-@keyframes deslizarTexto {
-  from {
-    transform: translateX(-50px);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
+/* Info extra */
+.info {
+  max-width: 600px;
+  margin: 20px auto;
+  font-size: 16px;
+  padding: 10px;
+  background: #f4f4f4;
+  border-radius: 8px;
 }
 
-/* 💬 Mensajes con fade-in */
-.mensaje-usuario, .mensaje-bot {
-  animation: aparecerMensaje 0.5s ease-out;
+body.oscuro .info {
+  background: #2a2a2a;
 }
-@keyframes aparecerMensaje {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+
+/* Calendario */
+#calendario-section {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 15px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+body.oscuro #calendario-section {
+  background: #1e1e1e;
+}
+
+#calendario-section h2 {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+#calendario-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+#calendario-section li {
+  margin: 8px 0;
+  padding: 6px;
+  background: #e8f5e9;
+  border-radius: 6px;
+}
+
+body.oscuro #calendario-section li {
+  background: #333;
 }

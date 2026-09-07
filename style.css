@@ -1,3 +1,4 @@
+/* --- ESTILO ORIGINAL --- */
 body {
   font-family: Arial, sans-serif;
   background-color: #f4f4f4;
@@ -70,10 +71,11 @@ header.banner {
   cursor: pointer;
 }
 
-/* Modo oscuro */
+/* --- MODO OSCURO --- */
 body.oscuro {
   background-color: #222;
   color: #fff;
+  transition: background-color 0.5s ease, color 0.5s ease; /* transición suave */
 }
 
 body.oscuro #chat {
@@ -91,9 +93,9 @@ body.oscuro .mensaje-bot {
   color: #fff;
 }
 
-/* 🔧 Ajuste del logo del municipio */
+/* --- LOGO MUNICIPIO --- */
 #logo-municipio {
-  max-width: 350px;   /* tamaño intermedio en PC */
+  max-width: 350px;
   max-height: 350px;
   width: auto;
   height: auto;
@@ -101,7 +103,7 @@ body.oscuro .mensaje-bot {
   margin: 10px auto;
 }
 
-/* 🔧 Responsive para celulares */
+/* --- RESPONSIVE --- */
 @media (max-width: 600px) {
   #chat {
     height: 300px;
@@ -120,7 +122,62 @@ body.oscuro .mensaje-bot {
     margin-left: 2px;
   }
   #logo-municipio {
-    max-width: 250px;  
+    max-width: 250px;
     max-height: 250px;
+  }
+}
+
+/* --- ANIMACIONES --- */
+
+/* ✨ Logo aparece con zoom */
+#logo-municipio {
+  opacity: 0;
+  transform: scale(0.8);
+  animation: aparecerLogo 1.5s ease-out forwards;
+}
+@keyframes aparecerLogo {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* 🎯 Botones con rebote */
+#btnEnviar, #btnLimpiar, #toggleModo {
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+#btnEnviar:hover, #btnLimpiar:hover, #toggleModo:hover {
+  transform: scale(1.1);
+  background-color: #ddd;
+}
+
+/* 🌈 Texto del banner desliza */
+.banner-text {
+  animation: deslizarTexto 2s ease-out forwards;
+  opacity: 0;
+}
+@keyframes deslizarTexto {
+  from {
+    transform: translateX(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* 💬 Mensajes con fade-in */
+.mensaje-usuario, .mensaje-bot {
+  animation: aparecerMensaje 0.5s ease-out;
+}
+@keyframes aparecerMensaje {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

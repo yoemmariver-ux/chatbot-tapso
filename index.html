@@ -8,31 +8,44 @@
 <body>
   <!-- Banner principal -->
   <header class="banner">
-    <img src="banner.jpg" alt="Tapso" class="banner-img">
+    <img src="images/banner.jpg" alt="Tapso" class="banner-img">
     <div class="banner-text">Bienvenido a Tapso</div>
   </header>
 
   <!-- Logo del municipio -->
-  <img id="logo-municipio" src="logo.png" alt="Logo Tapso">
+  <img id="logo-municipio" src="images/logo.png" alt="Logo Tapso">
 
   <!-- Chat interactivo -->
-  <div id="chat"></div>
-  <input id="entrada" type="text" placeholder="Escribe tu mensaje...">
-  <button id="btnEnviar">Enviar</button>
-  <button id="btnLimpiar">Limpiar</button>
-  <button id="toggleModo">Modo Oscuro</button>
+  <section id="chat-section">
+    <div id="chat"></div>
+    <input id="entrada" type="text" placeholder="Escribe tu mensaje...">
+    <button id="btnEnviar">Enviar</button>
+    <button id="btnLimpiar">Limpiar</button>
+    <button id="toggleModo">Modo Oscuro</button>
+  </section>
 
   <!-- Galería interactiva -->
-  <h2>Explora Tapso</h2>
-  <p>Haz clic en las imágenes para conocer más:</p>
-  <div class="galeria">
-    <img src="tapsofc.jpg" alt="Tapso FC" onclick="mostrarInfo('tapsofc')">
-    <img src="festival.jpg" alt="Festival Unión de Pueblos" onclick="mostrarInfo('festival')">
-    <img src="hosteria.jpg" alt="Hostería Tapso" onclick="mostrarInfo('hosteria')">
-  </div>
+  <section id="galeria-section">
+    <h2>Explora Tapso</h2>
+    <p>Haz clic en las imágenes para conocer más:</p>
+    <div class="galeria">
+      <img src="images/tapsofc.jpg" alt="Tapso FC" onclick="mostrarInfo('tapsofc')">
+      <img src="images/festival.jpg" alt="Festival Unión de Pueblos" onclick="mostrarInfo('festival')">
+      <img src="images/hosteria.jpg" alt="Hostería Tapso" onclick="mostrarInfo('hosteria')">
+    </div>
+    <div id="infoExtra" class="info"></div>
+  </section>
 
-  <!-- Contenedor de información extra -->
-  <div id="infoExtra" class="info"></div>
+  <!-- Sección de calendario -->
+  <section id="calendario-section">
+    <h2>Calendario de Eventos y Partidos</h2>
+    <ul>
+      <li>📅 12 de agosto: Fiesta Patronal en honor a San Roque</li>
+      <li>📅 Junio: Festival Unión de Pueblos</li>
+      <li>📅 Enero: Fiesta de la Quebrada</li>
+      <li>⚽ Próximo partido Tapso FC: vs San Lorenzo de Alem (fecha a confirmar)</li>
+    </ul>
+  </section>
 
   <script src="script.js"></script>
   <script>

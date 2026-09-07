@@ -16,6 +16,7 @@ function enviarMensaje() {
 
   let respuesta = "";
 
+  // Palabras clave
   if (texto.includes("muni") || texto.includes("municipalidad")) {
     respuesta = "🏛️ Municipalidad de Tapso: ubicada en Av. Virgen del Valle, ofrece servicios administrativos y atención al vecino.";
   } else if (texto.includes("policía")) {
@@ -30,6 +31,12 @@ function enviarMensaje() {
     respuesta = "📖 Tapso fue fundado el 15 de junio de 1826. Se ubica entre Catamarca y Santiago del Estero.";
   } else if (texto.includes("lugares")) {
     respuesta = "📍 Lugares de Tapso: Municipalidad, Policía, Escuelas, Punto Digital, Hostería, Club Tapso FC, Festival Unión de Pueblos.";
+  } else if (texto.includes("autoridades")) {
+    respuesta = "👔 Autoridades de Tapso: Intendente actual, concejales y secretarios municipales.";
+  } else if (texto.includes("intendente")) {
+    respuesta = "👔 El intendente de Tapso es la máxima autoridad municipal, encargado de la gestión local.";
+  } else if (texto.includes("ubicación")) {
+    respuesta = "📍 Tapso está ubicado en el límite entre Catamarca y Santiago del Estero, sobre la Ruta Nacional 34.";
   } else if (texto.includes("más info")) {
     respuesta = "ℹ️ Para más información de un lugar específico, escribe su nombre (ejemplo: 'hosteria', 'escuela').";
   } else {
@@ -52,9 +59,4 @@ function mostrarInfo(tipo) {
   const infoExtra = document.getElementById("infoExtra");
   if (tipo === "tapsofc") {
     infoExtra.textContent = "⚽ Tapso FC participa en el Torneo Regional Federal Amateur.";
-  } else if (tipo === "festival") {
-    infoExtra.textContent = "🎶 El Festival Unión de Pueblos se realiza cada junio en Tapso.";
-  } else if (tipo === "hosteria") {
-    infoExtra.textContent = "🏨 La Hostería Tapso está en Av. Virgen del Valle 4234.";
   }
-}

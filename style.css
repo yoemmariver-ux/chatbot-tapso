@@ -1,37 +1,51 @@
-/* Logo más grande */
+/* Logo más grande y centrado */
 #logo-municipio {
   display: block;
   margin: 20px auto;
-  width: 200px; /* más grande */
+  width: 240px;
   height: auto;
+}
+
+/* Sección social debajo del logo */
+#social-section {
+  max-width: 600px;
+  margin: 10px auto 20px auto;
+  text-align: center;
 }
 
 /* Chat centrado */
 #chat-section {
   max-width: 600px;
-  margin: 20px auto;
+  margin: 0 auto 20px auto;
   text-align: center;
 }
 
 /* Galería a los lados del chat */
-.galeria {
+#galeria-section {
   display: flex;
   justify-content: space-around;
-  margin: 20px auto;
-  max-width: 900px;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 20px;
+}
+
+.galeria {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
 .galeria img {
-  width: 200px;
+  width: 180px;
   transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
 
 .galeria img:hover {
-  transform: scale(1.15) rotate(2deg);
-  box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+  transform: scale(1.1) rotate(2deg);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
 }
 
-/* Redes sociales debajo del logo */
+/* Redes sociales */
 .social-icons {
   display: flex;
   justify-content: center;

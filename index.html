@@ -1,71 +1,71 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Asistente Virtual Tapso</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>Chatbot Tapso</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Banner principal -->
-  <header class="banner">
-    <img src="images/banner-tapso.png" alt="Tapso" class="banner-img">
-    <div class="banner-text">Bienvenido a Tapso</div>
-  </header>
+    <!-- Banner principal -->
+    <header class="banner">
+        <img src="images/banner-tapso.png" alt="Banner Tapso" class="banner-img">
+        <div class="banner-text">Chatbot Tapso</div>
+    </header>
 
-  <!-- Logo del municipio -->
-  <img id="logo-municipio" src="images/logo-tapso.png" alt="Logo Tapso">
+    <!-- Logo del municipio -->
+    <img id="logo-municipio" src="images/logo-tapso.png" alt="Logo Tapso">
 
-  <!-- Sección de enlaces sociales debajo del logo -->
-  <section id="social-section">
-    <h2>Conectá con Tapso</h2>
-    <div class="social-icons">
-      <a href="https://www.facebook.com/municipalidadetapso/?locale=es_LA" target="_blank">
-        <img src="images/facebook.png" alt="Facebook">
-      </a>
-      <a href="https://www.instagram.com/tapsocultura/" target="_blank">
-        <img src="images/instagram.png" alt="Instagram">
-      </a>
-      <a href="https://wa.me/549XXXXXXXXXX" target="_blank">
-        <img src="images/whatsapp.png" alt="WhatsApp">
-      </a>
-      <a href="https://maps.google.com/?q=Tapso+Catamarca" target="_blank">
-        <img src="images/ubicacion.png" alt="Ubicación">
-      </a>
-    </div>
-  </section>
+    <!-- Sección de enlaces sociales debajo del logo -->
+    <section id="social-section">
+        <h2>Conectá con Tapso</h2>
+        <div class="social-icons">
+            <a href="https://www.facebook.com/municipalidadetapso/?locale=es_LA" target="_blank">
+                <img src="images/facebook.png" alt="Facebook">
+            </a>
+            <a href="https://www.instagram.com/tapsocultura/" target="_blank">
+                <img src="images/instagram.png" alt="Instagram">
+            </a>
+            <a href="https://wa.me/549XXXXXXXXXX" target="_blank">
+                <img src="images/whatsapp.png" alt="WhatsApp">
+            </a>
+            <a href="https://maps.google.com/?q=Tapso+Catamarca" target="_blank">
+                <img src="images/ubicacion.png" alt="Ubicación">
+            </a>
+        </div>
+    </section>
 
-  <!-- Chat en el centro -->
-  <section id="chat-section">
-    <div id="chat"></div>
-    <input id="entrada" type="text" placeholder="Escribe tu mensaje...">
-    <button id="btnEnviar">Enviar</button>
-    <button id="btnLimpiar">Limpiar</button>
-    <button id="toggleModo">Modo Oscuro</button>
-  </section>
+    <!-- Chat en el centro -->
+    <section id="chat-section">
+        <div id="chat"></div>
+        <input id="entrada" type="text" placeholder="Escribe tu mensaje...">
+        <button id="btnEnviar">Enviar</button>
+        <button id="btnLimpiar">Limpiar</button>
+        <button id="toggleModo">Modo Oscuro</button>
+    </section>
 
-  <!-- Galería a los lados del chat -->
-  <section id="galeria-section">
-    <h2>Explora Tapso</h2>
-    <p>Haz clic en las imágenes para conocer más:</p>
-    <div class="galeria">
-      <img src="images/tapsofc.jpg" alt="Tapso FC" onclick="mostrarInfo('tapsofc')">
-      <img src="images/festival.jpg" alt="Festival Unión de Pueblos" onclick="mostrarInfo('festival')">
-      <img src="images/hosteria.jpg" alt="Hostería Tapso" onclick="mostrarInfo('hosteria')">
-    </div>
-    <div id="infoExtra" class="info"></div>
-  </section>
+    <!-- Galería a los lados del chat -->
+    <section id="galeria-section">
+        <h2>Explora Tapso</h2>
+        <p>Haz clic en las imágenes para conocer más:</p>
+        <div class="galeria">
+            <img src="images/tapsofc.jpg" alt="Tapso FC" onclick="mostrarInfo('tapsofc')">
+            <img src="images/festival.jpg" alt="Festival Unión de Pueblos" onclick="mostrarInfo('festival')">
+            <img src="images/hosteria.jpg" alt="Hostería Tapso" onclick="mostrarInfo('hosteria')">
+        </div>
+        <div id="infoExtra" class="info"></div>
+    </section>
 
-  <!-- Sección de calendario -->
-  <section id="calendario-section">
-    <h2>Calendario de Eventos y Partidos</h2>
-    <ul>
-      <li>📅 12 de agosto: Fiesta Patronal en honor a San Roque</li>
-      <li>📅 Junio: Festival Unión de Pueblos</li>
-      <li>📅 Enero: Fiesta de la Quebrada</li>
-      <li>⚽ Próximo partido Tapso FC: vs San Lorenzo de Alem (fecha a confirmar)</li>
-    </ul>
-  </section>
+    <!-- Sección de calendario -->
+    <section id="calendario-section">
+        <h2>Calendario de Eventos y Partidos</h2>
+        <ul>
+            <li>📅 12 de agosto: Fiesta Patronal en honor a San Roque</li>
+            <li>📅 Junio: Festival Unión de Pueblos</li>
+            <li>📅 Enero: Fiesta de la Quebrada</li>
+            <li>⚽ Próximo partido Tapso FC: vs San Lorenzo de Alem (fecha a confirmar)</li>
+        </ul>
+    </section>
 
-  <script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>

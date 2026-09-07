@@ -16,31 +16,24 @@ function enviarMensaje() {
 
   let respuesta = "";
 
-  // Palabras clave
   if (texto.includes("muni") || texto.includes("municipalidad")) {
-    respuesta = "🏛️ Municipalidad de Tapso: ubicada en Av. Virgen del Valle, ofrece servicios administrativos y atención al vecino.";
+    respuesta = "🏛️ Municipalidad de Tapso: ubicada en Av. Virgen del Valle.";
   } else if (texto.includes("policía")) {
-    respuesta = "👮 Policía de Tapso: Comisaría local en el centro del pueblo, atención las 24 horas.";
-  } else if (texto.includes("escuela")) {
-    respuesta = "📚 Escuelas de Tapso: Primaria N°71 y secundaria en Misión Monotécnica.";
-  } else if (texto.includes("punto digital")) {
-    respuesta = "💻 Punto Digital Tapso: espacio con acceso a internet, capacitaciones y trámites digitales.";
+    respuesta = "👮 Policía de Tapso: Comisaría local en el centro.";
   } else if (texto.includes("hosteria")) {
-    respuesta = "🏨 Hostería Tapso: Av. Virgen del Valle 4234, check-in desde las 14:00, check-out hasta las 10:00.";
+    respuesta = "🏨 Hostería Tapso: Av. Virgen del Valle 4234.";
   } else if (texto.includes("historia")) {
-    respuesta = "📖 Tapso fue fundado el 15 de junio de 1826. Se ubica entre Catamarca y Santiago del Estero.";
+    respuesta = "📖 Tapso fue fundado en 1826.";
   } else if (texto.includes("lugares")) {
-    respuesta = "📍 Lugares de Tapso: Municipalidad, Policía, Escuelas, Punto Digital, Hostería, Club Tapso FC, Festival Unión de Pueblos.";
+    respuesta = "📍 Lugares: Municipalidad, Policía, Escuelas, Punto Digital, Hostería.";
   } else if (texto.includes("autoridades")) {
-    respuesta = "👔 Autoridades de Tapso: Intendente actual, concejales y secretarios municipales.";
+    respuesta = "👔 Autoridades: Intendente, concejales y secretarios.";
   } else if (texto.includes("intendente")) {
-    respuesta = "👔 El intendente de Tapso es la máxima autoridad municipal, encargado de la gestión local.";
+    respuesta = "👔 El intendente es la máxima autoridad municipal.";
   } else if (texto.includes("ubicación")) {
-    respuesta = "📍 Tapso está ubicado en el límite entre Catamarca y Santiago del Estero, sobre la Ruta Nacional 34.";
-  } else if (texto.includes("más info")) {
-    respuesta = "ℹ️ Para más información de un lugar específico, escribe su nombre (ejemplo: 'hosteria', 'escuela').";
+    respuesta = "📍 Tapso está en el límite Catamarca-Santiago del Estero.";
   } else {
-    respuesta = "Encantado de atenderte, Emma. ¿En qué puedo ayudarte?";
+    respuesta = "Encantado de ayudarte, Emma.";
   }
 
   mostrarMensaje(respuesta, "bot");
@@ -58,5 +51,10 @@ function mostrarMensaje(texto, tipo) {
 function mostrarInfo(tipo) {
   const infoExtra = document.getElementById("infoExtra");
   if (tipo === "tapsofc") {
-    infoExtra.textContent = "⚽ Tapso FC participa en el Torneo Regional Federal Amateur.";
+    infoExtra.textContent = "⚽ Tapso FC participa en el Torneo Regional.";
+  } else if (tipo === "festival") {
+    infoExtra.textContent = "🎉 Festival Unión de Pueblos en junio.";
+  } else if (tipo === "hosteria") {
+    infoExtra.textContent = "🏨 Hostería Tapso: alojamiento cómodo en el centro.";
   }
+}

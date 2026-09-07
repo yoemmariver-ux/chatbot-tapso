@@ -110,3 +110,14 @@ button:hover {
   color: #eee;
 }
 
+.mensaje-usuario {
+  text-align: right;
+  color: #004080;
+  margin: 5px;
+}
+
+.mensaje-bot {
+  text-align: left;
+  color: #000;
+  margin: 5px;
+}

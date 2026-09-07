@@ -66,10 +66,4 @@ function mostrarMensaje(texto, tipo) {
   div.className = tipo === "usuario" ? "mensaje-usuario" : "mensaje-bot";
   div.textContent = texto;
   chat.appendChild(div);
-  chat.scrollTop = chat.scrollHeight;
-}
-
-function mostrarInfo(seccion) {
-  let info = "";
-  if (seccion === "tapsofc") {
-    info = "⚽ Tapso FC: Nuestro
+  chat.scrollTop = chat.scrollHeight

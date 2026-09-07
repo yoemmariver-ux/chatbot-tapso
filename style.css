@@ -1,132 +1,28 @@
-/* Estilos generales */
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  background: #f9f9f9;
-  color: #333;
-  transition: background 0.3s, color 0.3s;
-}
-
-/* Modo oscuro */
-body.oscuro {
-  background: #121212;
-  color: #f1f1f1;
-}
-
-/* Banner */
-.banner {
-  position: relative;
-  text-align: center;
-  color: white;
-}
-
-.banner-img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-}
-
-.banner-text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 32px;
-  font-weight: bold;
-  background: rgba(0,0,0,0.5);
-  padding: 10px 20px;
-  border-radius: 8px;
-}
-
-/* Logo */
+/* Logo más grande */
 #logo-municipio {
   display: block;
   margin: 20px auto;
-  width: 120px;
+  width: 200px; /* más grande */
   height: auto;
 }
 
-/* Chat */
+/* Chat centrado */
 #chat-section {
   max-width: 600px;
   margin: 20px auto;
-  padding: 10px;
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  text-align: center;
 }
 
-body.oscuro #chat-section {
-  background: #1e1e1e;
-}
-
-#chat {
-  height: 300px;
-  overflow-y: auto;
-  border: 1px solid #ccc;
-  padding: 10px;
-  margin-bottom: 10px;
-  background: #fafafa;
-}
-
-body.oscuro #chat {
-  background: #2a2a2a;
-  border-color: #444;
-}
-
-.mensaje-usuario {
-  background: #d4f1c5;
-  padding: 8px;
-  margin: 5px 0;
-  border-radius: 8px;
-  text-align: right;
-}
-
-.mensaje-bot {
-  background: #e0e0e0;
-  padding: 8px;
-  margin: 5px 0;
-  border-radius: 8px;
-  text-align: left;
-}
-
-/* Inputs y botones */
-#entrada {
-  width: 70%;
-  padding: 8px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-}
-
-button {
-  padding: 8px 12px;
-  margin: 5px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  background: #4CAF50;
-  color: white;
-  transition: background 0.3s;
-}
-
-button:hover {
-  background: #45a049;
-}
-
-/* Galería */
+/* Galería a los lados del chat */
 .galeria {
   display: flex;
-  justify-content: center;
-  gap: 20px;
-  margin: 20px;
+  justify-content: space-around;
+  margin: 20px auto;
+  max-width: 900px;
 }
 
 .galeria img {
   width: 200px;
-  height: auto;
-  cursor: pointer;
-  border-radius: 10px;
   transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
 
@@ -135,67 +31,17 @@ button:hover {
   box-shadow: 0 6px 15px rgba(0,0,0,0.4);
 }
 
-/* Info extra */
-.info {
-  max-width: 600px;
-  margin: 20px auto;
-  font-size: 16px;
-  padding: 10px;
-  background: #f4f4f4;
-  border-radius: 8px;
-}
-
-body.oscuro .info {
-  background: #2a2a2a;
-}
-
-/* Calendario */
-#calendario-section {
-  max-width: 600px;
-  margin: 20px auto;
-  padding: 15px;
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
-
-body.oscuro #calendario-section {
-  background: #1e1e1e;
-}
-
-#calendario-section h2 {
-  text-align: center;
-  margin-bottom: 10px;
-}
-
-#calendario-section ul {
-  list-style: none;
-  padding: 0;
-}
-
-#calendario-section li {
-  margin: 8px 0;
-  padding: 6px;
-  background: #e8f5e9;
-  border-radius: 6px;
-}
-
-body.oscuro #calendario-section li {
-  background: #333;
-}
-
-/* Redes sociales */
+/* Redes sociales debajo del logo */
 .social-icons {
   display: flex;
   justify-content: center;
   gap: 20px;
-  margin: 20px;
+  margin: 20px auto;
 }
 
 .social-icons img {
   width: 50px;
   height: 50px;
-  cursor: pointer;
   transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
 

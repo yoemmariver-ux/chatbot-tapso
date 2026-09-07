@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // Preguntar nombre al inicio
   let nombreUsuario = prompt("¡Hola! Soy el asistente virtual de Tapso. ¿Cuál es tu nombre?");
   if (!nombreUsuario || nombreUsuario.trim() === "") {
     nombreUsuario = "Usuario";
@@ -11,12 +10,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const btnLimpiar = document.getElementById("btnLimpiar");
   const toggleBtn = document.getElementById("toggleModo");
 
-  // Modo claro/oscuro
   toggleBtn.addEventListener("click", () => {
     document.body.classList.toggle("oscuro");
   });
 
-  // Mensaje inicial
   const saludo = document.createElement("div");
   saludo.className = "mensaje-bot";
   saludo.textContent = "Encantado de atenderte, " + nombreUsuario + ". ¿En qué puedo ayudarte?";
@@ -29,7 +26,6 @@ document.addEventListener("DOMContentLoaded", () => {
     "Disculpa, no encontré respuesta para tu consulta."
   ];
 
-  // Función de distancia de Levenshtein
   function distancia(a, b) {
     const matrix = [];
     for (let i = 0; i <= b.length; i++) matrix[i] = [i];
@@ -50,7 +46,6 @@ document.addEventListener("DOMContentLoaded", () => {
     return matrix[b.length][a.length];
   }
 
-  // Función para verificar coincidencia aproximada
   function coincide(mensaje, variantes) {
     return variantes.some(v => distancia(mensaje, v) <= 2 || mensaje.includes(v));
   }
@@ -67,63 +62,26 @@ document.addEventListener("DOMContentLoaded", () => {
     const respuesta = document.createElement("div");
     respuesta.className = "mensaje-bot";
 
-    // Historia del municipio
-    if (coincide(mensaje, ["fundacion","origen","historia"])) {
+    if (mensaje === "historia" || coincide(mensaje, ["fundacion","origen"])) {
       respuesta.textContent = "Tapso fue fundado el 15 de junio de 1826. Se ubica entre Catamarca y Santiago del Estero, con una rica tradición cultural y comunitaria.";
     }
-    // Información general del municipio
+    else if (mensaje === "hosteria" || coincide(mensaje, ["alojamiento","hotel","hospedaje"])) {
+      respuesta.textContent = "La Hostería Tapso se encuentra en Av. Virgen del Valle 4234. 🕒 Horarios: Check-in desde las 14:00, check-out hasta las 10:00. 🚫 No se admiten mascotas. Ofrece habitaciones cómodas y entorno rural tranquilo, ideal para familias y visitantes.";
+    }
     else if (coincide(mensaje, ["info","informacion","municipio","tapso"])) {
-      respuesta.textContent = "Tapso es un municipio del departamento El Alto, Catamarca, con alrededor de 1.001 habitantes. El intendente actual es Mario Sosa. La municipalidad está en Av. Virgen del Valle 4234. Se celebran fiestas patronales en honor a San Roque y festivales folclóricos como la Fiesta de la Quebrada y el Festival Unión de Pueblos.";
+      respuesta.textContent = "Tapso es un municipio del departamento El Alto, Catamarca, con alrededor de 1.001 habitantes. El intendente actual es Mario Sosa. Se celebran fiestas patronales en honor a San Roque y festivales folclóricos como la Fiesta de la Quebrada y el Festival Unión de Pueblos.";
     }
-    // Hostería de Tapso
-    else if (coincide(mensaje, ["hosteria","alojamiento","hotel","hospedaje"])) {
-      respuesta.textContent = "La Hostería Tapso se encuentra en Av. Virgen del Valle 4234. 🕒 Horarios: Check-in desde las 14:00, check-out hasta las 10:00. 🚫 No se admiten mascotas. Ofrece habitaciones cómodas y entorno rural tranquilo, ideal para familias y visitantes. Está cerca de atractivos culturales como la Iglesia de La Quebrada y el Museo Histórico Cultural. Es una opción con buena relación calidad-precio para descansar y conocer la zona.";
-    }
-    // Eventos y festivales
     else if (coincide(mensaje, ["fiesta","festival","evento","celebracion"])) {
-      respuesta.textContent = "Tapso celebra la Fiesta Patronal en honor a San Roque cada agosto. Además, en enero se realiza la Fiesta de la Quebrada y en junio el Festival Unión de Pueblos, con música folclórica, danza y gastronomía típica.";
+      respuesta.textContent = "Tapso celebra la Fiesta Patronal en honor a San Roque cada agosto. Además, en enero se realiza la Fiesta de la Quebrada y en junio el Festival Unión de Pueblos.";
     }
-    // Turismo y atractivos
     else if (coincide(mensaje, ["turismo","atractivos","lugares","visitar","que ver"])) {
-      respuesta.textContent = "En Tapso podés visitar la Iglesia de La Quebrada, el Museo Histórico Cultural abierto todos los días de 8:00 a 20:00, y disfrutar de la naturaleza en la zona serrana de Molle Yaco. También se realizan actividades culturales y ferias artesanales durante los festivales.";
+      respuesta.textContent = "En Tapso podés visitar la Iglesia de La Quebrada, el Museo Histórico Cultural abierto todos los días de 8:00 a 20:00, y disfrutar de la naturaleza en la zona serrana de Molle Yaco.";
     }
-    // Otros bloques que ya tenías
-    else if (coincide(mensaje, ["aniversario","cumpleaños"])) {
-      respuesta.textContent = "Tapso celebra su aniversario cada 12 de agosto.";
+    else if (coincide(mensaje, ["comida","gastronomia","platos","cocina","bebida"])) {
+      respuesta.textContent = "La gastronomía típica de Tapso incluye empanadas catamarqueñas, locro, humita en chala y tamales. En bebidas, se disfruta la aloja de algarroba y vinos regionales.";
     }
-    else if (coincide(mensaje, ["ubicacion","donde esta","mapa","provincia"])) {
-      respuesta.textContent = "Tapso está ubicado en el límite entre Catamarca y Santiago del Estero.";
-    }
-    else if (coincide(mensaje, ["intendente"])) {
-      respuesta.textContent = "El intendente actual de Tapso es el Dr. Mario Alberto Sosa.";
-    }
-    else if (coincide(mensaje, ["municipalidad","ayuntamiento","municipio","muni"])) {
-      respuesta.textContent = "La Municipalidad de Tapso está frente a la plaza principal.";
-    }
-    else if (coincide(mensaje, ["hospital","salud","clinica","hosp"])) {
-      respuesta.textContent = "El hospital local brinda atención médica básica y emergencias.";
-    }
-    else if (coincide(mensaje, ["habitantes","poblacion"])) {
-      respuesta.textContent = "Tapso tiene alrededor de 882 habitantes según el censo 2010.";
-    }
-    else if (coincide(mensaje, ["localidades","distritos","lugares","lista","info","informacion"])) {
-      respuesta.textContent =
-        "La jurisdicción de Tapso comprende:\n" +
-        "- Tapso: cabecera municipal.\n" +
-        "- Achalco: zona rural agrícola.\n" +
-        "- Ayapaso: paraje ganadero.\n" +
-        "- Simogasta: localidad cultural.\n" +
-        "- Colonia Achalco: asentamiento agrícola.\n" +
-        "- Los Morteros: comunidad rural.\n" +
-        "- Choya Viejo: paraje histórico.\n" +
-        "- La Calera: producción de cal.\n" +
-        "- La Chilca: área rural.\n" +
-        "- La Puerta de Molle Yaco: acceso serrano.\n" +
-        "- Pozo Grande: comunidad rural.\n" +
-        "- Albigasta: localidad cercana con vínculos históricos.";
-    }
-    else if (coincide(mensaje, ["albigasta"])) {
-      respuesta.textContent = "Albigasta es una localidad cercana con vínculos históricos con Tapso.";
+    else if (coincide(mensaje, ["futbol","tapso fc","club atletico tapso","equipo"])) {
+      respuesta.textContent = "⚽ Tapso FC participa en el Torneo Regional Federal Amateur. Actualmente ocupa la posición 4 de su grupo, con un 17% de victorias. Ha marcado 6 goles y recibido 16 en la temporada. Su último triunfo fue 1–0 frente a Sportivo Villa Dolores.";
     }
     else {
       respuesta.textContent = respuestasNoInfo[Math.floor(Math.random() * respuestasNoInfo.length)];
@@ -134,7 +92,6 @@ document.addEventListener("DOMContentLoaded", () => {
     chat.scrollTop = chat.scrollHeight;
   }
 
-  // Eventos de botones y teclado
   btnEnviar.addEventListener("click", enviarMensaje);
   entrada.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {

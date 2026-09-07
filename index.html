@@ -8,10 +8,11 @@
 <body>
   <!-- Banner -->
   <header class="banner">
-    <div class="banner-text">Chatbot Tapso</div>
+    <h1>Municipalidad de Tapso</h1>
+    <p>Dos siglos de historia. Nuestro pueblo, nuestro orgullo, nuestro futuro.</p>
   </header>
 
-  <!-- Logo centrado -->
+  <!-- Logo -->
   <img id="logo-municipio" src="images/logo-tapso.png" alt="Logo Tapso">
 
   <!-- Conectá con Tapso -->
@@ -25,36 +26,52 @@
     </div>
   </section>
 
-  <!-- Chat -->
-  <section id="chat-section">
-    <div id="chat"></div>
-    <input id="entrada" type="text" placeholder="Escribe tu mensaje...">
-    <button id="btnEnviar">Enviar</button>
-    <button id="btnLimpiar">Limpiar</button>
-    <button id="toggleModo">Modo Oscuro</button>
-  </section>
-
-  <!-- Explora Tapso -->
-  <section id="galeria-section">
-    <h2>Explora Tapso</h2>
-    <div class="galeria">
-      <img src="images/tapsofc.jpg" alt="Tapso FC" onclick="mostrarInfo('tapsofc')">
-      <img src="images/festival.jpg" alt="Festival Unión de Pueblos" onclick="mostrarInfo('festival')">
-      <img src="images/hosteria.jpg" alt="Hostería Tapso" onclick="mostrarInfo('hosteria')">
+  <!-- Nombre inicial -->
+  <div id="nombreModal" class="modal">
+    <div class="modal-content">
+      <p>¿Cuál es tu nombre?</p>
+      <input type="text" id="nombreInput" placeholder="Ingresa tu nombre">
+      <button id="guardarNombre">Comenzar</button>
     </div>
-    <div id="infoExtra" class="info"></div>
-  </section>
+  </div>
 
-  <!-- Calendario -->
-  <section id="calendario-section">
-    <h2>Calendario de Eventos</h2>
-    <ul>
-      <li>📅 12 de agosto: Fiesta Patronal</li>
-      <li>📅 Junio: Festival Unión de Pueblos</li>
-      <li>📅 Enero: Fiesta de la Quebrada</li>
-      <li>⚽ Tapso FC vs San Lorenzo (fecha a confirmar)</li>
-    </ul>
-  </section>
+  <!-- Contenedor principal -->
+  <div class="contenedor">
+    <!-- Explora Tapso -->
+    <section id="explora-section">
+      <h2>Explora Tapso</h2>
+      <div class="galeria">
+        <img src="images/tapsofc.jpg" alt="Tapso FC" onclick="mostrarInfo('tapsofc')">
+        <img src="images/festival.jpg" alt="Festival Unión de Pueblos" onclick="mostrarInfo('festival')">
+        <img src="images/hosteria.jpg" alt="Hostería Tapso" onclick="mostrarInfo('hosteria')">
+      </div>
+    </section>
+
+    <!-- Chat -->
+    <section id="chat-section">
+      <div id="chat"></div>
+      <input id="entrada" type="text" placeholder="Escribe tu mensaje...">
+      <button id="btnEnviar">Enviar</button>
+      <button id="btnLimpiar">Limpiar</button>
+      <button id="toggleModo">Modo Oscuro</button>
+    </section>
+
+    <!-- Calendario -->
+    <section id="calendario-section">
+      <h2>Calendario de Eventos</h2>
+      <ul>
+        <li>📅 12 de agosto: Fiesta Patronal</li>
+        <li>📅 Junio: Festival Unión de Pueblos</li>
+        <li>📅 Enero: Fiesta de la Quebrada</li>
+        <li>⚽ Tapso FC vs San Lorenzo (fecha a confirmar)</li>
+      </ul>
+    </section>
+  </div>
+
+  <!-- Ventana emergente -->
+  <div id="infoModal" class="modal">
+    <div class="modal-content" id="infoExtra"></div>
+  </div>
 
   <script src="script.js"></script>
 </body>

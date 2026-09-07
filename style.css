@@ -1,123 +1,26 @@
 body {
   font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  background: #f0f0f0;
+  background: #f9f9f9;
+  color: #333;
 }
-
-.banner {
-  background: #004080;
+header {
+  background: #0066cc;
   color: white;
   text-align: center;
-  padding: 20px;
-}
-
-#logo-municipio {
-  display: block;
-  margin: 20px auto;
-  width: 200px;
-}
-
-.social-icons {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  margin: 20px auto;
-}
-
-.social-icons img {
-  width: 50px;
-  transition: transform 0.3s;
-}
-
-.social-icons img:hover {
-  transform: scale(1.2);
-}
-
-.contenedor {
-  display: flex;
-  justify-content: space-between;
-  margin: 20px;
-}
-
-#explora-section, #calendario-section {
-  flex: 1;
-}
-
-#chat-section {
-  flex: 1;
-  max-width: 400px;
-}
-
-#chat {
-  border: 2px solid #004080;
-  background: #fff;
-  height: 250px;
-  overflow-y: auto;
   padding: 10px;
-  margin-bottom: 10px;
 }
-
-#entrada {
-  width: 100%;
-  padding: 8px;
-  margin-bottom: 10px;
-}
-
-button {
-  margin: 5px;
-  padding: 10px 15px;
-  background: #004080;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-button:hover {
-  background: #0066cc;
-}
-
-.galeria {
-  display: flex;
-  flex-direction: row;
-  gap: 15px;
-}
-
-.galeria img {
+.gallery img {
   width: 150px;
-  cursor: pointer;
+  margin: 10px;
   transition: transform 0.3s;
 }
-
-.galeria img:hover {
+.gallery img:hover {
   transform: scale(1.1);
 }
-
-.modal {
-  display: none;
-  position: fixed;
-  top: 20%;
-  left: 30%;
-  background: white;
-  border: 2px solid #004080;
-  padding: 20px;
-  z-index: 1000;
+#calendario h2 {
+  font-family: "Georgia", serif;
 }
-
-.oscuro {
+.dark-mode {
   background: #222;
   color: #eee;
-}
-
-.mensaje-usuario {
-  text-align: right;
-  color: #004080;
-  margin: 5px;
-}
-
-.mensaje-bot {
-  text-align: left;
-  color: #000;
-  margin: 5px;
 }

@@ -2,76 +2,65 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Chatbot Tapso</title>
+  <title>Tapso 200 años</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <!-- Banner -->
-  <header class="banner">
-    <h1>Municipalidad de Tapso</h1>
-    <p>Dos siglos de historia. Nuestro pueblo, nuestro orgullo, nuestro futuro.</p>
+  <header>
+    <h1>200 años Tapso (1820–2020)</h1>
   </header>
 
-  <!-- Logo -->
-  <img id="logo-municipio" src="images/logo-tapso.png" alt="Logo Tapso">
+  <!-- Login -->
+  <div id="loginModal" class="modal">
+    <div class="modal-content">
+      <h2>Bienvenido</h2>
+      <input type="text" id="nombre" placeholder="Ingresa tu nombre">
+      <button onclick="login()">Entrar</button>
+      <button id="gmailLogin">Login con Gmail</button>
+    </div>
+  </div>
 
   <!-- Conectá con Tapso -->
-  <section id="social-section">
+  <section id="conecta">
     <h2>Conectá con Tapso</h2>
-    <div class="social-icons">
-      <a href="https://www.facebook.com/municipalidadetapso/?locale=es_LA" target="_blank"><img src="images/facebook.png" alt="Facebook"></a>
-      <a href="https://www.instagram.com/tapsocultura/" target="_blank"><img src="images/instagram.png" alt="Instagram"></a>
-      <a href="https://wa.me/549XXXXXXXXXX" target="_blank"><img src="images/whatsapp.png" alt="WhatsApp"></a>
-      <a href="https://maps.google.com/?q=Tapso+Catamarca" target="_blank"><img src="images/ubicacion.png" alt="Ubicación"></a>
+    <div class="icons">
+      <a href="#">Instagram</a>
+      <a href="#">WhatsApp</a>
+      <a href="#">Ubicación</a>
     </div>
   </section>
 
-  <!-- Modal nombre -->
-  <div id="nombreModal" class="modal">
-    <div class="modal-content">
-      <p>¿Cuál es tu nombre?</p>
-      <input type="text" id="nombreInput" placeholder="Ingresa tu nombre">
-      <button id="guardarNombre">Comenzar</button>
+  <!-- Explora Tapso -->
+  <section id="explora">
+    <h2>Explora Tapso</h2>
+    <div class="gallery">
+      <img src="tapsofc.png" alt="Tapso FC 2020">
+      <img src="festival.png" alt="Festival Unión de Pueblos">
+      <img src="edificio.png" alt="Edificio Tapso">
     </div>
-  </div>
+  </section>
 
-  <!-- Contenedor principal -->
-  <div class="contenedor">
-    <!-- Explora Tapso -->
-    <section id="explora-section">
-      <h2>Explora Tapso</h2>
-      <div class="galeria">
-        <img src="images/tapsofc.jpg" alt="Tapso FC" onclick="mostrarInfo('tapsofc')">
-        <img src="images/festival.jpg" alt="Festival Unión de Pueblos" onclick="mostrarInfo('festival')">
-        <img src="images/hosteria.jpg" alt="Hostería Tapso" onclick="mostrarInfo('hosteria')">
-      </div>
-    </section>
+  <!-- Calendario -->
+  <section id="calendario">
+    <h2>Calendario de Eventos</h2>
+    <ul>
+      <li>12 de agosto: Fiesta Patronal</li>
+      <li>Junio: Festival Unión de Pueblos</li>
+      <li>Enero: Fiesta de la Quebrada</li>
+      <li>Tapso FC vs San Lorenzo (fecha a confirmar)</li>
+    </ul>
+  </section>
 
-    <!-- Chat -->
-    <section id="chat-section">
-      <div id="chat"></div>
-      <input id="entrada" type="text" placeholder="Escribe tu mensaje...">
-      <button id="btnEnviar">Enviar</button>
-      <button id="btnLimpiar">Limpiar</button>
-      <button id="toggleModo">Modo Oscuro</button>
-    </section>
-
-    <!-- Calendario -->
-    <section id="calendario-section">
-      <h2>Calendario de Eventos</h2>
-      <ul>
-        <li>📅 12 de agosto: Fiesta Patronal</li>
-        <li>📅 Junio: Festival Unión de Pueblos</li>
-        <li>📅 Enero: Fiesta de la Quebrada</li>
-        <li>⚽ Tapso FC vs San Lorenzo (fecha a confirmar)</li>
-      </ul>
-    </section>
-  </div>
-
-  <!-- Modal info -->
-  <div id="infoModal" class="modal">
-    <div class="modal-content" id="infoExtra"></div>
-  </div>
+  <!-- Chat -->
+  <section id="chat">
+    <h2>Chat Tapso</h2>
+    <div id="chatBox"></div>
+    <input type="text" id="mensaje" placeholder="Escribe tu mensaje...">
+    <button onclick="enviar()">Enviar</button>
+    <button onclick="limpiar()">Limpiar</button>
+    <button onclick="toggleDarkMode()">Modo Oscuro</button>
+  </section>
 
   <script src="script.js"></script>
 </body>

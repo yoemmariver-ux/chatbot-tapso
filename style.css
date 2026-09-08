@@ -16,13 +16,13 @@ body {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.85);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+  z-index: 9999;
 }
 
 .modal-content {
@@ -32,7 +32,7 @@ body {
   text-align: center;
   width: 90%;
   max-width: 400px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  box-shadow: 0 5px 20px rgba(0,0,0,0.5);
 }
 
 .modal-content h2 {
@@ -47,9 +47,11 @@ body {
   border: 1px solid #ccc;
   border-radius: 6px;
   font-size: 1em;
+  box-sizing: border-box;
 }
 
 .modal-content button {
+  width: 100%;
   padding: 10px 20px;
   background-color: #0056b3;
   color: white;
@@ -57,10 +59,34 @@ body {
   border-radius: 6px;
   cursor: pointer;
   font-size: 1em;
+  font-weight: bold;
 }
 
 .modal-content button:hover {
   background-color: #003d80;
+}
+
+/* Visor de imágenes ampliadas */
+.image-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.9);
+  justify-content: center;
+  align-items: center;
+  z-index: 9998;
+  cursor: pointer;
+}
+
+.image-modal img {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+  transition: transform 0.3s ease;
 }
 
 /* Encabezado */
@@ -156,6 +182,16 @@ header {
   margin-bottom: 10px;
 }
 
+.conoce-img.ampliable {
+  cursor: zoom-in;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.conoce-img.ampliable:hover {
+  opacity: 0.9;
+  transform: scale(1.03);
+}
+
 .info {
   font-size: 0.9em;
   color: #444;
@@ -238,7 +274,7 @@ body.dark-mode .info {
   color: #ddd;
 }
 
-/* Diseño Adaptable (Móviles) */
+/* Responsive */
 @media (max-width: 850px) {
   #main {
     flex-direction: column;
@@ -251,6 +287,6 @@ body.dark-mode .info {
   }
 
   #central {
-    order: -1; /* Muestra el chat primero en pantallas chicas */
+    order: -1;
   }
 }

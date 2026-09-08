@@ -1,3 +1,5 @@
+let timerImagen; // Guardará el temporizador para cerrar la imagen sola
+
 // Carga inicial y Modal de bienvenida
 window.onload = function() {
   const modal = document.getElementById("loginModal");
@@ -26,7 +28,39 @@ window.onload = function() {
       alert("Por favor, ingresa tu nombre para continuar.");
     }
   }
+
+  // Escuchar clics en imágenes ampliables
+  const imagenesAmpliables = document.querySelectorAll(".conoce-img.ampliable");
+  imagenesAmpliables.forEach(img => {
+    img.addEventListener("click", function() {
+      agrandarImagen(this.src);
+    });
+  });
 };
+
+// Función para agrandar la imagen al hacer clic
+function agrandarImagen(src) {
+  const imageModal = document.getElementById("imageModal");
+  const imgAmpliada = document.getElementById("imgAmpliada");
+
+  imgAmpliada.src = src;
+  imageModal.style.display = "flex";
+
+  // Cancela cualquier temporizador previo
+  clearTimeout(timerImagen);
+
+  // Vuelve al tamaño original solos después de 4 segundos (4000 ms)
+  timerImagen = setTimeout(() => {
+    cerrarImagen();
+  }, 4000);
+}
+
+// Función para cerrar la imagen ampliada
+function cerrarImagen() {
+  const imageModal = document.getElementById("imageModal");
+  imageModal.style.display = "none";
+  clearTimeout(timerImagen);
+}
 
 // Eventos para enviar mensajes
 document.getElementById("btnEnviar").onclick = enviarMensaje;
@@ -59,7 +93,7 @@ function enviarMensaje() {
   }
 }
 
-// Función para normalizar texto (quita tildes, mayúsculas y símbolos)
+// Función para normalizar texto
 function normalizarTexto(texto) {
   return texto
     .toLowerCase()
@@ -72,7 +106,7 @@ function normalizarTexto(texto) {
 function obtenerRespuesta(mensaje) {
   const msg = normalizarTexto(mensaje);
 
-  // 1. Intendente / Autoridades (Detección directa)
+  // 1. Intendente / Autoridades
   if (
     msg.includes("intendente") || 
     msg.includes("gobierna") || 

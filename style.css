@@ -7,28 +7,68 @@ body {
   text-align: center;
 }
 
-.logo-municipio {
+.section-title {
+  font-size: 22px;
+  color: #0066cc;
+  margin-bottom: 10px;
+}
+
+#main {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin: 20px;
+}
+
+#conoce, #chat, #calendario {
+  flex: 1;
+  margin: 0 10px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  margin: 15px 0;
+}
+
+.conoce-img {
   width: 70px;
-  margin: 15px auto;
+  margin-right: 15px;
+}
+
+.info {
+  font-size: 14px;
+  color: #444;
+}
+
+/* Logo municipio doble tamaño */
+.logo-municipio {
+  width: 120px;
+  margin: 10px auto;
   display: block;
 }
 
-.banner img {
-  width: 100%;
-  max-height: 200px;
-  object-fit: cover;
+/* Íconos redes pequeños */
+.icons img {
+  width: 40px;
+  height: 40px;
+  margin: 5px;
+  cursor: pointer;
 }
 
-#chatBox {
-  height: 400px;
+/* Ventana de chat */
+.chat-window {
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  width: 90%;
+  margin: 10px auto;
+  padding: 10px;
+  min-height: 150px;
   max-height: 400px;
   overflow-y: auto;
-  overflow-x: hidden;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  padding: 10px;
-  background: #fff;
+  background: #fefefe;
   text-align: left;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
 .user-msg {
@@ -36,7 +76,6 @@ body {
   padding: 10px;
   margin: 8px 0;
   border-radius: 12px;
-  display: block;
 }
 
 .bot-msg {
@@ -44,7 +83,6 @@ body {
   padding: 10px;
   margin: 8px 0;
   border-radius: 12px;
-  display: block;
 }
 
 input {
@@ -67,6 +105,7 @@ button {
   color: #eee;
 }
 
+/* Modal */
 .modal {
   display: block;
   position: fixed;
@@ -85,4 +124,9 @@ button {
   border-radius: 20px;
   text-align: center;
   box-shadow: 0 0 20px rgba(0,0,0,0.5);
+}
+
+/* WhatsApp icon */
+.whatsapp-icon {
+  width: 35px;
 }

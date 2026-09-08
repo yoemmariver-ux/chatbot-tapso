@@ -10,7 +10,6 @@ body {
   height: auto;
 }
 
-/* Contenedor principal */
 #main {
   display: flex;
   justify-content: space-between;
@@ -23,7 +22,6 @@ body {
   margin-bottom: 10px;
 }
 
-/* Conocé Tapso y Calendario */
 #conoce, #calendario {
   width: 25%;
 }
@@ -33,7 +31,6 @@ body {
   text-align: center;
 }
 
-/* Ítems */
 .item {
   background: #f9f9f9;
   border-radius: 10px;
@@ -43,21 +40,15 @@ body {
   text-align: center;
 }
 
-/* Imágenes SOLO Conocé Tapso y Calendario */
+/* Imágenes Conocé Tapso y Calendario */
 .conoce-img {
   width: 100%;
-  max-width: 180px;   /* un poco más grandes que antes */
+  max-width: 160px;  /* tamaño estable, un poquito más grande */
   height: auto;
   margin: 0 auto 10px auto;
   display: block;
-  transition: transform 0.3s;
 }
 
-.conoce-img:hover {
-  transform: scale(1.05);
-}
-
-/* Texto */
 .info {
   font-size: 0.95em;
   margin-top: 5px;
@@ -73,7 +64,7 @@ body {
   padding: 10px;
 }
 
-/* Íconos de redes y logo central */
+/* Íconos y logo en tamaño normal */
 .icons img {
   width: 30px;
   height: 30px;
@@ -86,7 +77,7 @@ body {
   margin-bottom: 15px;
 }
 
-/* Responsive para celular */
+/* Responsive */
 @media (max-width: 768px) {
   #main {
     flex-direction: column;
@@ -99,7 +90,7 @@ body {
   }
 
   .conoce-img {
-    max-width: 220px; /* más grandes en móvil pero proporcionadas */
+    max-width: 200px; /* un poco más grandes en móvil */
     margin-bottom: 15px;
   }
 
@@ -110,14 +101,5 @@ body {
 
   .chat-window {
     max-height: 250px;
-  }
-
-  .icons img {
-    width: 28px;
-    height: 28px;
-  }
-
-  .logo-municipio {
-    width: 90px;
   }
 }

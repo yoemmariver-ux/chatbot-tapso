@@ -1,302 +1,101 @@
+/* General */
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: #f9f9f9;
-  color: #333;
+  font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  text-align: center;
+}
+
+.banner-img {
+  width: 100%;
+  height: auto;
+}
+
+/* Secciones principales */
+#main {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 20px;
 }
 
 .section-title {
-  font-size: 22px;
-  color: #0066cc;
+  font-size: 1.5em;
   margin-bottom: 10px;
 }
 
-/* Grid layout */
-#main {
-  display: grid;
-  grid-template-columns: 1fr 2fr 1fr; /* izquierda, centro, derecha */
-  grid-template-rows: auto 1fr;       /* fila 1: banner, fila 2: contenido */
-  gap: 20px;
+/* Conocé Tapso y Calendario */
+#conoce, #calendario {
+  width: 25%;
 }
 
-/* Banner ocupa toda la fila superior */
-.banner-img {
-  grid-column: 1 / 4;
-  width: 100%;
-  height: 400px;
-  object-fit: cover;
-  display: block;
-}
-
-/* Conocé Tapso a la izquierda */
-#conoce {
-  grid-column: 1;
-  grid-row: 2;
-  text-align: left;
-}
-
-/* Sección central */
 #central {
-  grid-column: 2;
-  grid-row: 2;
+  width: 45%;
   text-align: center;
 }
 
-/* Calendario a la derecha */
-#calendario {
-  grid-column: 3;
-  grid-row: 2;
-  text-align: left;
-}
-
-.logo-municipio {
-  width: 80px;
-  margin: 10px auto;
-  display: block;
-}
-
-.icons img,
-.conoce-img {
-  width: 30px;
-  height: 30px;
-  margin: 5px;
-  cursor: pointer;
-}
-
-.chat-window {
-  border: 1px solid #ccc;
-  border-radius: 20px;
-  width: 90%;
-  margin: 10px auto;
-  padding: 10px;
-  min-height: 150px;
-  max-height: 400px;
-  overflow-y: auto;
-  background: #fefefe;
-  text-align: left;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
-}
-
-.user-msg {
-  background: #dcf8c6;
-  padding: 10px;
-  margin: 8px 0;
-  border-radius: 12px;
-}
-
-.bot-msg {
-  background: #ececec;
-  padding: 10px;
-  margin: 8px 0;
-  border-radius: 12px;
-}
-
-input {
-  width: 70%;
-  padding: 8px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-}
-
-button {
-  padding: 8px 12px;
-  margin: 5px;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-}
-
-.dark-mode {
-  background: #222;
-  color: #eee;
-}
-
-/* Modal */
-.modal {
-  display: block;
-  position: fixed;
-  z-index: 999;
-  left: 0; top: 0;
-  width: 100%; height: 100%;
-  background: rgba(0,0,0,0.7);
-}
-
-.modal-content {
-  background: linear-gradient(135deg, #0066cc, #00ccff);
-  color: white;
-  margin: 15% auto;
-  padding: 20px;
-  width: 320px;
-  border-radius: 20px;
+/* Ítems con estilo tipo card */
+.item {
+  background: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  padding: 15px;
+  margin-bottom: 20px;
   text-align: center;
-  box-shadow: 0 0 20px rgba(0,0,0,0.5);
-}
-/* Logo municipio más grande con animación */
-.logo-municipio {
-  width: 160px;              /* antes 80px, ahora el doble */
-  margin: 10px auto;
-  display: block;
-  animation: zoomIn 2s ease-in-out infinite alternate;
 }
 
-/* Logos de Conocé Tapso más grandes y centrados con animación */
+/* Imágenes */
 .conoce-img {
-  width: 60px;               /* antes 30px, ahora el doble */
-  height: 60px;
-  margin: 10px auto;
-  display: block;
-  animation: bounce 2s infinite;
-}
-
-/* Animaciones */
-@keyframes zoomIn {
-  from { transform: scale(1); }
-  to { transform: scale(1.2); }
-}
-
-@keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
-/* Logo municipio más grande y animado */
-.logo-municipio {
-  width: 120px;              /* antes 80px, ahora un poco más grande */
-  margin: 15px auto;
-  display: block;
-  animation: zoomIn 2s ease-in-out infinite alternate;
-}
-
-/* Íconos redes sociales más grandes y centrados */
-.icons img {
-  width: 40px;               /* antes 30px */
-  height: 40px;
-  margin: 10px auto;
-  display: inline-block;
-  animation: pulse 2s infinite;
-}
-
-/* Logos de Conocé Tapso más grandes, centrados y animados */
-.conoce-img {
-  width: 60px;               /* antes 30px */
-  height: 60px;
-  margin: 15px auto;
-  display: block;
-  animation: bounce 2s infinite;
-}
-
-/* Animaciones */
-@keyframes zoomIn {
-  from { transform: scale(1); }
-  to { transform: scale(1.2); }
-}
-
-@keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.1); }
-  100% { transform: scale(1); }
-}
-
-@keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
-/* Logo municipio más grande y animado */
-.logo-municipio {
-  width: 120px;              /* más grande que antes */
-  margin: 15px auto;
-  display: block;
-  animation: zoomIn 2s ease-in-out infinite alternate;
-}
-
-/* Íconos redes sociales más grandes, centrados y animados */
-.icons img {
-  width: 40px;               /* más grandes que antes */
-  height: 40px;
-  margin: 10px auto;
-  display: inline-block;
-  animation: pulse 2s infinite;
-}
-
-/* Logos de Conocé Tapso más grandes, centrados y animados */
-.conoce-img {
-  width: 60px;               /* más grandes que antes */
-  height: 60px;
-  margin: 15px auto;
-  display: block;
-  animation: bounce 2s infinite;
-}
-
-/* Animaciones */
-@keyframes zoomIn {
-  from { transform: scale(1); }
-  to { transform: scale(1.2); }
-}
-
-@keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.1); }
-  100% { transform: scale(1); }
-}
-
-@keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
-/* Animación de bandera ondeando */
-.banner-img {
-  grid-column: 1 / 4;
   width: 100%;
-  height: 400px;
-  object-fit: cover;
+  max-width: 200px;   /* buen tamaño en PC */
+  height: auto;       /* mantiene proporción */
+  margin: 0 auto 10px auto;
   display: block;
-  animation: wave 6s ease-in-out infinite;
-}
-
-/* Keyframes para el efecto de onda */
-@keyframes wave {
-  0% { transform: skewX(0deg) translateY(0px); }
-  25% { transform: skewX(2deg) translateY(-3px); }
-  50% { transform: skewX(0deg) translateY(0px); }
-  75% { transform: skewX(-2deg) translateY(3px); }
-  100% { transform: skewX(0deg) translateY(0px); }
-}
-/* Imágenes Conocé Tapso y Calendario */
-.conoce-img {
-  width: 140px;   /* antes estaban en 70px, ahora el doble */
-  margin-right: 15px;
   transition: transform 0.3s;
 }
 
 .conoce-img:hover {
-  transform: scale(1.1);
+  transform: scale(1.05);
 }
-/* Ajustes para pantallas chicas */
+
+/* Texto */
+.info {
+  font-size: 0.95em;
+  margin-top: 5px;
+}
+
+/* Chat */
+.chat-window {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  height: 300px;
+  overflow-y: auto;
+  margin-bottom: 10px;
+  padding: 10px;
+}
+
+/* Responsive para celular */
 @media (max-width: 768px) {
   #main {
-    display: flex;
-    flex-direction: column; /* apila todo en columna */
+    flex-direction: column;
     align-items: center;
   }
 
   #conoce, #central, #calendario {
-    width: 90%;   /* que ocupen casi todo el ancho */
-    margin-bottom: 20px; /* espacio entre secciones */
+    width: 95%;
+    margin-bottom: 25px; /* más aire entre secciones */
   }
 
   .conoce-img {
-    width: 100%;   /* que las imágenes se adapten al ancho */
-    max-width: 300px; /* límite para que no se desborden */
-    margin: 0 auto;
-    display: block;
+    max-width: 300px; /* más grandes en móvil */
+    margin-bottom: 15px;
   }
 
   .info {
-    text-align: center; /* texto centrado debajo de cada imagen */
+    text-align: center;
+    margin-bottom: 10px;
   }
 
   .chat-window {
-    max-height: 250px; /* más compacto en celular */
+    max-height: 220px; /* más compacto en móvil */
   }
 }

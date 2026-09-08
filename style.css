@@ -202,3 +202,63 @@ button {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-10px); }
 }
+/* Logo municipio más grande y animado */
+.logo-municipio {
+  width: 120px;              /* más grande que antes */
+  margin: 15px auto;
+  display: block;
+  animation: zoomIn 2s ease-in-out infinite alternate;
+}
+
+/* Íconos redes sociales más grandes, centrados y animados */
+.icons img {
+  width: 40px;               /* más grandes que antes */
+  height: 40px;
+  margin: 10px auto;
+  display: inline-block;
+  animation: pulse 2s infinite;
+}
+
+/* Logos de Conocé Tapso más grandes, centrados y animados */
+.conoce-img {
+  width: 60px;               /* más grandes que antes */
+  height: 60px;
+  margin: 15px auto;
+  display: block;
+  animation: bounce 2s infinite;
+}
+
+/* Animaciones */
+@keyframes zoomIn {
+  from { transform: scale(1); }
+  to { transform: scale(1.2); }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+/* Animación de bandera ondeando */
+.banner-img {
+  grid-column: 1 / 4;
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  display: block;
+  animation: wave 6s ease-in-out infinite;
+}
+
+/* Keyframes para el efecto de onda */
+@keyframes wave {
+  0% { transform: skewX(0deg) translateY(0px); }
+  25% { transform: skewX(2deg) translateY(-3px); }
+  50% { transform: skewX(0deg) translateY(0px); }
+  75% { transform: skewX(-2deg) translateY(3px); }
+  100% { transform: skewX(0deg) translateY(0px); }
+}

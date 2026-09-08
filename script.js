@@ -1,24 +1,23 @@
-// Variable para guardar el nombre del usuario
 let nombreUsuario = "";
 
-// Función de login
+// Login
 function login() {
   nombreUsuario = document.getElementById("nombre").value || "vecino";
   document.getElementById("loginModal").style.display = "none";
   mostrarRespuesta("¡Hola " + nombreUsuario + "! Bienvenido al asistente de Tapso. Estoy aquí para ayudarte con información de nuestro municipio.");
 }
 
-// Función para mostrar mensajes en el chat
+// Mostrar respuesta
 function mostrarRespuesta(texto) {
   const chatBox = document.getElementById("chatBox");
   const msg = document.createElement("div");
   msg.className = "bot-msg";
   msg.textContent = texto;
   chatBox.appendChild(msg);
-  chatBox.scrollTop = chatBox.scrollHeight; // mantiene el scroll abajo
+  chatBox.scrollTop = chatBox.scrollHeight;
 }
 
-// Función para enviar mensaje
+// Enviar mensaje
 function enviarMensaje() {
   const mensaje = document.getElementById("mensaje").value.toLowerCase();
   if (mensaje.trim() !== "") {
@@ -36,7 +35,7 @@ function enviarMensaje() {
 // Botón enviar
 document.getElementById("btnEnviar").addEventListener("click", enviarMensaje);
 
-// Enviar con Enter desde PC
+// Enter desde teclado
 document.getElementById("mensaje").addEventListener("keypress", function(event) {
   if (event.key === "Enter") {
     event.preventDefault();
@@ -44,17 +43,17 @@ document.getElementById("mensaje").addEventListener("keypress", function(event) 
   }
 });
 
-// Función para limpiar el chat
+// Limpiar chat
 function limpiar() {
   document.getElementById("chatBox").innerHTML = "";
 }
 
-// Función para modo oscuro/claro
+// Modo oscuro
 function toggleDarkMode() {
   document.body.classList.toggle("dark-mode");
 }
 
-// Bloques de respuestas
+// Respuestas
 function responder(mensaje) {
   let respuesta = "";
 
@@ -69,7 +68,7 @@ function responder(mensaje) {
   } else if (mensaje.includes("historia") || mensaje.includes("fundacion")) {
     respuesta = "Tapso fue fundado en 1826 y cada 12 de agosto celebramos con orgullo nuestro aniversario.";
   } else if (mensaje.includes("lugares") || mensaje.includes("localidades")) {
-    respuesta = "Tapso cuenta con localidades como Achalco, Ayapaso, Simogasta, Colonia Achalco, Los Morteros, Choya Viejo, La Calera, La Chilca, La Puerta de Molle Yaco, Pozo Grande y Albigasta. ¡Cada una con su encanto propio!";
+    respuesta = "Tapso cuenta con localidades como Achalco, Ayapaso, Simogasta, Colonia Achalco, Los Morteros, Choya Viejo, La Calera, La Chilca, La Puerta de Molle Yaco, Pozo Grande y Albigasta.";
   } else if (mensaje.includes("distritos")) {
     respuesta = "Nuestro municipio se organiza en distintos distritos y zonas rurales que forman parte de la comunidad activa de Tapso.";
   } else if (mensaje.includes("intendente")) {
@@ -83,10 +82,9 @@ function responder(mensaje) {
   } else if (mensaje.includes("fiesta patronal") || mensaje.includes("patronal")) {
     respuesta = "¡Las Fiestas Patronales de Tapso son un momento único! Cada 12 de agosto celebramos con música, tradición y la alegría de toda la comunidad.";
   } else if (mensaje.includes("festival") || mensaje.includes("union de pueblos")) {
-    respuesta = "El Festival Unión de Pueblos se celebra en junio y reúne a vecinos y visitantes con música, danzas y gastronomía típica. ¡Una verdadera fiesta de la cultura!";
+    respuesta = "El Festival Unión de Pueblos se celebra en junio y reúne a vecinos y visitantes con música, danzas y gastronomía típica.";
   } else {
-    respuesta = "Lo siento, no entendí tu mensaje. Podés preguntar sobre la municipalidad, policía, Punto Digital, hostería, historia, lugares, distritos, intendente, autoridades, ubicación o fiestas. " +
-                "Si necesitás atención personalizada, hacé click en el ícono de WhatsApp y un asistente del municipio te ayudará.";
+    respuesta = "Lo siento, no entendí tu mensaje. Podés preguntar sobre la municipalidad, policía, Punto Digital, hostería, historia, lugares, distritos, intendente, autoridades, ubicación o fiestas. Si necesitás atención personalizada, hacé click en el ícono de WhatsApp.";
   }
 
   mostrarRespuesta(respuesta);

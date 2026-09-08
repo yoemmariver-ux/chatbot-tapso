@@ -1,18 +1,8 @@
-/* Tipografía general */
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: #f9f9f9;
-  color: #333;
-  margin: 0;
-  padding: 0;
-  text-align: center;
-}
-
-/* Chat */
+/* Chat con scroll */
 #chatBox {
-  height: 400px;        /* altura fija */
+  height: 400px;
   max-height: 400px;
-  overflow-y: auto;     /* barra vertical */
+  overflow-y: auto;
   overflow-x: hidden;
   border: 1px solid #ccc;
   border-radius: 10px;
@@ -21,77 +11,9 @@ body {
   text-align: left;
 }
 
-.user-msg {
-  background: #dcf8c6;
-  padding: 10px;
-  margin: 8px 0;
-  border-radius: 12px;
-  display: block;
-}
-
-.bot-msg {
-  background: #ececec;
-  padding: 10px;
-  margin: 8px 0;
-  border-radius: 12px;
-  display: block;
-}
-
-/* Inputs y botones */
-input {
-  width: 70%;
-  padding: 8px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-}
-
-button {
-  padding: 8px 12px;
-  margin: 5px;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-}
-
-.dark-mode {
-  background: #222;
-  color: #eee;
-}
-
-/* Modal */
-.modal {
-  display: block;
-  position: fixed;
-  z-index: 999;
-  left: 0; top: 0;
-  width: 100%; height: 100%;
-  background: rgba(0,0,0,0.7);
-}
-
-.modal-content {
-  background: linear-gradient(135deg, #0066cc, #00ccff);
-  color: white;
-  margin: 15% auto;
-  padding: 20px;
-  width: 320px;
-  border-radius: 20px;
-  text-align: center;
-  box-shadow: 0 0 20px rgba(0,0,0,0.5);
-}
-
-.modal-content input {
-  width: 90%;
-  padding: 8px;
-  margin: 10px 0;
-  border-radius: 8px;
-  border: none;
-}
-
-.modal-content button {
-  background: white;
-  color: #0066cc;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 8px;
-  cursor: pointer;
+/* Banner con tu imagen */
+.banner img {
+  width: 100%;
+  max-height: 200px;
+  object-fit: cover;
 }

@@ -43,7 +43,7 @@ body {
   text-align: center;
 }
 
-/* Imágenes */
+/* Imágenes SOLO de Conocé Tapso y Calendario */
 .conoce-img {
   width: 100%;
   max-width: 200px;   /* buen tamaño en PC */
@@ -73,11 +73,24 @@ body {
   padding: 10px;
 }
 
+/* Íconos de redes y logo central (se mantienen normales) */
+.icons img {
+  width: 40px;
+  height: 40px;
+  margin: 5px;
+}
+
+.logo-municipio {
+  width: 120px;
+  height: auto;
+  margin-bottom: 15px;
+}
+
 /* Responsive para celular */
 @media (max-width: 768px) {
   #main {
     display: flex;
-    flex-direction: column; /* mantiene orden pero apila */
+    flex-direction: column;
     align-items: center;
     gap: 25px; /* espacio entre bloques */
   }
@@ -98,5 +111,14 @@ body {
 
   .chat-window {
     max-height: 250px; /* más compacto en móvil */
+  }
+
+  .icons img {
+    width: 35px;
+    height: 35px;
+  }
+
+  .logo-municipio {
+    width: 100px;
   }
 }

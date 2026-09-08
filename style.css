@@ -2,6 +2,8 @@ body {
   font-family: Arial, sans-serif;
   background: #f9f9f9;
   color: #333;
+  margin: 0;
+  padding: 0;
 }
 header {
   background: #0066cc;
@@ -13,6 +15,16 @@ header {
   width: 100%;
   max-height: 200px;
   object-fit: cover;
+}
+.icons {
+  display: flex;
+  gap: 15px;
+  margin: 10px 0;
+}
+.icons img {
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
 }
 .item {
   display: flex;
@@ -31,7 +43,6 @@ header {
   font-size: 14px;
   color: #444;
 }
-.dark-mode {
-  background: #222;
-  color: #eee;
+#calendario h2 {
+  font-family: "Georgia", serif;
 }

@@ -15,7 +15,7 @@ function mostrarRespuesta(texto) {
   msg.className = "bot-msg";
   msg.textContent = texto;
   chatBox.appendChild(msg);
-  chatBox.scrollTop = chatBox.scrollHeight;
+  chatBox.scrollTop = chatBox.scrollHeight; // mantiene el scroll abajo
 }
 
 // Función para enviar mensaje
@@ -29,6 +29,7 @@ function enviarMensaje() {
     chatBox.appendChild(userMsg);
     responder(mensaje);
     document.getElementById("mensaje").value = "";
+    chatBox.scrollTop = chatBox.scrollHeight;
   }
 }
 
@@ -38,7 +39,7 @@ document.getElementById("btnEnviar").addEventListener("click", enviarMensaje);
 // Enviar con Enter desde PC
 document.getElementById("mensaje").addEventListener("keypress", function(event) {
   if (event.key === "Enter") {
-    event.preventDefault(); // evita salto de línea
+    event.preventDefault();
     enviarMensaje();
   }
 });
@@ -53,7 +54,7 @@ function toggleDarkMode() {
   document.body.classList.toggle("dark-mode");
 }
 
-// Bloques de respuestas (amables y con intendente Mario Sosa)
+// Bloques de respuestas
 function responder(mensaje) {
   let respuesta = "";
 
@@ -79,29 +80,14 @@ function responder(mensaje) {
     respuesta = "Tapso se encuentra en el límite entre Catamarca y Santiago del Estero, siendo un punto de unión entre ambas provincias.";
   } else if (mensaje.includes("hola") || mensaje.includes("buenas")) {
     respuesta = "¡Hola " + nombreUsuario + "! Qué alegría saludarte. Soy el asistente de Tapso y estoy aquí para ayudarte.";
+  } else if (mensaje.includes("fiesta patronal") || mensaje.includes("patronal")) {
+    respuesta = "¡Las Fiestas Patronales de Tapso son un momento único! Cada 12 de agosto celebramos con música, tradición y la alegría de toda la comunidad.";
+  } else if (mensaje.includes("festival") || mensaje.includes("union de pueblos")) {
+    respuesta = "El Festival Unión de Pueblos se celebra en junio y reúne a vecinos y visitantes con música, danzas y gastronomía típica. ¡Una verdadera fiesta de la cultura!";
   } else {
-    respuesta = "Lo siento, no entendí tu mensaje. Podés preguntar sobre la municipalidad, policía, Punto Digital, hostería, historia, lugares, distritos, intendente, autoridades o ubicación. " +
+    respuesta = "Lo siento, no entendí tu mensaje. Podés preguntar sobre la municipalidad, policía, Punto Digital, hostería, historia, lugares, distritos, intendente, autoridades, ubicación o fiestas. " +
                 "Si necesitás atención personalizada, hacé click en el ícono de WhatsApp y un asistente del municipio te ayudará.";
   }
 
   mostrarRespuesta(respuesta);
-}
-chatBox.appendChild(msg);
-chatBox.scrollTop = chatBox.scrollHeight;
-function mostrarRespuesta(texto) {
-  const chatBox = document.getElementById("chatBox");
-  const msg = document.createElement("div");
-  msg.className = "bot-msg";
-  msg.textContent = texto;
-  // Insertar arriba en lugar de abajo
-  chatBox.insertBefore(msg, chatBox.firstChild);
-}
-function mostrarRespuesta(texto) {
-  const chatBox = document.getElementById("chatBox");
-  const msg = document.createElement("div");
-  msg.className = "bot-msg";
-  msg.textContent = texto;
-  chatBox.appendChild(msg);
-  // Mantener el scroll abajo para ver el último mensaje
-  chatBox.scrollTop = chatBox.scrollHeight;
 }

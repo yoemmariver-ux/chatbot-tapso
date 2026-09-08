@@ -13,32 +13,48 @@ body {
   margin-bottom: 10px;
 }
 
+/* Grid layout */
 #main {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin: 20px;
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr; /* izquierda, centro, derecha */
+  grid-template-rows: auto 1fr;       /* fila 1: banner, fila 2: contenido */
+  gap: 20px;
 }
 
-#conoce, #central, #calendario {
-  flex: 1;
-  margin: 0 10px;
-}
-
+/* Banner ocupa toda la fila superior */
 .banner-img {
+  grid-column: 1 / 4;
   width: 100%;
-  height: 250px; /* más grande */
+  height: 400px;
   object-fit: cover;
+  display: block;
 }
 
-/* Logo municipio chico */
+/* Conocé Tapso a la izquierda */
+#conoce {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+/* Sección central */
+#central {
+  grid-column: 2;
+  grid-row: 2;
+  text-align: center;
+}
+
+/* Calendario a la derecha */
+#calendario {
+  grid-column: 3;
+  grid-row: 2;
+}
+
 .logo-municipio {
   width: 80px;
   margin: 10px auto;
   display: block;
 }
 
-/* Íconos redes y fotos conoce Tapso del mismo tamaño */
 .icons img,
 .conoce-img {
   width: 30px;
@@ -47,7 +63,6 @@ body {
   cursor: pointer;
 }
 
-/* Ventana de chat */
 .chat-window {
   border: 1px solid #ccc;
   border-radius: 20px;

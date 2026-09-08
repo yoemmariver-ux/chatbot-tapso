@@ -72,7 +72,7 @@ function normalizarTexto(texto) {
 function obtenerRespuesta(mensaje) {
   const msg = normalizarTexto(mensaje);
 
-  // 1. Intendente / Autoridades
+  // 1. Intendente / Autoridades (Detección directa)
   if (
     msg.includes("intendente") || 
     msg.includes("gobierna") || 
@@ -195,7 +195,7 @@ function obtenerRespuesta(mensaje) {
   }
 
   // Mensaje por defecto cuando no entiende
-  return "Lo siento, no entendí bien tu consulta. Podés preguntarme por el **intendente**, **horarios**, **ubicación**, **policía**, **distritos**, **Punto Digital**, la **liga de pádel** o **actividades culturales**.";
+  return "Lo siento, no entendí bien tu consulta. Podés preguntarme sobre el **intendente (Mario Sosa)**, **horarios**, **ubicación**, **policía**, **distritos**, **Punto Digital**, la **liga de pádel** o **actividades culturales**.";
 }
 
 // Funciones auxiliares

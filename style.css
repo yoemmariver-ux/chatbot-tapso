@@ -133,3 +133,30 @@ button {
   text-align: center;
   box-shadow: 0 0 20px rgba(0,0,0,0.5);
 }
+/* Logo municipio más grande con animación */
+.logo-municipio {
+  width: 160px;              /* antes 80px, ahora el doble */
+  margin: 10px auto;
+  display: block;
+  animation: zoomIn 2s ease-in-out infinite alternate;
+}
+
+/* Logos de Conocé Tapso más grandes y centrados con animación */
+.conoce-img {
+  width: 60px;               /* antes 30px, ahora el doble */
+  height: 60px;
+  margin: 10px auto;
+  display: block;
+  animation: bounce 2s infinite;
+}
+
+/* Animaciones */
+@keyframes zoomIn {
+  from { transform: scale(1); }
+  to { transform: scale(1.2); }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}

@@ -272,3 +272,31 @@ button {
 .conoce-img:hover {
   transform: scale(1.1);
 }
+/* Ajustes para pantallas chicas */
+@media (max-width: 768px) {
+  #main {
+    display: flex;
+    flex-direction: column; /* apila todo en columna */
+    align-items: center;
+  }
+
+  #conoce, #central, #calendario {
+    width: 90%;   /* que ocupen casi todo el ancho */
+    margin-bottom: 20px; /* espacio entre secciones */
+  }
+
+  .conoce-img {
+    width: 100%;   /* que las imágenes se adapten al ancho */
+    max-width: 300px; /* límite para que no se desborden */
+    margin: 0 auto;
+    display: block;
+  }
+
+  .info {
+    text-align: center; /* texto centrado debajo de cada imagen */
+  }
+
+  .chat-window {
+    max-height: 250px; /* más compacto en celular */
+  }
+}

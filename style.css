@@ -10,7 +10,7 @@ body {
   height: auto;
 }
 
-/* Secciones principales */
+/* Contenedor principal */
 #main {
   display: flex;
   justify-content: space-between;
@@ -76,17 +76,18 @@ body {
 /* Responsive para celular */
 @media (max-width: 768px) {
   #main {
-    flex-direction: column;
+    display: flex;
+    flex-direction: column; /* mantiene orden pero apila */
     align-items: center;
+    gap: 25px; /* espacio entre bloques */
   }
 
   #conoce, #central, #calendario {
-    width: 95%;
-    margin-bottom: 25px; /* más aire entre secciones */
+    width: 95%;   /* cada bloque ocupa casi todo el ancho */
   }
 
   .conoce-img {
-    max-width: 300px; /* más grandes en móvil */
+    max-width: 250px; /* más grandes en móvil pero proporcionadas */
     margin-bottom: 15px;
   }
 
@@ -96,6 +97,6 @@ body {
   }
 
   .chat-window {
-    max-height: 220px; /* más compacto en móvil */
+    max-height: 250px; /* más compacto en móvil */
   }
 }

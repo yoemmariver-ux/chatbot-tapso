@@ -34,6 +34,7 @@ body {
 #conoce {
   grid-column: 1;
   grid-row: 2;
+  text-align: left;
 }
 
 /* Sección central */
@@ -47,6 +48,7 @@ body {
 #calendario {
   grid-column: 3;
   grid-row: 2;
+  text-align: left;
 }
 
 .logo-municipio {

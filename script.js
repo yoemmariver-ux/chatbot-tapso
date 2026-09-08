@@ -1,98 +1,35 @@
-let nombreUsuario = "";
+// Modal de bienvenida
+window.onload = function() {
+  const modal = document.getElementById("loginModal");
+  const btnComenzar = document.getElementById("btnComenzar");
+  const nombreInput = document.getElementById("nombre");
 
-// Función de login
-function login() {
-  nombreUsuario = document.getElementById("nombre").value || "vecino";
-  document.getElementById("loginModal").style.display = "none";
-  mostrarRespuesta("¡Hola " + nombreUsuario + "! Bienvenido al asistente de Tapso. Estoy aquí para ayudarte con información de nuestro municipio.");
-}
+  modal.style.display = "block";
 
-// Conectar eventos al cargar DOM
-window.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("btnComenzar").addEventListener("click", login);
-  document.getElementById("nombre").addEventListener("keypress", function(event) {
-    if (event.key === "Enter") {
-      event.preventDefault();
-      login();
+  btnComenzar.onclick = function() {
+    const nombre = nombreInput.value.trim();
+    if (nombre !== "") {
+      modal.style.display = "none";
+      const chatBox = document.getElementById("chatBox");
+      chatBox.innerHTML += `<p><strong>Bienvenido, ${nombre} 👋</strong></p>`;
     }
-  });
-  document.getElementById("btnEnviar").addEventListener("click", enviarMensaje);
-  document.getElementById("mensaje").addEventListener("keypress", function(event) {
-    if (event.key === "Enter") {
-      event.preventDefault();
-      enviarMensaje();
-    }
-  });
-});
+  };
+};
 
-// Mostrar respuesta en el chat
-function mostrarRespuesta(texto) {
-  const chatBox = document.getElementById("chatBox");
-  const msg = document.createElement("div");
-  msg.className = "bot-msg";
-  msg.textContent = texto;
-  chatBox.appendChild(msg);
-  chatBox.scrollTop = chatBox.scrollHeight;
-}
-
-// Enviar mensaje
-function enviarMensaje() {
-  const mensaje = document.getElementById("mensaje").value.toLowerCase();
-  if (mensaje.trim() !== "") {
+// Chat básico
+document.getElementById("btnEnviar").onclick = function() {
+  const mensaje = document.getElementById("mensaje").value.trim();
+  if (mensaje !== "") {
     const chatBox = document.getElementById("chatBox");
-    const userMsg = document.createElement("div");
-    userMsg.className = "user-msg";
-    userMsg.textContent = mensaje;
-    chatBox.appendChild(userMsg);
-    responder(mensaje);
+    chatBox.innerHTML += `<p><strong>Tú:</strong> ${mensaje}</p>`;
     document.getElementById("mensaje").value = "";
-    chatBox.scrollTop = chatBox.scrollHeight;
   }
-}
+};
 
-// Limpiar chat
 function limpiar() {
   document.getElementById("chatBox").innerHTML = "";
 }
 
-// Modo oscuro
 function toggleDarkMode() {
   document.body.classList.toggle("dark-mode");
-}
-
-// Respuestas automáticas
-function responder(mensaje) {
-  let respuesta = "";
-
-  if (mensaje.includes("municipalidad") || mensaje.includes("muni")) {
-    respuesta = "La municipalidad de Tapso te espera de lunes a viernes de 8 a 13 hs para ayudarte con tus trámites.";
-  } else if (mensaje.includes("policia") || mensaje.includes("comisaria")) {
-    respuesta = "La comisaría de Tapso está en el centro del pueblo, siempre lista para cuidar la seguridad de nuestros vecinos.";
-  } else if (mensaje.includes("punto digital")) {
-    respuesta = "El Punto Digital de Tapso es un espacio para aprender y conectarse, parte del programa nacional que busca acercar la tecnología a todos.";
-  } else if (mensaje.includes("hosteria")) {
-    respuesta = "La Hostería de Tapso es un lugar histórico y acogedor, ideal para descansar y disfrutar de la tranquilidad de nuestra localidad.";
-  } else if (mensaje.includes("historia") || mensaje.includes("fundacion")) {
-    respuesta = "Tapso fue fundado en 1826 y cada 12 de agosto celebramos con orgullo nuestro aniversario.";
-  } else if (mensaje.includes("lugares") || mensaje.includes("localidades")) {
-    respuesta = "Tapso cuenta con localidades como Achalco, Ayapaso, Simogasta, Colonia Achalco, Los Morteros, Choya Viejo, La Calera, La Chilca, La Puerta de Molle Yaco, Pozo Grande y Albigasta.";
-  } else if (mensaje.includes("distritos")) {
-    respuesta = "Nuestro municipio se organiza en distintos distritos y zonas rurales que forman parte de la comunidad activa de Tapso.";
-  } else if (mensaje.includes("intendente")) {
-    respuesta = "El intendente actual de Tapso es Mario Sosa, quien trabaja junto a su equipo para el bienestar de todos los vecinos.";
-  } else if (mensaje.includes("autoridades")) {
-    respuesta = "Además del intendente Mario Sosa, el gobierno municipal está integrado por concejales y secretarios que acompañan la gestión.";
-  } else if (mensaje.includes("ubicacion") || mensaje.includes("donde queda")) {
-    respuesta = "Tapso se encuentra en el límite entre Catamarca y Santiago del Estero, siendo un punto de unión entre ambas provincias.";
-  } else if (mensaje.includes("hola") || mensaje.includes("buenas")) {
-    respuesta = "¡Hola " + nombreUsuario + "! Qué alegría saludarte. Soy el asistente de Tapso y estoy aquí para ayudarte.";
-  } else if (mensaje.includes("fiesta patronal") || mensaje.includes("patronal")) {
-    respuesta = "¡Las Fiestas Patronales de Tapso son un momento único! Cada 12 de agosto celebramos con música, tradición y la alegría de toda la comunidad.";
-  } else if (mensaje.includes("festival") || mensaje.includes("union de pueblos")) {
-    respuesta = "El Festival Unión de Pueblos se celebra en junio y reúne a vecinos y visitantes con música, danzas y gastronomía típica.";
-  } else {
-    respuesta = "Lo siento, no entendí tu mensaje. Podés preguntar sobre la municipalidad, policía, Punto Digital, hostería, historia, lugares, distritos, intendente, autoridades, ubicación o fiestas.";
-  }
-
-  mostrarRespuesta(respuesta);
 }

@@ -67,4 +67,34 @@ function responder(mensaje) {
   let respuesta = "";
 
   if (mensaje.includes("municipalidad") || mensaje.includes("muni")) {
-    respuesta = "La municipalidad de Tapso te espera de lunes
+    respuesta = "La municipalidad de Tapso te espera de lunes a viernes de 8 a 13 hs para ayudarte con tus trámites.";
+  } else if (mensaje.includes("policia") || mensaje.includes("comisaria")) {
+    respuesta = "La comisaría de Tapso está en el centro del pueblo, siempre lista para cuidar la seguridad de nuestros vecinos.";
+  } else if (mensaje.includes("punto digital")) {
+    respuesta = "El Punto Digital de Tapso es un espacio para aprender y conectarse, parte del programa nacional que busca acercar la tecnología a todos.";
+  } else if (mensaje.includes("hosteria")) {
+    respuesta = "La Hostería de Tapso es un lugar histórico y acogedor, ideal para descansar y disfrutar de la tranquilidad de nuestra localidad.";
+  } else if (mensaje.includes("historia") || mensaje.includes("fundacion")) {
+    respuesta = "Tapso fue fundado en 1826 y cada 12 de agosto celebramos con orgullo nuestro aniversario.";
+  } else if (mensaje.includes("lugares") || mensaje.includes("localidades")) {
+    respuesta = "Tapso cuenta con localidades como Achalco, Ayapaso, Simogasta, Colonia Achalco, Los Morteros, Choya Viejo, La Calera, La Chilca, La Puerta de Molle Yaco, Pozo Grande y Albigasta.";
+  } else if (mensaje.includes("distritos")) {
+    respuesta = "Nuestro municipio se organiza en distintos distritos y zonas rurales que forman parte de la comunidad activa de Tapso.";
+  } else if (mensaje.includes("intendente")) {
+    respuesta = "El intendente actual de Tapso es Mario Sosa, quien trabaja junto a su equipo para el bienestar de todos los vecinos.";
+  } else if (mensaje.includes("autoridades")) {
+    respuesta = "Además del intendente Mario Sosa, el gobierno municipal está integrado por concejales y secretarios que acompañan la gestión.";
+  } else if (mensaje.includes("ubicacion") || mensaje.includes("donde queda")) {
+    respuesta = "Tapso se encuentra en el límite entre Catamarca y Santiago del Estero, siendo un punto de unión entre ambas provincias.";
+  } else if (mensaje.includes("hola") || mensaje.includes("buenas")) {
+    respuesta = "¡Hola " + nombreUsuario + "! Qué alegría saludarte. Soy el asistente de Tapso y estoy aquí para ayudarte.";
+  } else if (mensaje.includes("fiesta patronal") || mensaje.includes("patronal")) {
+    respuesta = "¡Las Fiestas Patronales de Tapso son un momento único! Cada 12 de agosto celebramos con música, tradición y la alegría de toda la comunidad.";
+  } else if (mensaje.includes("festival") || mensaje.includes("union de pueblos")) {
+    respuesta = "El Festival Unión de Pueblos se celebra en junio y reúne a vecinos y visitantes con música, danzas y gastronomía típica.";
+  } else {
+    respuesta = "Lo siento, no entendí tu mensaje. Podés preguntar sobre la municipalidad, policía, Punto Digital, hostería, historia, lugares, distritos, intendente, autoridades, ubicación o fiestas.";
+  }
+
+  mostrarRespuesta(respuesta);
+}

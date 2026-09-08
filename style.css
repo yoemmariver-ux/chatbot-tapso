@@ -10,6 +10,27 @@ body {
   height: auto;
 }
 
+.logo-container {
+  text-align: center;
+  margin: 15px 0;
+}
+
+.logo-municipio {
+  width: 80px; /* tamaño normal */
+  height: auto;
+}
+
+.icons {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.icons img {
+  width: 30px;
+  height: 30px;
+  margin: 5px;
+}
+
 #main {
   display: flex;
   justify-content: space-between;
@@ -43,7 +64,7 @@ body {
 /* Imágenes Conocé Tapso y Calendario */
 .conoce-img {
   width: 100%;
-  max-width: 150px;  /* tamaño estable */
+  max-width: 150px; /* un poquito más grandes */
   height: auto;
   margin: 0 auto 10px auto;
   display: block;
@@ -64,19 +85,6 @@ body {
   padding: 10px;
 }
 
-/* Íconos y logo en tamaño original */
-.icons img {
-  width: 30px;
-  height: 30px;
-  margin: 5px;
-}
-
-.logo-municipio {
-  width: 80px;
-  height: auto;
-  margin-bottom: 15px;
-}
-
 /* Responsive */
 @media (max-width: 768px) {
   #main {
@@ -90,7 +98,7 @@ body {
   }
 
   .conoce-img {
-    max-width: 180px; /* un poco más grandes en móvil */
+    max-width: 180px;
     margin-bottom: 15px;
   }
 

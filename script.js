@@ -7,7 +7,7 @@ function login() {
   mostrarRespuesta("¡Hola " + nombreUsuario + "! Bienvenido al asistente de Tapso. Estoy aquí para ayudarte con información de nuestro municipio.");
 }
 
-// Conectar botón comenzar y Enter
+// Conectar eventos al cargar DOM
 window.addEventListener("DOMContentLoaded", () => {
   document.getElementById("btnComenzar").addEventListener("click", login);
   document.getElementById("nombre").addEventListener("keypress", function(event) {

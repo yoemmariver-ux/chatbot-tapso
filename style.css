@@ -262,3 +262,13 @@ button {
   75% { transform: skewX(-2deg) translateY(3px); }
   100% { transform: skewX(0deg) translateY(0px); }
 }
+/* Imágenes Conocé Tapso y Calendario */
+.conoce-img {
+  width: 140px;   /* antes estaban en 70px, ahora el doble */
+  margin-right: 15px;
+  transition: transform 0.3s;
+}
+
+.conoce-img:hover {
+  transform: scale(1.1);
+}

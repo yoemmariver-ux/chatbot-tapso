@@ -8,12 +8,21 @@ function login() {
 }
 
 // Conectar botón comenzar y Enter
-document.getElementById("btnComenzar").addEventListener("click", login);
-document.getElementById("nombre").addEventListener("keypress", function(event) {
-  if (event.key === "Enter") {
-    event.preventDefault();
-    login();
-  }
+window.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("btnComenzar").addEventListener("click", login);
+  document.getElementById("nombre").addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      login();
+    }
+  });
+  document.getElementById("btnEnviar").addEventListener("click", enviarMensaje);
+  document.getElementById("mensaje").addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      enviarMensaje();
+    }
+  });
 });
 
 // Mostrar respuesta en el chat
@@ -40,17 +49,6 @@ function enviarMensaje() {
     chatBox.scrollTop = chatBox.scrollHeight;
   }
 }
-
-// Botón enviar
-document.getElementById("btnEnviar").addEventListener("click", enviarMensaje);
-
-// Enviar con Enter
-document.getElementById("mensaje").addEventListener("keypress", function(event) {
-  if (event.key === "Enter") {
-    event.preventDefault();
-    enviarMensaje();
-  }
-});
 
 // Limpiar chat
 function limpiar() {

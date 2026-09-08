@@ -5,44 +5,62 @@ body {
   margin: 0;
   padding: 0;
 }
+
 header {
   background: #0066cc;
   color: white;
   text-align: center;
   padding: 10px;
 }
+
 .banner {
   width: 100%;
   max-height: 200px;
   object-fit: cover;
 }
+
 .icons {
   display: flex;
   gap: 15px;
   margin: 10px 0;
+  justify-content: center;
 }
+
 .icons img {
   width: 40px;
   height: 40px;
   cursor: pointer;
 }
+
+#explora {
+  padding: 20px;
+}
+
 .item {
   display: flex;
   align-items: center;
   margin: 15px 0;
 }
+
 .item img {
   width: 150px;
   margin-right: 20px;
   transition: transform 0.3s;
 }
+
 .item img:hover {
   transform: scale(1.1);
 }
+
 .info {
   font-size: 14px;
   color: #444;
 }
+
+#calendario {
+  padding: 20px;
+}
+
 #calendario h2 {
   font-family: "Georgia", serif;
 }

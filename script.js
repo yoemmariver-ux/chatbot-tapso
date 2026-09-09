@@ -119,7 +119,7 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 // ----------------------------------------------------
-// LÓGICA DEL CHAT CON MEMORIA DE CONVERSACIÓN Y NUEVA BASE
+// LÓGICA DEL CHAT CON MEMORIA DE CONVERSACIÓN
 // ----------------------------------------------------
 function mostrarSaludoInicial() {
   const chatBox = document.getElementById("chatBox");
@@ -254,8 +254,8 @@ function detectarTema(texto) {
 
 // Información detallada a devolver
 function generarRespuestaPorTema(tema, repeticiones) {
-  if (repeticiones > 2) {
-    return `Seguimos conversando sobre **${nombreTemaFormateado(tema)}**. Como tenés varias consultas específicas sobre esto, te recomiendo ponerte en contacto directo a través de nuestro botón de **WhatsApp** para darte una atención personalizada.`;
+  if (repeticiones > 5) {
+    return `Seguimos conversando sobre **${nombreTemaFormateado(tema)}**. Si tenés más dudas específicas, te sugiero consultarnos vía **WhatsApp** mediante el botón inferior para asesorarte de forma personalizada.`;
   }
 
   switch (tema) {
@@ -293,41 +293,44 @@ function generarRespuestaPorTema(tema, repeticiones) {
 
 // Respuestas cuando se repregunta sobre el MISMO tema conservando la memoria
 function generarRespuestaSeguimiento(tema, texto, repeticiones) {
-  if (repeticiones >= 3) {
+  if (repeticiones >= 5) {
     return `Sobre **${nombreTemaFormateado(tema)}**: para más detalles o consultas personalizadas, te invitamos a enviarnos un mensaje por **WhatsApp** usando el botón del panel inferior.`;
   }
 
-  // Preguntas de seguimiento de Ubicación / Dónde
-  if (texto.includes("donde") || texto.includes("ubicacion") || texto.includes("queda") || texto.includes("donde esta")) {
-    if (tema === "hosteria_alojamiento_tapso") return "La Hostería Municipal queda exactamente sobre la **Ruta Nacional N° 157**, en Tapso.";
+  // 1. Preguntas de Horarios
+  if (texto.includes("horario") || texto.includes("horarios") || texto.includes("hora") || texto.includes("abierto") || texto.includes("atencion")) {
+    if (tema === "punto_digital_tapso") {
+      return "El **Punto Digital Tapso** funciona de lunes a viernes en horario administrativo municipal. Podés acercarte para usar las computadoras, realizar trámites o pedir información sobre los cursos disponibles.";
+    }
+    if (tema === "municipalidad_autoridades_tapso") {
+      return "La atención en el Municipio (Centro Cívico) se realiza habitualmente de **Lunes a Viernes de 7:00 a 13:00 hs**.";
+    }
+    if (tema === "hosteria_alojamiento_tapso") {
+      return "La Hostería Municipal cuenta con recepción para huéspedes. Para coordinar horarios de check-in o reservas, podés llamar al **385 6096508**.";
+    }
+  }
+
+  // 2. Preguntas de Ubicación / Dónde queda
+  if (texto.includes("donde") || texto.includes("ubicacion") || texto.includes("queda") || texto.includes("direccion")) {
+    if (tema === "punto_digital_tapso") return "El **Punto Digital Tapso** se encuentra ubicado en el área cívica/institucional de la localidad de Tapso.";
+    if (tema === "hosteria_alojamiento_tapso") return "La Hostería Municipal queda sobre la **Ruta Nacional N° 157**, en Tapso.";
     if (tema === "municipalidad_autoridades_tapso") return "El Municipio (sector Catamarca) está ubicado en la zona del **Centro Cívico** de Tapso.";
-    if (tema === "padel_tapso" || tema === "turismo_deportes_tapso") return "Las actividades deportivas y la cancha de pádel están en el **Complejo Deportivo de Tapso**.";
-    return `Referente a **${nombreTemaFormateado(tema)}**, podés ubicar la zona principal sobre la Ruta 157 o en el Centro Cívico de Tapso.`;
+    if (tema === "padel_tapso" || tema === "turismo_deportes_tapso") return "Las actividades deportivas están centradas en el **Complejo Deportivo de Tapso**.";
   }
 
-  // Preguntas de seguimiento de Contacto / Teléfono / Reservas
-  if (texto.includes("telefono") || texto.includes("contacto") || texto.includes("llamar") || texto.includes("reserva") || texto.includes("numero")) {
-    if (tema === "hosteria_alojamiento_tapso") return "Para reservas o consultas en la Hostería Municipal, podés llamar al **385 6096508**.";
-    if (tema === "padel_tapso") return "Para inscribirte o consultar sobre el Pádel, comunicate al **3854415855**.";
-    return `Para contactarte sobre **${nombreTemaFormateado(tema)}**, podés escribirnos por nuestro botón oficial de **WhatsApp** ubicado abajo.`;
-  }
-
-  // Preguntas de seguimiento de Precios / Costos
-  if (texto.includes("cuanto") || texto.includes("precio") || texto.includes("costo") || texto.includes("valor") || texto.includes("cobran")) {
+  // 3. Preguntas de Precios / Costos
+  if (texto.includes("cuanto") || texto.includes("precio") || texto.includes("costo") || texto.includes("valor") || texto.includes("gratis") || texto.includes("cobran")) {
+    if (tema === "punto_digital_tapso") return "¡Todos los servicios del **Punto Digital** (internet, trámites, computadoras, videojuegos y cursos) son **100% gratuitos** para los vecinos!";
     if (tema === "padel_tapso") return "La inscripción a la Liga de Pádel cuesta **$20.000 por pareja**.";
-    if (tema === "punto_digital_tapso") return "¡Los servicios del Punto Digital son 100% **gratuitos** para todos los vecinos!";
-    return `Para precios actualizados respecto a **${nombreTemaFormateado(tema)}**, te sugerimos comunicarte por WhatsApp al canal municipal.`;
   }
 
-  // Preguntas de seguimiento de Fechas / Horarios
-  if (texto.includes("cuando") || texto.includes("fecha") || texto.includes("horario") || texto.includes("dia")) {
-    if (tema === "historia_fundacion_tapso" || tema === "festivales_aniversario_tapso") return "La fecha de fundación de Tapso es el **15 de junio** (habiendo cumplido su Bicentenario el 19 de junio de 2026).";
-    if (tema === "padel_tapso") return "La Liga de Pádel comienza a finales de septiembre con 1 fecha por semana.";
-    return `Para horarios específicos sobre **${nombreTemaFormateado(tema)}**, podés hacer tu consulta rápida por WhatsApp.`;
+  // 4. Preguntas de Contacto / Teléfono
+  if (texto.includes("telefono") || texto.includes("contacto") || texto.includes("llamar") || texto.includes("reserva") || texto.includes("numero")) {
+    if (tema === "hosteria_alojamiento_tapso") return "El teléfono de la Hostería Municipal es **385 6096508**.";
+    if (tema === "padel_tapso") return "Para consultar sobre el Pádel, comunicate al **3854415855**.";
   }
 
-  // Respuesta general manteniendo el contexto si la repregunta no es puntual
-  return `Seguimos con el tema de **${nombreTemaFormateado(tema)}**. ¿Hay algún detalle específico (como horarios, ubicación o trámites) que quieras consultar? También podés contactarnos por **WhatsApp**.`;
+  return `Seguimos conversando sobre **${nombreTemaFormateado(tema)}**. Podés consultarme sobre ubicación, horarios, actividades o trámites de esta área.`;
 }
 
 function nombreTemaFormateado(tema) {

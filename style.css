@@ -144,30 +144,42 @@ header {
   display: block;
 }
 
+/* Logo del Municipio Agrandado y animado */
 .logo-container {
-  margin: 15px 0 10px 0;
+  margin: 20px 0 15px 0;
 }
 
 .logo-municipio {
-  width: 100px;
+  width: 200px; /* El doble de tamaño */
   height: auto;
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.4s ease;
+  filter: drop-shadow(0 4px 8px rgba(0, 86, 179, 0.25));
 }
 
+.logo-municipio:hover {
+  transform: scale(1.08) translateY(-4px);
+  filter: drop-shadow(0 8px 16px rgba(0, 86, 179, 0.45));
+}
+
+/* Redes Sociales Agrandadas y animadas */
 .icons {
   display: flex;
   justify-content: center;
-  gap: 15px;
-  padding-bottom: 15px;
+  align-items: center;
+  gap: 25px;
+  padding-bottom: 20px;
 }
 
 .icons img {
-  width: 32px;
-  height: 32px;
-  transition: transform 0.2s;
+  width: 64px; /* El doble de tamaño */
+  height: 64px;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.3s ease;
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.15));
 }
 
 .icons img:hover {
-  transform: scale(1.15);
+  transform: translateY(-8px) scale(1.15) rotate(4deg);
+  filter: drop-shadow(0 8px 15px rgba(0, 0, 0, 0.3));
 }
 
 /* Layout Principal */

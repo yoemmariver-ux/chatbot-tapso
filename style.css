@@ -135,6 +135,14 @@ header {
   text-align: center;
   background-color: #ffffff;
   border-bottom: 1px solid #ddd;
+  overflow: hidden; /* Evita desbordamientos al animar el banner */
+}
+
+/* Banner de la Bandera con Animación de Ondeo */
+.banner-container {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
 }
 
 .banner-img {
@@ -142,6 +150,32 @@ header {
   max-height: 250px;
   object-fit: cover;
   display: block;
+  transform-origin: center center;
+  animation: flamear 6s ease-in-out infinite alternate;
+}
+
+/* Animación de Ondeo Suave (Bandera al viento) */
+@keyframes flamear {
+  0% {
+    transform: scale(1.02) skewY(0deg) translateX(0px);
+    filter: brightness(1);
+  }
+  25% {
+    transform: scale(1.03) skewY(0.6deg) translateX(-4px);
+    filter: brightness(1.03);
+  }
+  50% {
+    transform: scale(1.02) skewY(-0.5deg) translateX(2px);
+    filter: brightness(0.97);
+  }
+  75% {
+    transform: scale(1.04) skewY(0.4deg) translateX(-2px);
+    filter: brightness(1.02);
+  }
+  100% {
+    transform: scale(1.02) skewY(-0.3deg) translateX(3px);
+    filter: brightness(0.98);
+  }
 }
 
 /* Logo del Municipio Agrandado y animado */
@@ -150,7 +184,7 @@ header {
 }
 
 .logo-municipio {
-  width: 200px; /* El doble de tamaño */
+  width: 200px;
   height: auto;
   transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.4s ease;
   filter: drop-shadow(0 4px 8px rgba(0, 86, 179, 0.25));
@@ -171,7 +205,7 @@ header {
 }
 
 .icons img {
-  width: 64px; /* El doble de tamaño */
+  width: 64px;
   height: 64px;
   transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.3s ease;
   filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.15));

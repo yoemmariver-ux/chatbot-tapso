@@ -646,3 +646,98 @@ footer {
   margin-top: 8px;
   font-weight: bold;
 }
+/* BANNER HERO */
+.hero-banner {
+  background: linear-gradient(135deg, #0d6efd 0%, #0b5ed7 100%);
+  color: white;
+  text-align: center;
+  padding: 30px 20px;
+  margin-bottom: 10px;
+}
+
+.hero-banner h2 {
+  font-size: 1.6rem;
+  margin-bottom: 8px;
+}
+
+.hero-banner p {
+  font-size: 1rem;
+  opacity: 0.9;
+}
+
+/* ENCABEZADO DERECHO Y REDES */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.social-links a {
+  color: white;
+  font-size: 1.2rem;
+  margin-left: 8px;
+  text-decoration: none;
+}
+
+.logo-img {
+  height: 45px;
+  width: auto;
+}
+
+/* SECCIONES: CONOCÉ TAPSO Y CALENDARIO */
+.info-section, .calendar-section {
+  max-width: 800px;
+  width: 100%;
+  margin: 0 auto 20px auto;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.info-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.info-card {
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 6px;
+  border-left: 4px solid #0d6efd;
+}
+
+.card-icon {
+  font-size: 1.5rem;
+  color: #0d6efd;
+  margin-bottom: 8px;
+}
+
+.events-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 15px;
+}
+
+.event-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background: #f8f9fa;
+  padding: 12px;
+  border-radius: 6px;
+}
+
+.event-date {
+  background: #0d6efd;
+  color: white;
+  font-weight: bold;
+  padding: 8px 12px;
+  border-radius: 5px;
+  font-size: 0.85rem;
+  min-width: 80px;
+  text-align: center;
+}

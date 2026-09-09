@@ -30,24 +30,40 @@
     </div>
   </div>
 
-  <!-- ENCABEZADO -->
+  <!-- ENCABEZADO CON LOGO Y REDES SOCIALES -->
   <header>
     <div class="header-container">
       <div class="logo-area">
+        <img src="images/logo-muni.png" alt="Logo Municipio de Tapso" class="logo-img" onerror="this.style.display='none'">
         <span class="escudo">🏛️</span>
         <div>
           <h1>Municipio de Tapso</h1>
           <p class="subtitle">Catamarca - Santiago del Estero</p>
         </div>
       </div>
-      <button onclick="toggleDarkMode()" class="theme-toggle" title="Cambiar modo claro/oscuro">🌙 / ☀️</button>
+      
+      <div class="header-right">
+        <div class="social-links">
+          <a href="https://facebook.com" target="_blank" title="Facebook"><i class="fab fa-facebook"></i></a>
+          <a href="https://instagram.com" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+        </div>
+        <button onclick="toggleDarkMode()" class="theme-toggle" title="Cambiar modo claro/oscuro">🌙 / ☀️</button>
+      </div>
     </div>
   </header>
+
+  <!-- BANNER PRINCIPAL INSTITUCIONAL -->
+  <section class="hero-banner">
+    <div class="banner-content">
+      <h2>Portal Oficial de Atención Ciudadana</h2>
+      <p>Información, servicios y consultas de la comunidad de Tapso en un solo lugar.</p>
+    </div>
+  </section>
 
   <!-- CONTENEDOR PRINCIPAL DEL CHAT -->
   <main class="chat-container">
     
-    <!-- BARRA DE CONTROLES DE AUDIO Y VOZ -->
+    <!-- CONTROLES DE AUDIO Y VOZ -->
     <div class="audio-controls">
       <label for="selectVoz"><i class="fas fa-volume-up"></i> Lectura de voz:</label>
       <select id="selectVoz" class="select-voz">
@@ -71,6 +87,56 @@
       <button onclick="limpiar()" class="btn-clear"><i class="fas fa-broom"></i> Limpiar chat</button>
     </div>
   </main>
+
+  <!-- SECCIÓN: CONOCÉ TAPSO -->
+  <section class="info-section">
+    <h3>📍 Conocé Tapso</h3>
+    <div class="info-cards-grid">
+      <div class="info-card">
+        <i class="fas fa-map-marked-alt card-icon"></i>
+        <h4>Ubicación</h4>
+        <p>Ubicado estratégicamente sobre la Ruta Nacional N° 157, integrando las provincias de Catamarca y Santiago del Estero.</p>
+      </div>
+      <div class="info-card">
+        <i class="fas fa-history card-icon"></i>
+        <h4>Historia</h4>
+        <p>Un pueblo con rica tradición ferroviaria e historia cultural, fundado en 1826.</p>
+      </div>
+      <div class="info-card">
+        <i class="fas fa-laptop-house card-icon"></i>
+        <h4>Servicios</h4>
+        <p>Punto Digital, Hostería Municipal, complejos deportivos y atención al vecino constante.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN: CALENDARIO DE EVENTOS -->
+  <section class="calendar-section">
+    <h3>📅 Calendario de Eventos</h3>
+    <div class="events-list">
+      <div class="event-item">
+        <span class="event-date">15 JUN</span>
+        <div class="event-details">
+          <h4>Aniversario de Tapso</h4>
+          <p>Festejos centrales, desfile institucional y espectáculos en vivo.</p>
+        </div>
+      </div>
+      <div class="event-item">
+        <span class="event-date">FESTIVAL</span>
+        <div class="event-details">
+          <h4>Festival Unión de Pueblos</h4>
+          <p>Encuentro de música, folclore y gastronomía regional.</p>
+        </div>
+      </div>
+      <div class="event-item">
+        <span class="event-date">ANUAL</span>
+        <div class="event-details">
+          <h4>Liga Municipal de Pádel</h4>
+          <p>Torneos locales en las instalaciones del Complejo Deportivo.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- SECCIÓN GALERÍAS -->
   <section class="gallery-section">

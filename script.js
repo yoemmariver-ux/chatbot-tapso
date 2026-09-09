@@ -220,7 +220,7 @@ function responder() {
   }, 300);
 }
 
-// Detector de temas amplio basado en tus palabras clave
+// Detector de temas amplio
 function detectarTema(texto) {
   if (texto.includes("ubicacion") || texto.includes("donde queda") || texto.includes("como llegar") || texto.includes("mapa") || texto.includes("ruta 157") || texto.includes("el alto") || texto.includes("choya") || texto.includes("limites") || texto.includes("dos provincias") || texto.includes("geografia")) {
     return "ubicacion_geografica_tapso";
@@ -252,9 +252,9 @@ function detectarTema(texto) {
   return null;
 }
 
-// Información detallada a devolver
+// Respuesta principal por tema
 function generarRespuestaPorTema(tema, repeticiones) {
-  if (repeticiones > 5) {
+  if (repeticiones > 6) {
     return `Seguimos conversando sobre **${nombreTemaFormateado(tema)}**. Si tenés más dudas específicas, te sugiero consultarnos vía **WhatsApp** mediante el botón inferior para asesorarte de forma personalizada.`;
   }
 
@@ -291,46 +291,67 @@ function generarRespuestaPorTema(tema, repeticiones) {
   }
 }
 
-// Respuestas cuando se repregunta sobre el MISMO tema conservando la memoria
+// Respuestas de seguimiento según la interacción
 function generarRespuestaSeguimiento(tema, texto, repeticiones) {
-  if (repeticiones >= 5) {
+  if (repeticiones >= 6) {
     return `Sobre **${nombreTemaFormateado(tema)}**: para más detalles o consultas personalizadas, te invitamos a enviarnos un mensaje por **WhatsApp** usando el botón del panel inferior.`;
   }
 
-  // 1. Preguntas de Horarios
+  // A. Respuestas a "OK", "Gracias", etc.
+  if (/^(ok|okay|bueno|dale|bien|listo|entiendo|perfecto|joya|gracias)/i.test(texto)) {
+    return `¡Bárbaro! ¿Querés consultar sobre alguna otra cosa de **${nombreTemaFormateado(tema)}** o querés pasar a otro tema?`;
+  }
+
+  // B. Preguntas de Actividades / Servicios
+  if (texto.includes("actividad") || texto.includes("actividades") || texto.includes("servicio") || texto.includes("servicios") || texto.includes("que hay") || texto.includes("instalaciones") || texto.includes("ofrece") || texto.includes("comida") || texto.includes("restaurante")) {
+    if (tema === "hosteria_alojamiento_tapso") {
+      return "En la **Hostería Municipal** podés disfrutar de la piscina al aire libre, restaurante/bar con comidas típicas, amplias zonas de descanso, TV plana y conexión Wi-Fi gratuita.";
+    }
+    if (tema === "punto_digital_tapso") {
+      return "En el **Punto Digital** disponés de computadoras con internet, capacitaciones gratuitas, trámites online y una sala de videojuegos/entretenimiento para jóvenes.";
+    }
+    if (tema === "turismo_deportes_tapso") {
+      return "Podés visitar el Museo Municipal, recorrer La Aguadita, practicar Hockey en cancha sintética, realizar Mountain Bike por las serranías o asistir a las fechas del Rally.";
+    }
+    if (tema === "padel_tapso") {
+      return "En la Liga de Pádel podés participar de partidos semanales en categorías Masculino y Femenino. ¡Llevamos tablas de posiciones y premios por fecha!";
+    }
+  }
+
+  // C. Preguntas de Horarios
   if (texto.includes("horario") || texto.includes("horarios") || texto.includes("hora") || texto.includes("abierto") || texto.includes("atencion")) {
     if (tema === "punto_digital_tapso") {
-      return "El **Punto Digital Tapso** funciona de lunes a viernes en horario administrativo municipal. Podés acercarte para usar las computadoras, realizar trámites o pedir información sobre los cursos disponibles.";
+      return "El **Punto Digital Tapso** funciona de lunes a viernes en horario administrativo municipal.";
     }
     if (tema === "municipalidad_autoridades_tapso") {
-      return "La atención en el Municipio (Centro Cívico) se realiza habitualmente de **Lunes a Viernes de 7:00 a 13:00 hs**.";
+      return "La atención en el Municipio (Centro Cívico) es de **Lunes a Viernes de 7:00 a 13:00 hs**.";
     }
     if (tema === "hosteria_alojamiento_tapso") {
-      return "La Hostería Municipal cuenta con recepción para huéspedes. Para coordinar horarios de check-in o reservas, podés llamar al **385 6096508**.";
+      return "La Hostería Municipal cuenta con recepción para huéspedes. Podés coordinar check-in o reservas llamando al **385 6096508**.";
     }
   }
 
-  // 2. Preguntas de Ubicación / Dónde queda
+  // D. Ubicación / Dónde queda
   if (texto.includes("donde") || texto.includes("ubicacion") || texto.includes("queda") || texto.includes("direccion")) {
-    if (tema === "punto_digital_tapso") return "El **Punto Digital Tapso** se encuentra ubicado en el área cívica/institucional de la localidad de Tapso.";
-    if (tema === "hosteria_alojamiento_tapso") return "La Hostería Municipal queda sobre la **Ruta Nacional N° 157**, en Tapso.";
-    if (tema === "municipalidad_autoridades_tapso") return "El Municipio (sector Catamarca) está ubicado en la zona del **Centro Cívico** de Tapso.";
-    if (tema === "padel_tapso" || tema === "turismo_deportes_tapso") return "Las actividades deportivas están centradas en el **Complejo Deportivo de Tapso**.";
+    if (tema === "punto_digital_tapso") return "El **Punto Digital Tapso** está ubicado en el área cívica de la localidad.";
+    if (tema === "hosteria_alojamiento_tapso") return "La Hostería Municipal queda sobre la **Ruta Nacional N° 157**.";
+    if (tema === "municipalidad_autoridades_tapso") return "El Municipio (sector Catamarca) está ubicado en el **Centro Cívico**.";
+    if (tema === "padel_tapso" || tema === "turismo_deportes_tapso") return "Se ubica en el **Complejo Deportivo de Tapso**.";
   }
 
-  // 3. Preguntas de Precios / Costos
+  // E. Precios / Costos
   if (texto.includes("cuanto") || texto.includes("precio") || texto.includes("costo") || texto.includes("valor") || texto.includes("gratis") || texto.includes("cobran")) {
-    if (tema === "punto_digital_tapso") return "¡Todos los servicios del **Punto Digital** (internet, trámites, computadoras, videojuegos y cursos) son **100% gratuitos** para los vecinos!";
+    if (tema === "punto_digital_tapso") return "¡Todos los servicios del **Punto Digital** son **100% gratuitos**!";
     if (tema === "padel_tapso") return "La inscripción a la Liga de Pádel cuesta **$20.000 por pareja**.";
   }
 
-  // 4. Preguntas de Contacto / Teléfono
+  // F. Contacto / Teléfono
   if (texto.includes("telefono") || texto.includes("contacto") || texto.includes("llamar") || texto.includes("reserva") || texto.includes("numero")) {
     if (tema === "hosteria_alojamiento_tapso") return "El teléfono de la Hostería Municipal es **385 6096508**.";
-    if (tema === "padel_tapso") return "Para consultar sobre el Pádel, comunicate al **3854415855**.";
+    if (tema === "padel_tapso") return "Para dudas sobre Pádel, podés comunicarte al **3854415855**.";
   }
 
-  return `Seguimos conversando sobre **${nombreTemaFormateado(tema)}**. Podés consultarme sobre ubicación, horarios, actividades o trámites de esta área.`;
+  return `Entendido. ¿Tenés alguna otra duda sobre **${nombreTemaFormateado(tema)}** (como ubicación, teléfono o servicios) o preferís consultar sobre otro tema?`;
 }
 
 function nombreTemaFormateado(tema) {

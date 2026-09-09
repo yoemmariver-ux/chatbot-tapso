@@ -9,13 +9,24 @@
 </head>
 <body>
 
-  <!-- MODAL INICIAL NOMBRE -->
+  <!-- MODAL INICIAL DE NOMBRE -->
   <div id="loginModal" class="modal">
     <div class="modal-content">
       <h2>🏛️ ¡Bienvenido a Tapso!</h2>
       <p>Por favor, decinos tu nombre para personalizar la atención:</p>
       <input type="text" id="nombre" placeholder="Tu nombre aquí..." autofocus>
       <button id="btnComenzar" class="btn-primary">Ingresar al Portal</button>
+    </div>
+  </div>
+
+  <!-- BARRA SUPERIOR DE ACCESIBILIDAD -->
+  <div class="accessibility-bar">
+    <div class="accessibility-container">
+      <span class="acc-label">Accesibilidad:</span>
+      <button onclick="cambiarTamanioTexto(-1)" class="btn-acc" title="Reducir texto">A-</button>
+      <button onclick="cambiarTamanioTexto(1)" class="btn-acc" title="Aumentar texto">A+</button>
+      <button onclick="restablecerTamanioTexto()" class="btn-acc" title="Restablecer tamaño">A</button>
+      <button onclick="toggleAltoContraste()" class="btn-acc btn-contrast" title="Alto Contraste">👁️ Contraste</button>
     </div>
   </div>
 
@@ -35,23 +46,33 @@
 
   <!-- CONTENEDOR PRINCIPAL DEL CHAT -->
   <main class="chat-container">
+    
+    <!-- BARRA DE CONTROLES DE AUDIO Y VOZ -->
+    <div class="audio-controls">
+      <label for="selectVoz"><i class="fas fa-volume-up"></i> Lectura de voz:</label>
+      <select id="selectVoz" class="select-voz">
+        <option value="">Cargando voces...</option>
+      </select>
+      <button id="btnToggleAudio" onclick="toggleAudio()" class="btn-audio-toggle" title="Activar/Desactivar audio">
+        🔊 Activado
+      </button>
+    </div>
+
     <div id="chatBox" class="chat-box">
       <!-- Mensajes dinámicos vía JS -->
     </div>
 
-    <!-- SUGERENCIAS DENTRO DE JS (se renderizan dinámicamente) -->
-
     <div class="input-area">
       <input type="text" id="mensaje" placeholder="Escribe tu mensaje..." autocomplete="off">
-      <button id="btnEnviar" class="btn-send">Enviar</button>
+      <button id="btnEnviar" class="btn-send"><i class="fas fa-paper-plane"></i> Enviar</button>
     </div>
 
     <div class="actions-area">
-      <button onclick="limpiar()" class="btn-clear">🧹 Limpiar chat</button>
+      <button onclick="limpiar()" class="btn-clear"><i class="fas fa-broom"></i> Limpiar chat</button>
     </div>
   </main>
 
-  <!-- SECCIÓN GALERÍAS DUMP -->
+  <!-- SECCIÓN GALERÍAS -->
   <section class="gallery-section">
     <h3>🖼️ Galería de Fotos e Instalaciones</h3>
     <div class="gallery-buttons">
@@ -85,7 +106,6 @@
     </div>
   </footer>
 
-  <!-- Carga del script con refresco de versión -->
-  <script src="script.js?v=16"></script>
+  <script src="script.js"></script>
 </body>
 </html>

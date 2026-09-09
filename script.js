@@ -426,7 +426,366 @@ function actualizarImagenGaleria() {
   if (imgElem && captionElem && galeriaActual[indiceImagen]) {
     imgElem.src = galeriaActual[indiceImagen].src;
     captionElem.innerText = galeriaActual[indiceImagen].caption;
+  let usuarioNombre = "Vecino/a";
+
+let memoriaContexto = {
+  temaActivo: null,
+  contadorRepeticiones: 0,
+  historialUltimosMensajes: []
+};
+
+const soundClick = new Audio('sounds/click.mp3');
+const soundSend = new Audio('sounds/send.mp3');
+const soundReceive = new Audio('sounds/receive.mp3');
+
+function playClick() {
+  soundClick.currentTime = 0;
+  soundClick.play().catch(() => {});
+}
+
+function playSend() {
+  soundSend.currentTime = 0;
+  soundSend.play().catch(() => {});
+}
+
+function playReceive() {
+  soundReceive.currentTime = 0;
+  soundReceive.play().catch(() => {});
+}
+
+const galerias = {
+  tapsofc: [
+    { src: 'images/tapsofc.jpg', caption: 'Club Tapso FC - Plantel Principal' },
+    { src: 'images/tapsofc2.jpg', caption: 'Encuentro deportivo local' }
+  ],
+  hosteria: [
+    { src: 'images/hosteria.jpg', caption: 'Fachada de la Histórica Hostería de Tapso' },
+    { src: 'images/hosteria2.jpg', caption: 'Instalaciones y alrededores' }
+  ],
+  festival: [
+    { src: 'images/festival.jpg', caption: 'Festival Unión de Pueblos' },
+    { src: 'images/festival2.jpg', caption: 'Escenario y show en vivo' }
+  ],
+  padel: [
+    { src: 'images/padel-tapso.jpg', caption: 'Torneo y Liga de Pádel Tapso' }
+  ]
+};
+
+let galeriaActual = [];
+let indiceImagen = 0;
+
+const respuestasDesconocidas = [
+  "Lo siento, por el momento no cuento con esa información específica. Te sugiero consultar directamente al Municipio a través de nuestro botón de **WhatsApp** en la sección de contacto.",
+  "No tengo esa respuesta en mi base de datos actual. Si querés una atención más personalizada, podés enviarnos un mensaje por **WhatsApp** usando el enlace de redes que está abajo.",
+  "Mmm, no sabría decirte con exactitud sobre ese tema. Podés probar escribiéndonos por **WhatsApp** a través del botón correspondiente en el panel de contacto."
+];
+
+function obtenerRespuestaDesconocida() {
+  const indice = Math.floor(Math.random() * respuestasDesconocidas.length);
+  return respuestasDesconocidas[indice];
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+  const modal = document.getElementById("loginModal");
+  const btnComenzar = document.getElementById("btnComenzar");
+  const inputNombre = document.getElementById("nombre");
+
+  if (modal) modal.style.display = "flex";
+
+  if (btnComenzar) {
+    btnComenzar.addEventListener("click", function() {
+      playClick();
+      const nombreIngresado = inputNombre.value.trim();
+      if (nombreIngresado !== "") {
+        usuarioNombre = nombreIngresado;
+      }
+      modal.style.display = "none";
+      mostrarSaludoInicial();
+    });
   }
+
+  if (inputNombre) {
+    inputNombre.addEventListener("keypress", function(e) {
+      if (e.key === "Enter") {
+        btnComenzar.click();
+      }
+    });
+  }
+
+  const inputMensaje = document.getElementById("mensaje");
+  const btnEnviar = document.getElementById("btnEnviar");
+
+  if (inputMensaje && btnEnviar) {
+    inputMensaje.addEventListener("keypress", function(e) {
+      if (e.key === "Enter") {
+        responder();
+      }
+    });
+
+    btnEnviar.addEventListener("click", function() {
+      responder();
+    });
+  }
+});
+
+function mostrarSaludoInicial() {
+  const chatBox = document.getElementById("chatBox");
+  chatBox.innerHTML = `
+    <p>🤖 <strong>Asistente:</strong> ¡Hola <strong>${usuarioNombre}</strong>! Bienvenido/a al portal de Tapso. ¿En qué te puedo ayudar hoy?</p>
+  `;
+  mostrarSugerenciasIniciales();
+}
+
+function mostrarSugerenciasIniciales() {
+  const chatBox = document.getElementById("chatBox");
+  let contenedorChips = document.getElementById("sugerencias-container");
+
+  if (!contenedorChips) {
+    contenedorChips = document.createElement("div");
+    contenedorChips.id = "sugerencias-container";
+    contenedorChips.className = "sugerencias-container";
+    chatBox.parentNode.insertBefore(contenedorChips, chatBox.nextSibling);
+  }
+
+  contenedorChips.innerHTML = `
+    <button class="chip-btn" onclick="enviarSugerencia('Ubicación')">📍 Ubicación</button>
+    <button class="chip-btn" onclick="enviarSugerencia('Historia')">📜 Historia</button>
+    <button class="chip-btn" onclick="enviarSugerencia('Muni')">🏛️ Municipio</button>
+    <button class="chip-btn" onclick="enviarSugerencia('Hostería')">🏨 Hostería</button>
+    <button class="chip-btn" onclick="enviarSugerencia('Punto Digital')">💻 Punto Digital</button>
+    <button class="chip-btn" onclick="enviarSugerencia('Policía')">👮 Policía</button>
+    <button class="chip-btn" onclick="enviarSugerencia('Festivales')">🎉 Festivales</button>
+    <button class="chip-btn" onclick="enviarSugerencia('Turismo y Deportes')">🌲 Turismo/Deportes</button>
+    <button class="chip-btn" onclick="enviarSugerencia('Pádel')">🎾 Pádel</button>
+  `;
+}
+
+function responder() {
+  const input = document.getElementById("mensaje");
+  const textoOriginal = input.value.trim();
+  const texto = textoOriginal.toLowerCase();
+  const chatBox = document.getElementById("chatBox");
+
+  if (texto === "") return;
+
+  playSend();
+
+  chatBox.innerHTML += `<p>👤 <strong>Tú:</strong> ${textoOriginal}</p>`;
+  input.value = "";
+
+  let respuesta = "";
+  let nuevoTema = detectarTema(texto);
+
+  // 1. Detección de "No" o solicitud de cambio de consulta (Resetea la memoria)
+  if (/^(no|nop|ninguna|ninguno|otra consulta|otro tema|cambiar|nada|ningun|para nada)$/i.test(texto) || texto === "no gracias") {
+    respuesta = `¡Entendido! ¿Sobre qué otro tema querés consultar? Podés elegir una de las sugerencias o escribir tu duda.`;
+    actualizarMemoria(null);
+  }
+  // 2. Saludos
+  else if (/^(hola|hols|buenas|buen|buenos|buenas noches|buenas tardes|que tal|como va|saludos)/i.test(texto)) {
+    respuesta = `¡Hola ${usuarioNombre}! ¿En qué te puedo ayudar hoy?`;
+    actualizarMemoria(null);
+  } 
+  // 3. Despedidas
+  else if (/^(chau|adios|nos vemos|hasta luego|que tengas buen dia|gracias|muchas gracias)/i.test(texto)) {
+    respuesta = `¡Hasta luego, ${usuarioNombre}! Que tengas un excelente día.`;
+    actualizarMemoria(null);
+  } 
+  // 4. Nuevo tema detectado
+  else if (nuevoTema) {
+    if (memoriaContexto.temaActivo === nuevoTema) {
+      memoriaContexto.contadorRepeticiones++;
+    } else {
+      memoriaContexto.temaActivo = nuevoTema;
+      memoriaContexto.contadorRepeticiones = 1;
+    }
+    respuesta = generarRespuestaPorTema(nuevoTema, memoriaContexto.contadorRepeticiones);
+  }
+  // 5. Seguimiento del tema actual
+  else if (memoriaContexto.temaActivo) {
+    memoriaContexto.contadorRepeticiones++;
+    respuesta = generarRespuestaSeguimiento(memoriaContexto.temaActivo, texto, memoriaContexto.contadorRepeticiones);
+  } 
+  // 6. Sin coincidencias
+  else {
+    respuesta = obtenerRespuestaDesconocida();
+    actualizarMemoria(null);
+  }
+
+  memoriaContexto.historialUltimosMensajes.push({ usuario: textoOriginal, bot: respuesta });
+
+  setTimeout(() => {
+    playReceive();
+    chatBox.innerHTML += `<p>🤖 <strong>Asistente:</strong> ${formatearTexto(respuesta)}</p>`;
+    chatBox.scrollTop = chatBox.scrollHeight;
+  }, 300);
+}
+
+function detectarTema(texto) {
+  if (texto.includes("ubicacion") || texto.includes("donde queda") || texto.includes("como llegar") || texto.includes("mapa") || texto.includes("ruta 157")) {
+    return "ubicacion_geografica_tapso";
+  }
+  if (texto.includes("historia") || texto.includes("fundacion") || texto.includes("fundador") || texto.includes("origen") || texto.includes("quichua") || texto.includes("200 años")) {
+    return "historia_fundacion_tapso";
+  }
+  if (texto.includes("muni") || texto.includes("municipalidad") || texto.includes("intendente") || texto.includes("mario sosa") || texto.includes("ruly vega")) {
+    return "municipalidad_autoridades_tapso";
+  }
+  if (texto.includes("hosteria") || texto.includes("hotel") || texto.includes("hospedaje") || texto.includes("alojamiento") || texto.includes("dormir") || texto.includes("pileta")) {
+    return "hosteria_alojamiento_tapso";
+  }
+  if (texto.includes("punto digital") || texto.includes("computadoras") || texto.includes("wifi publico") || texto.includes("cursos") || texto.includes("anses")) {
+    return "punto_digital_tapso";
+  }
+  if (texto.includes("policia") || texto.includes("comisaria") || texto.includes("destacamento") || texto.includes("seguridad") || texto.includes("denuncia")) {
+    return "seguridad_policia_tapso";
+  }
+  if (texto.includes("festival") || texto.includes("fiesta") || texto.includes("aniversario") || texto.includes("union de pueblos") || texto.includes("el colono")) {
+    return "festivales_aniversario_tapso";
+  }
+  if (texto.includes("turismo") || texto.includes("pasear") || texto.includes("que hacer") || texto.includes("museo") || texto.includes("iglesia") || texto.includes("deporte")) {
+    return "turismo_deportes_tapso";
+  }
+  if (texto.includes("padel") || texto.includes("liga de padel") || texto.includes("torneo de padel")) {
+    return "padel_tapso";
+  }
+  return null;
+}
+
+function generarRespuestaPorTema(tema, repeticiones) {
+  switch (tema) {
+    case "ubicacion_geografica_tapso":
+      return "Tapso se encuentra dividida entre dos provincias: el sector oeste pertenece al Departamento El Alto (Catamarca) y el sector este al Departamento Choya (Santiago del Estero). Se ubica sobre la **Ruta Nacional N° 157**.";
+
+    case "historia_fundacion_tapso":
+      return "El nombre **Tapso** proviene del quichua (*'Franja Estrecha de Tierra'*). Fue fundada el 15 de junio de 1826 y celebró su **Bicentenario** el 19 de junio de 2026. Su desarrollo estuvo siempre ligado al ferrocarril.";
+
+    case "municipalidad_autoridades_tapso":
+      return "El sector catamarqueño lo administra el Municipio a cargo del **Intendente Dr. Mario Sosa** (Centro Cívico), mientras que el sector santiagueño lo encabeza el **Comisionado Ruly Vega**.";
+
+    case "hosteria_alojamiento_tapso":
+      return "La **Hostería Municipal de Tapso** se ubica sobre la Ruta Nacional N° 157. Cuenta con habitaciones con baño privado, aire acondicionado, TV, Wi-Fi, restaurante y piscina. Teléfono: **385 6096508**.";
+
+    case "punto_digital_tapso":
+      return "El **Punto Digital Tapso** ofrece computadoras e internet libre para trámites (ANSES, etc.), cursos de informática y sala de entretenimientos.";
+
+    case "seguridad_policia_tapso":
+      return "En Catamarca opera la **Comisaría de Tapso** (y Subcomisaría de Colonia Achalco), mientras que en Santiago del Estero actúa el **Destacamento Policial N° 15**.";
+
+    case "festivales_aniversario_tapso":
+      return "Destacan la fiesta del **Aniversario de Tapso** (15 de junio), el **Festival Unión de Pueblos** y el **Festival El Colono** en Colonia Achalco.";
+
+    case "turismo_deportes_tapso":
+      return "Podés visitar el Museo Municipal, la Iglesia local, la zona arqueológica de La Aguadita o realizar deportes como Hockey y Mountain Bike.";
+
+    case "padel_tapso":
+      return "La **Liga de Pádel** se juega en el Complejo Deportivo. Inscripciones e información al **3854415855**.";
+
+    default:
+      return obtenerRespuestaDesconocida();
+  }
+}
+
+function generarRespuestaSeguimiento(tema, texto, repeticiones) {
+  if (texto.includes("horario") || texto.includes("abierto")) {
+    if (tema === "municipalidad_autoridades_tapso") return "La atención en el Municipio es de **Lunes a Viernes de 7:00 a 13:00 hs**.";
+    if (tema === "punto_digital_tapso") return "El Punto Digital atiende de lunes a viernes en horario administrativo municipal.";
+  }
+
+  if (texto.includes("telefono") || texto.includes("contacto") || texto.includes("numero")) {
+    if (tema === "hosteria_alojamiento_tapso") return "Contacto Hostería: **385 6096508**.";
+    if (tema === "padel_tapso") return "Contacto Pádel: **3854415855**.";
+  }
+
+  return `Entendido. ¿Tenés alguna otra duda sobre **${nombreTemaFormateado(tema)}** (ubicación, horarios, servicios) o preferís consultar sobre otro tema?`;
+}
+
+function nombreTemaFormateado(tema) {
+  const nombres = {
+    ubicacion_geografica_tapso: "Ubicación Geográfica",
+    historia_fundacion_tapso: "Historia y Fundación",
+    municipalidad_autoridades_tapso: "Municipalidad y Autoridades",
+    hosteria_alojamiento_tapso: "Hostería Municipal",
+    punto_digital_tapso: "Punto Digital",
+    seguridad_policia_tapso: "Seguridad y Policía",
+    festivales_aniversario_tapso: "Festivales y Aniversarios",
+    turismo_deportes_tapso: "Turismo y Deportes",
+    padel_tapso: "Liga de Pádel"
+  };
+  return nombres[tema] || "este tema";
+}
+
+function actualizarMemoria(nuevoTema) {
+  memoriaContexto.temaActivo = nuevoTema;
+  memoriaContexto.contadorRepeticiones = 0;
+}
+
+function formatearTexto(str) {
+  return str.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
+}
+
+function enviarSugerencia(palabra) {
+  const input = document.getElementById("mensaje");
+  input.value = palabra;
+  responder();
+}
+
+function limpiar() {
+  playClick();
+  actualizarMemoria(null);
+  memoriaContexto.historialUltimosMensajes = [];
+  mostrarSaludoInicial();
+}
+
+function toggleDarkMode() {
+  playClick();
+  document.body.classList.toggle("dark-mode");
+}
+
+function abrirGaleria(categoria) {
+  playClick();
+  if (!galerias[categoria] || galerias[categoria].length === 0) return;
+
+  galeriaActual = galerias[categoria];
+  indiceImagen = 0;
+
+  const modalGaleria = document.getElementById("galleryModal");
+  if (modalGaleria) {
+    modalGaleria.style.display = "flex";
+    actualizarImagenGaleria();
+  }
+}
+
+function actualizarImagenGaleria() {
+  const imgElem = document.getElementById("imgGaleria");
+  const captionElem = document.getElementById("captionGaleria");
+
+  if (imgElem && captionElem && galeriaActual[indiceImagen]) {
+    imgElem.src = galeriaActual[indiceImagen].src;
+    captionElem.innerText = galeriaActual[indiceImagen].caption;
+  }
+}
+
+function cambiarImagen(direccion) {
+  playClick();
+  indiceImagen += direccion;
+
+  if (indiceImagen < 0) {
+    indiceImagen = galeriaActual.length - 1;
+  } else if (indiceImagen >= galeriaActual.length) {
+    indiceImagen = 0;
+  }
+
+  actualizarImagenGaleria();
+}
+
+function cerrarGaleria() {
+  playClick();
+  const modalGaleria = document.getElementById("galleryModal");
+  if (modalGaleria) {
+    modalGaleria.style.display = "none";
+  }
+}
 }
 
 function cambiarImagen(direccion) {

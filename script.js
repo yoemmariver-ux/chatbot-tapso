@@ -5,8 +5,8 @@ let usuarioNombre = "Vecino/a";
 // SISTEMA DE MEMORIA Y HILO DE CONVERSACIÓN
 // ----------------------------------------------------
 let memoriaContexto = {
-  temaActivo: null,          // Guarda el tema actual (ej: 'hosteria', 'padel')
-  contadorRepeticiones: 0,   // Cuenta cuántas veces seguidas se consulta sobre el mismo tema
+  temaActivo: null,            // Guarda el tema actual
+  contadorRepeticiones: 0,     // Cuenta cuántas veces seguidas se consulta sobre el mismo tema
   historialUltimosMensajes: [] // Almacena el historial reciente de la interacción
 };
 
@@ -119,7 +119,7 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 // ----------------------------------------------------
-// LÓGICA DEL CHAT CON MEMORIA DE CONVERSACIÓN
+// LÓGICA DEL CHAT CON MEMORIA DE CONVERSACIÓN Y NUEVA BASE
 // ----------------------------------------------------
 function mostrarSaludoInicial() {
   const chatBox = document.getElementById("chatBox");
@@ -141,14 +141,15 @@ function mostrarSugerenciasIniciales() {
   }
 
   contenedorChips.innerHTML = `
-    <button class="chip-btn" onclick="enviarSugerencia('Muni')">🏛️ Muni</button>
-    <button class="chip-btn" onclick="enviarSugerencia('Policía')">👮 Policía</button>
-    <button class="chip-btn" onclick="enviarSugerencia('Fútbol')">⚽ Fútbol (Tapso FC)</button>
-    <button class="chip-btn" onclick="enviarSugerencia('Punto Digital')">💻 Punto Digital</button>
+    <button class="chip-btn" onclick="enviarSugerencia('Ubicación')">📍 Ubicación</button>
+    <button class="chip-btn" onclick="enviarSugerencia('Historia')">📜 Historia</button>
+    <button class="chip-btn" onclick="enviarSugerencia('Muni')">🏛️ Municipio</button>
     <button class="chip-btn" onclick="enviarSugerencia('Hostería')">🏨 Hostería</button>
-    <button class="chip-btn" onclick="enviarSugerencia('Festival')">🎉 Festival</button>
+    <button class="chip-btn" onclick="enviarSugerencia('Punto Digital')">💻 Punto Digital</button>
+    <button class="chip-btn" onclick="enviarSugerencia('Policía')">👮 Policía</button>
+    <button class="chip-btn" onclick="enviarSugerencia('Festivales')">🎉 Festivales</button>
+    <button class="chip-btn" onclick="enviarSugerencia('Turismo y Deportes')">🌲 Turismo/Deportes</button>
     <button class="chip-btn" onclick="enviarSugerencia('Pádel')">🎾 Pádel</button>
-    <button class="chip-btn" onclick="enviarSugerencia('Trámites')">📝 Trámites</button>
   `;
 }
 
@@ -168,7 +169,7 @@ function responder() {
   let respuesta = "";
   let nuevoTema = detectarTema(texto);
 
-  // 1. Manejo de saludos y despedidas
+  // 1. Saludos y despedidas
   if (/^(hola|hols|buenas|buen|buenos|buenas noches|buenas tardes|que tal|como va|saludos)/i.test(texto)) {
     const saludos = [
       `¡Hola ${usuarioNombre}! ¿En qué puedo ayudarte hoy?`,
@@ -182,7 +183,7 @@ function responder() {
     const despedidas = [
       `¡Hasta luego, ${usuarioNombre}! Que tengas un excelente día.`,
       `¡De nada, ${usuarioNombre}! Quedo a tu disposición si necesitas algo más.`,
-      `¡Nos vemos! Un saludo cordial de parte de la Municipalidad de Tapso.`
+      `¡Nos vemos! Un saludo cordial de parte de la comunidad de Tapso.`
     ];
     respuesta = despedidas[Math.floor(Math.random() * despedidas.length)];
     actualizarMemoria(null);
@@ -198,12 +199,12 @@ function responder() {
 
     respuesta = generarRespuestaPorTema(nuevoTema, memoriaContexto.contadorRepeticiones);
   }
-  // 3. Si NO detecta tema nuevo, pero HAY un tema activo en la memoria (Seguimiento del hilo)
+  // 3. Si NO detecta tema nuevo pero HAY tema activo en la memoria (Hilo de conversación)
   else if (memoriaContexto.temaActivo) {
     memoriaContexto.contadorRepeticiones++;
     respuesta = generarRespuestaSeguimiento(memoriaContexto.temaActivo, texto, memoriaContexto.contadorRepeticiones);
   } 
-  // 4. Si no hay tema previo ni nuevo tema detectable
+  // 4. Sin tema previo ni coincidencia
   else {
     respuesta = obtenerRespuestaDesconocida();
     actualizarMemoria(null);
@@ -212,7 +213,6 @@ function responder() {
   // Guardar en el historial
   memoriaContexto.historialUltimosMensajes.push({ usuario: textoOriginal, bot: respuesta });
 
-  // Simular tiempo de respuesta y sonido de recepción
   setTimeout(() => {
     playReceive();
     chatBox.innerHTML += `<p>🤖 <strong>Asistente:</strong> ${formatearTexto(respuesta)}</p>`;
@@ -220,89 +220,127 @@ function responder() {
   }, 300);
 }
 
-// Helper para detectar temas en el texto
+// Detector de temas amplio basado en tus palabras clave
 function detectarTema(texto) {
-  if (texto.includes("muni") || texto.includes("municipalidad")) return "muni";
-  if (texto.includes("policia") || texto.includes("seguridad") || texto.includes("comisaria")) return "policia";
-  if (texto.includes("futbol") || texto.includes("tapso fc") || texto.includes("club")) return "futbol";
-  if (texto.includes("punto digital") || texto.includes("digital") || texto.includes("internet") || texto.includes("capacitacion") || texto.includes("computadoras")) return "punto_digital";
-  if (texto.includes("hosteria") || texto.includes("alojamiento") || texto.includes("hospedaje") || texto.includes("turismo")) return "hosteria";
-  if (texto.includes("festival") || texto.includes("union de pueblos") || texto.includes("evento")) return "festival";
-  if (texto.includes("padel") || texto.includes("liga") || texto.includes("torneo")) return "padel";
-  if (texto.includes("historia") || texto.includes("origen") || texto.includes("pueblo")) return "historia";
-  if (texto.includes("tramite") || texto.includes("tramites") || texto.includes("gestion")) return "tramites";
+  if (texto.includes("ubicacion") || texto.includes("donde queda") || texto.includes("como llegar") || texto.includes("mapa") || texto.includes("ruta 157") || texto.includes("el alto") || texto.includes("choya") || texto.includes("limites") || texto.includes("dos provincias") || texto.includes("geografia")) {
+    return "ubicacion_geografica_tapso";
+  }
+  if (texto.includes("historia") || texto.includes("fundacion") || texto.includes("fundador") || texto.includes("origen") || texto.includes("quichua") || texto.includes("significado") || texto.includes("bicentenario") || texto.includes("200 años") || texto.includes("ferrocarril") || texto.includes("tren") || texto.includes("pasado")) {
+    return "historia_fundacion_tapso";
+  }
+  if (texto.includes("muni") || texto.includes("municipalidad") || texto.includes("intendente") || texto.includes("mario sosa") || texto.includes("ruly vega") || texto.includes("comisionado") || texto.includes("gestion") || texto.includes("autoridades") || texto.includes("centro civico")) {
+    return "municipalidad_autoridades_tapso";
+  }
+  if (texto.includes("hosteria") || texto.includes("hotel") || texto.includes("hospedaje") || texto.includes("alojamiento") || texto.includes("dormir") || texto.includes("pileta") || texto.includes("piscina") || texto.includes("habitaciones") || texto.includes("385 6096508") || texto.includes("reserva")) {
+    return "hosteria_alojamiento_tapso";
+  }
+  if (texto.includes("punto digital") || texto.includes("computadoras") || texto.includes("wifi publico") || texto.includes("cursos") || texto.includes("anses") || texto.includes("mi argentina") || texto.includes("videojuegos") || texto.includes("tecnologia")) {
+    return "punto_digital_tapso";
+  }
+  if (texto.includes("policia") || texto.includes("comisaria") || texto.includes("destacamento") || texto.includes("seguridad") || texto.includes("denuncia") || texto.includes("emergencia") || texto.includes("achalco")) {
+    return "seguridad_policia_tapso";
+  }
+  if (texto.includes("festival") || texto.includes("fiesta") || texto.includes("aniversario") || texto.includes("cumpleaños") || texto.includes("15 de junio") || texto.includes("union de pueblos") || texto.includes("el colono") || texto.includes("folklore") || texto.includes("desfile") || texto.includes("peña")) {
+    return "festivales_aniversario_tapso";
+  }
+  if (texto.includes("turismo") || texto.includes("pasear") || texto.includes("que hacer") || texto.includes("museo") || texto.includes("iglesia") || texto.includes("la aguadita") || texto.includes("arte rupestre") || texto.includes("sierra") || texto.includes("rally") || texto.includes("hockey") || texto.includes("mountain bike") || texto.includes("deporte")) {
+    return "turismo_deportes_tapso";
+  }
+  if (texto.includes("padel") || texto.includes("liga de padel") || texto.includes("torneo de padel") || texto.includes("3854415855")) {
+    return "padel_tapso";
+  }
   return null;
 }
 
-// Respuestas según el tema cargado
+// Información detallada a devolver
 function generarRespuestaPorTema(tema, repeticiones) {
   if (repeticiones > 2) {
-    return `Seguimos hablando de **${nombreTemaFormateado(tema)}**. Como tenés varias dudas puntuales sobre esto, te recomiendo consultar directamente por **WhatsApp** al Municipio para que te den detalles precisos.`;
+    return `Seguimos conversando sobre **${nombreTemaFormateado(tema)}**. Como tenés varias consultas específicas sobre esto, te recomiendo ponerte en contacto directo a través de nuestro botón de **WhatsApp** para darte una atención personalizada.`;
   }
 
   switch (tema) {
-    case "muni":
-      return "La Municipalidad de Tapso está disponible para trámites e informes. ¿Necesitás consultar por algún área o trámite específico?";
-    case "policia":
-      return "La Comisaría local atiende emergencias y trámites de seguridad. ¿Buscás el contacto o consultar por algún trámite policial?";
-    case "futbol":
-      return "El Club Tapso FC representa el fútbol local. Podés ver su galería de fotos en el panel izquierdo. ¿Querés saber algo más sobre el club?";
-    case "punto_digital":
-      return "El Punto Digital Tapso brinda capacitaciones gratuitas, acceso a computadoras e internet. ¿Te gustaría saber sobre cursos o trámites online?";
-    case "hosteria":
-      return "La histórica Hostería de Tapso ofrece hospedaje y comida regional en un entorno natural. Podés revisar la galería en 'Conocé Tapso'. ¿Buscás más información sobre alojamiento?";
-    case "festival":
-      return "El Festival Unión de Pueblos es la gran fiesta cultural local con música en vivo. Podés ver fotos en el panel lateral. ¿Querés saber más sobre este evento?";
-    case "padel":
-      return "La Liga de Pádel arranca a fines de septiembre en el Complejo Deportivo (16 parejas, $20.000 inscripción). Consultas al 3854415855. ¿Te interesa anotarte o saber sobre categorías?";
-    case "historia":
-      return "Tapso cuenta con un origen histórico muy ligado al ferrocarril y la cultura de Catamarca. ¿Te interesa algún periodo en particular?";
-    case "tramites":
-      return "Los trámites administrativos se gestionan en la Municipalidad o Punto Digital. ¿Qué trámite necesitas realizar?";
+    case "ubicacion_geografica_tapso":
+      return "Tapso cuenta con una particularidad geopolítica: está dividida entre dos provincias. El sector oeste pertenece al Departamento El Alto (Catamarca) y el sector este al Departamento Choya (Santiago del Estero), divididos por las vías del ferrocarril. Se ubica estratégicamente sobre la **Ruta Nacional N° 157**, siendo un punto clave de tránsito en el NOA.";
+
+    case "historia_fundacion_tapso":
+      return "El nombre **Tapso** proviene del quichua y significa *'Franja Estrecha de Tierra'*. Fue fundada el 15 de junio de 1826 y celebró su **Bicentenario (200 años)** el 19 de junio de 2026 con un histórico desfile cívico-militar y grandes obras. Su desarrollo estuvo siempre ligado al ferrocarril.";
+
+    case "municipalidad_autoridades_tapso":
+      return "La gestión se coordina entre dos jurisdicciones: el sector catamarqueño lo administra el Municipio de Tapso a cargo del **Intendente Dr. Mario Sosa** (Centro Cívico), mientras que el sector santiagueño lo encabeza el **Comisionado Ruly Vega**. Ambos gobiernos trabajan conjuntamente en servicios y eventos.";
+
+    case "hosteria_alojamiento_tapso":
+      return "La **Hostería Municipal de Tapso** está sobre la Ruta Nacional N° 157. Cuenta con habitaciones con baño privado, aire acondicionado, TV plana, Wi-Fi gratis, estacionamiento, restaurante/bar y piscina al aire libre. Teléfono de contacto directo: **385 6096508**.";
+
+    case "punto_digital_tapso":
+      return "El **Punto Digital Tapso** es un espacio público y gratuito con computadoras e internet libre para trámites (ANSES, Boleto Estudiantil, etc.) y aprendizaje. Además, tiene sala de entretenimientos con consolas para jóvenes, proyecciones audiovisuales y cursos de habilidades digitales.";
+
+    case "seguridad_policia_tapso":
+      return "La seguridad opera en cooperación: en Catamarca actúa la **Comisaría de Tapso** (con apoyo de la Subcomisaría de Colonia Achalco). En Santiago del Estero opera el **Destacamento Policial N° 15**, en coordinación con la Comisaría Comunitaria N° 23 de Frías.";
+
+    case "festivales_aniversario_tapso":
+      return "Las festividades principales son:\n\n• **Aniversario de Tapso:** 15 de junio (actos y desfiles a mediados de mes).\n• **Festival 'Unión de Pueblos':** Encuentro folclórico insignia entre ambas provincias.\n• **Festival 'El Colono':** Celebración de música nativa y comidas típicas en Colonia Achalco.";
+
+    case "turismo_deportes_tapso":
+      return "Atractivos destacados:\n\n• **Cultura y Fe:** Iglesia local, Museo Municipal (arqueológico/ferroviario) e Iglesia de Ayapaso.\n• **Naturaleza:** Serranías de El Alto y zona arqueológica de La Aguadita (arte rupestre).\n• **Deportes:** Cancha sintética de hockey, competencias de Mountain Bike y fechas de Rally Regional.";
+
+    case "padel_tapso":
+      return "¡La **Liga de Pádel** arranca a finales de septiembre en el Complejo Deportivo! 16 parejas, 1 fecha por semana, inscripción $20.000. Categorías Masculino (suma 13) y Femenino (suma 15). Consultas al **3854415855**.";
+
     default:
       return obtenerRespuestaDesconocida();
   }
 }
 
-// Respuestas cuando el usuario repregunta sobre el MISMO tema usando el hilo de la conversación
+// Respuestas cuando se repregunta sobre el MISMO tema conservando la memoria
 function generarRespuestaSeguimiento(tema, texto, repeticiones) {
   if (repeticiones >= 3) {
-    return `Sobre **${nombreTemaFormateado(tema)}**: si necesitás datos específicos que no tengo cargados, escribinos por **WhatsApp** usando el botón oficial que está abajo.`;
+    return `Sobre **${nombreTemaFormateado(tema)}**: para más detalles o consultas personalizadas, te invitamos a enviarnos un mensaje por **WhatsApp** usando el botón del panel inferior.`;
   }
 
-  // Preguntas frecuentes de seguimiento
-  if (texto.includes("donde") || texto.includes("ubicacion") || texto.includes("queda")) {
-    if (tema === "padel") return "La Liga de Pádel se juega en la cancha dentro del Complejo Deportivo de Tapso, Catamarca.";
-    if (tema === "hosteria") return "La Hostería se encuentra en la zona céntrica de Tapso, Catamarca. Podés ver sus fotos en el panel lateral.";
-    if (tema === "punto_digital" || tema === "muni") return "El Punto Digital y la sede Municipal están ubicados en la localidad de Tapso, Catamarca.";
-    return `La ubicación referente a **${nombreTemaFormateado(tema)}** podés verificarla en la zona céntrica de Tapso o consultarnos por WhatsApp.`;
+  // Preguntas de seguimiento de Ubicación / Dónde
+  if (texto.includes("donde") || texto.includes("ubicacion") || texto.includes("queda") || texto.includes("donde esta")) {
+    if (tema === "hosteria_alojamiento_tapso") return "La Hostería Municipal queda exactamente sobre la **Ruta Nacional N° 157**, en Tapso.";
+    if (tema === "municipalidad_autoridades_tapso") return "El Municipio (sector Catamarca) está ubicado en la zona del **Centro Cívico** de Tapso.";
+    if (tema === "padel_tapso" || tema === "turismo_deportes_tapso") return "Las actividades deportivas y la cancha de pádel están en el **Complejo Deportivo de Tapso**.";
+    return `Referente a **${nombreTemaFormateado(tema)}**, podés ubicar la zona principal sobre la Ruta 157 o en el Centro Cívico de Tapso.`;
   }
 
-  if (texto.includes("cuanto") || texto.includes("precio") || texto.includes("costo") || texto.includes("valor") || texto.includes("inscripcion")) {
-    if (tema === "padel") return "La inscripción para la Liga de Pádel cuesta $20.000 por pareja. Cupos limitados.";
-    return `Para consultar precios o tarifas actualizadas sobre **${nombreTemaFormateado(tema)}**, podés comunicarte por WhatsApp al canal oficial.`;
+  // Preguntas de seguimiento de Contacto / Teléfono / Reservas
+  if (texto.includes("telefono") || texto.includes("contacto") || texto.includes("llamar") || texto.includes("reserva") || texto.includes("numero")) {
+    if (tema === "hosteria_alojamiento_tapso") return "Para reservas o consultas en la Hostería Municipal, podés llamar al **385 6096508**.";
+    if (tema === "padel_tapso") return "Para inscribirte o consultar sobre el Pádel, comunicate al **3854415855**.";
+    return `Para contactarte sobre **${nombreTemaFormateado(tema)}**, podés escribirnos por nuestro botón oficial de **WhatsApp** ubicado abajo.`;
   }
 
+  // Preguntas de seguimiento de Precios / Costos
+  if (texto.includes("cuanto") || texto.includes("precio") || texto.includes("costo") || texto.includes("valor") || texto.includes("cobran")) {
+    if (tema === "padel_tapso") return "La inscripción a la Liga de Pádel cuesta **$20.000 por pareja**.";
+    if (tema === "punto_digital_tapso") return "¡Los servicios del Punto Digital son 100% **gratuitos** para todos los vecinos!";
+    return `Para precios actualizados respecto a **${nombreTemaFormateado(tema)}**, te sugerimos comunicarte por WhatsApp al canal municipal.`;
+  }
+
+  // Preguntas de seguimiento de Fechas / Horarios
   if (texto.includes("cuando") || texto.includes("fecha") || texto.includes("horario") || texto.includes("dia")) {
-    if (tema === "padel") return "La Liga de Pádel empieza a finales de septiembre con 1 fecha por semana.";
-    return `Para conocer fechas o horarios detallados sobre **${nombreTemaFormateado(tema)}**, te sugerimos contactarnos por WhatsApp.`;
+    if (tema === "historia_fundacion_tapso" || tema === "festivales_aniversario_tapso") return "La fecha de fundación de Tapso es el **15 de junio** (habiendo cumplido su Bicentenario el 19 de junio de 2026).";
+    if (tema === "padel_tapso") return "La Liga de Pádel comienza a finales de septiembre con 1 fecha por semana.";
+    return `Para horarios específicos sobre **${nombreTemaFormateado(tema)}**, podés hacer tu consulta rápida por WhatsApp.`;
   }
 
-  // Respuesta general de seguimiento si no reconoce la repregunta puntual
-  return `Siguiendo con el tema de **${nombreTemaFormateado(tema)}**: por el momento no dispongo de ese dato específico. Podés escribirnos por **WhatsApp** desde el botón de contacto para aclararlo.`;
+  // Respuesta general manteniendo el contexto si la repregunta no es puntual
+  return `Seguimos con el tema de **${nombreTemaFormateado(tema)}**. ¿Hay algún detalle específico (como horarios, ubicación o trámites) que quieras consultar? También podés contactarnos por **WhatsApp**.`;
 }
 
 function nombreTemaFormateado(tema) {
   const nombres = {
-    muni: "Municipalidad de Tapso",
-    policia: "Policía de Tapso",
-    futbol: "Club Tapso FC",
-    punto_digital: "Punto Digital",
-    hosteria: "Hostería de Tapso",
-    festival: "Festival Unión de Pueblos",
-    padel: "Liga de Pádel",
-    historia: "Historia de Tapso",
-    tramites: "Trámites Municipales"
+    ubicacion_geografica_tapso: "Ubicación Geográfica",
+    historia_fundacion_tapso: "Historia y Fundación",
+    municipalidad_autoridades_tapso: "Municipalidad y Autoridades",
+    hosteria_alojamiento_tapso: "Hostería Municipal",
+    punto_digital_tapso: "Punto Digital",
+    seguridad_policia_tapso: "Seguridad y Policía",
+    festivales_aniversario_tapso: "Festivales y Aniversarios",
+    turismo_deportes_tapso: "Turismo y Deportes",
+    padel_tapso: "Liga de Pádel"
   };
   return nombres[tema] || "este tema";
 }
@@ -313,7 +351,7 @@ function actualizarMemoria(nuevoTema) {
 }
 
 function formatearTexto(str) {
-  return str.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+  return str.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
 }
 
 function enviarSugerencia(palabra) {

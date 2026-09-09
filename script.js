@@ -1,3 +1,29 @@
+// CARGA Y CONFIGURACIÓN DE EFECTOS DE SONIDO UI
+const sndClick = new Audio('sounds/click.mp3');
+const sndSend = new Audio('sounds/send.mp3');
+const sndReceive = new Audio('sounds/receive.mp3');
+
+// Ajuste de volúmenes suaves para no molestar al usuario
+sndClick.volume = 0.2;
+sndSend.volume = 0.3;
+sndReceive.volume = 0.3;
+
+// Funciones para reproducir los sonidos
+function playClick() {
+  sndClick.currentTime = 0;
+  sndClick.play().catch(() => {});
+}
+
+function playSend() {
+  sndSend.currentTime = 0;
+  sndSend.play().catch(() => {});
+}
+
+function playReceive() {
+  sndReceive.currentTime = 0;
+  sndReceive.play().catch(() => {});
+}
+
 // CONFIGURACIÓN DE LAS GALERÍAS DE FOTOS
 const galerias = {
   tapsofc: [
@@ -44,17 +70,20 @@ window.onload = function() {
   function iniciarSesion() {
     const nombre = nombreInput.value.trim();
     if (nombre !== "") {
+      playReceive(); // Sonido de bienvenida
       modal.style.display = "none";
       const chatBox = document.getElementById("chatBox");
       chatBox.innerHTML += `<p>🤖 <strong>Asistente:</strong> ¡Hola <strong>${nombre}</strong>! Bienvenido al portal de Tapso. ¿En qué puedo ayudarte hoy?</p>`;
     } else {
+      playClick();
       alert("Por favor, ingresa tu nombre para continuar.");
     }
   }
 };
 
-// FUNCIONES DE LA GALERÍA
+// FUNCIONES DE LA GALERÍA CON SONIDO
 function abrirGaleria(clave) {
+  playClick();
   if (galerias[clave] && galerias[clave].length > 0) {
     galeriaActual = galerias[clave];
     indiceActual = 0;
@@ -72,6 +101,7 @@ function mostrarImagenGaleria() {
 }
 
 function cambiarImagen(direccion) {
+  playClick();
   indiceActual += direccion;
   if (indiceActual < 0) {
     indiceActual = galeriaActual.length - 1; // Vuelve a la última foto
@@ -82,6 +112,7 @@ function cambiarImagen(direccion) {
 }
 
 function cerrarGaleria() {
+  playClick();
   document.getElementById("galleryModal").style.display = "none";
 }
 
@@ -109,6 +140,8 @@ function enviarMensaje() {
   const mensaje = mensajeInput.value.trim();
   
   if (mensaje !== "") {
+    playSend(); // Sonido al enviar mensaje
+    
     const chatBox = document.getElementById("chatBox");
     
     // Mostrar mensaje del usuario
@@ -120,9 +153,10 @@ function enviarMensaje() {
     const respuesta = obtenerRespuesta(mensaje);
     
     setTimeout(() => {
+      playReceive(); // Sonido cuando responde el bot
       chatBox.innerHTML += `<p>🤖 <strong>Asistente:</strong> ${respuesta}</p>`;
       chatBox.scrollTop = chatBox.scrollHeight;
-    }, 300);
+    }, 400);
   }
 }
 
@@ -265,11 +299,13 @@ function obtenerRespuesta(mensaje) {
   return "Lo siento, no entendí bien tu consulta. Podés preguntarme sobre el **intendente (Mario Sosa)**, **horarios**, **ubicación**, **policía**, **distritos**, **Punto Digital**, la **liga de pádel** o **actividades culturales**.";
 }
 
-// Funciones auxiliares
+// Funciones auxiliares con sonido
 function limpiar() {
+  playClick();
   document.getElementById("chatBox").innerHTML = "";
 }
 
 function toggleDarkMode() {
+  playClick();
   document.body.classList.toggle("dark-mode");
 }

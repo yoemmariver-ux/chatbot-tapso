@@ -11,7 +11,7 @@ body {
   color: #333;
 }
 
-/* Modal de bienvenida (Pop-up superpuesto) */
+/* Modal de bienvenida */
 .modal {
   position: fixed;
   top: 0;
@@ -47,7 +47,6 @@ body {
   border: 1px solid #ccc;
   border-radius: 6px;
   font-size: 1em;
-  box-sizing: border-box;
 }
 
 .modal-content button {
@@ -62,11 +61,7 @@ body {
   font-weight: bold;
 }
 
-.modal-content button:hover {
-  background-color: #003d80;
-}
-
-/* Visor de imágenes ampliadas */
+/* Modal Galería Interactiva */
 .image-modal {
   display: none;
   position: fixed;
@@ -74,20 +69,65 @@ body {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.9);
+  background-color: rgba(0, 0, 0, 0.92);
   justify-content: center;
   align-items: center;
   z-index: 9998;
-  cursor: pointer;
 }
 
-.image-modal img {
-  max-width: 90%;
-  max-height: 90%;
+.gallery-content {
+  text-align: center;
+  max-width: 85%;
+  max-height: 85%;
+}
+
+.gallery-content img {
+  max-width: 100%;
+  max-height: 75vh;
   border-radius: 8px;
   box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
-  transition: transform 0.3s ease;
+  object-fit: contain;
 }
+
+.gallery-caption {
+  color: #fff;
+  margin-top: 12px;
+  font-size: 1.1em;
+}
+
+/* Botones de la Galería */
+.close-btn {
+  position: absolute;
+  top: 20px;
+  right: 35px;
+  color: #fff;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 10000;
+}
+
+.nav-btn {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: none;
+  font-size: 28px;
+  padding: 15px 20px;
+  cursor: pointer;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: background 0.3s;
+  user-select: none;
+}
+
+.nav-btn:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.prev-btn { left: 20px; }
+.next-btn { right: 20px; }
 
 /* Encabezado */
 header {
@@ -130,7 +170,7 @@ header {
   transform: scale(1.15);
 }
 
-/* Layout Principal: 3 Columnas */
+/* Layout Principal */
 #main {
   display: flex;
   justify-content: space-between;
@@ -164,7 +204,17 @@ header {
   padding-bottom: 5px;
 }
 
-/* Tarjetas Informativas */
+/* Tarjetas Clickeables */
+.item.galeria-trigger {
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.item.galeria-trigger:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
 .item {
   background: #ffffff;
   border-radius: 10px;
@@ -182,21 +232,17 @@ header {
   margin-bottom: 10px;
 }
 
-.conoce-img.ampliable {
-  cursor: zoom-in;
-  transition: transform 0.2s ease, opacity 0.2s ease;
-}
-
-.conoce-img.ampliable:hover {
-  opacity: 0.9;
-  transform: scale(1.03);
-}
-
 .info {
   font-size: 0.9em;
   color: #444;
   line-height: 1.4;
   text-align: left;
+}
+
+.info.clickeable span {
+  color: #0056b3;
+  font-size: 0.85em;
+  text-decoration: underline;
 }
 
 /* Chat */

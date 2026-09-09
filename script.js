@@ -1,4 +1,27 @@
-let timerImagen; // Guardará el temporizador para cerrar la imagen sola
+// CONFIGURACIÓN DE LAS GALERÍAS DE FOTOS
+const galerias = {
+  tapsofc: [
+    { src: "images/tapsofc.jpg", caption: "Club Tapso FC - Escudo Oficial" },
+    { src: "images/tapsofc1.jpg", caption: "Club Tapso FC - Banner Institucional" },
+    { src: "images/tapsofc2.jpg", caption: "Club Tapso FC - Plantel de Jugadores" }
+  ],
+  hosteria: [
+    { src: "images/hosteria.jpg", caption: "La histórica hostería de Tapso - Fachada de ingreso" },
+    { src: "images/hosteria1.jpg", caption: "La histórica hostería de Tapso - Vista exterior lateral" },
+    { src: "images/hosteria2.jpg", caption: "La histórica hostería de Tapso - Interior y comedor" },
+    { src: "images/hosteria3.jpg", caption: "La histórica hostería de Tapso - Sala de estar con TV" },
+    { src: "images/hosteria4.jpg", caption: "La histórica hostería de Tapso - Habitaciones" }
+  ],
+  festival: [
+    { src: "images/festival.jpg", caption: "Festival Unión de Pueblos - Escenario y cartelera principal" }
+  ],
+  padel: [
+    { src: "images/padel-tapso.jpg", caption: "Liga de Pádel Tapso - Afiche Oficial e información de torneo" }
+  ]
+};
+
+let galeriaActual = [];
+let indiceActual = 0;
 
 // Carga inicial y Modal de bienvenida
 window.onload = function() {
@@ -28,41 +51,51 @@ window.onload = function() {
       alert("Por favor, ingresa tu nombre para continuar.");
     }
   }
-
-  // Escuchar clics en imágenes ampliables
-  const imagenesAmpliables = document.querySelectorAll(".conoce-img.ampliable");
-  imagenesAmpliables.forEach(img => {
-    img.addEventListener("click", function() {
-      agrandarImagen(this.src);
-    });
-  });
 };
 
-// Función para agrandar la imagen al hacer clic
-function agrandarImagen(src) {
-  const imageModal = document.getElementById("imageModal");
-  const imgAmpliada = document.getElementById("imgAmpliada");
-
-  imgAmpliada.src = src;
-  imageModal.style.display = "flex";
-
-  // Cancela cualquier temporizador previo
-  clearTimeout(timerImagen);
-
-  // Vuelve al tamaño original solos después de 4 segundos (4000 ms)
-  timerImagen = setTimeout(() => {
-    cerrarImagen();
-  }, 4000);
+// FUNCIONES DE LA GALERÍA
+function abrirGaleria(clave) {
+  if (galerias[clave] && galerias[clave].length > 0) {
+    galeriaActual = galerias[clave];
+    indiceActual = 0;
+    mostrarImagenGaleria();
+    document.getElementById("galleryModal").style.display = "flex";
+  }
 }
 
-// Función para cerrar la imagen ampliada
-function cerrarImagen() {
-  const imageModal = document.getElementById("imageModal");
-  imageModal.style.display = "none";
-  clearTimeout(timerImagen);
+function mostrarImagenGaleria() {
+  const imgElement = document.getElementById("imgGaleria");
+  const captionElement = document.getElementById("captionGaleria");
+  
+  imgElement.src = galeriaActual[indiceActual].src;
+  captionElement.textContent = `${galeriaActual[indiceActual].caption} (${indiceActual + 1}/${galeriaActual.length})`;
 }
 
-// Eventos para enviar mensajes
+function cambiarImagen(direccion) {
+  indiceActual += direccion;
+  if (indiceActual < 0) {
+    indiceActual = galeriaActual.length - 1; // Vuelve a la última foto
+  } else if (indiceActual >= galeriaActual.length) {
+    indiceActual = 0; // Vuelve a la primera foto
+  }
+  mostrarImagenGaleria();
+}
+
+function cerrarGaleria() {
+  document.getElementById("galleryModal").style.display = "none";
+}
+
+// Navegación por teclado en la galería
+document.addEventListener("keydown", function(event) {
+  const modal = document.getElementById("galleryModal");
+  if (modal.style.display === "flex") {
+    if (event.key === "ArrowLeft") cambiarImagen(-1);
+    if (event.key === "ArrowRight") cambiarImagen(1);
+    if (event.key === "Escape") cerrarGaleria();
+  }
+});
+
+// Eventos para enviar mensajes en el chat
 document.getElementById("btnEnviar").onclick = enviarMensaje;
 
 document.getElementById("mensaje").addEventListener("keypress", function(event) {
@@ -93,7 +126,7 @@ function enviarMensaje() {
   }
 }
 
-// Función para normalizar texto
+// Función para normalizar texto (quita tildes y mayúsculas)
 function normalizarTexto(texto) {
   return texto
     .toLowerCase()
@@ -102,7 +135,7 @@ function normalizarTexto(texto) {
     .replace(/[^a-z0-9\s]/g, "");
 }
 
-// Lógica de Preguntas y Respuestas
+// Lógica de Preguntas y Respuestas del Bot
 function obtenerRespuesta(mensaje) {
   const msg = normalizarTexto(mensaje);
 
@@ -138,7 +171,7 @@ function obtenerRespuesta(mensaje) {
     }
   }
 
-  // 4. Distritos / Localidades (Consultas generales)
+  // 4. Distritos / Localidades
   if (
     msg.includes("distrito") || 
     msg.includes("localidad") || 
@@ -146,7 +179,7 @@ function obtenerRespuesta(mensaje) {
     msg.includes("zona") || 
     msg.includes("lugares pertenecen")
   ) {
-    return "La jurisdicción de Tapso comprende los siguientes distritos y localidades: **Tapso, Achalco, Ayapaso, Simogasta, Colonia Achalco, Los Morteros, Choya Viejo, La Calera, La Chilca, La Puerta de Molle Yaco, Pozo Grande y Albigasta**. Se encuentran distribuidos alrededor del casco urbano y en áreas rurales cercanas.";
+    return "La jurisdicción de Tapso comprende los siguientes distritos y localidades: **Tapso, Achalco, Ayapaso, Simogasta, Colonia Achalco, Los Morteros, Choya Viejo, La Calera, La Chilca, La Puerta de Molle Yaco, Pozo Grande y Albigasta**.";
   }
 
   // 5. Hostería
@@ -154,7 +187,7 @@ function obtenerRespuesta(mensaje) {
     return "La histórica hostería de Tapso es un espacio cultural y turístico del pueblo, donde se realizan eventos, reuniones y actividades comunitarias.";
   }
 
-  // 6. Historia / Fundacion / Bicentenario
+  // 6. Historia / Fundación / Bicentenario
   if (
     msg.includes("historia") || 
     msg.includes("fundo") || 
@@ -218,7 +251,7 @@ function obtenerRespuesta(mensaje) {
     return "Se realizan talleres, festivales como la “Unión de Pueblos”, actividades deportivas en el Complejo Deportivo y celebraciones del aniversario.";
   }
 
-  // 12. Consultas generales sobre Municipalidad / Muni / Ayuntamiento
+  // 12. Consultas generales sobre Municipalidad
   if (
     msg.includes("muni") || 
     msg.includes("municipalidad") || 
@@ -228,7 +261,7 @@ function obtenerRespuesta(mensaje) {
     return "La Municipalidad de Tapso se encuentra en Tapso, departamento El Alto, Catamarca. Atiende de Lunes a Viernes de 8:00 a 12:00 y de 17:00 a 20:00 hs.";
   }
 
-  // Mensaje por defecto cuando no entiende
+  // Mensaje por defecto
   return "Lo siento, no entendí bien tu consulta. Podés preguntarme sobre el **intendente (Mario Sosa)**, **horarios**, **ubicación**, **policía**, **distritos**, **Punto Digital**, la **liga de pádel** o **actividades culturales**.";
 }
 

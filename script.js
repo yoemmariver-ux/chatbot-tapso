@@ -169,8 +169,13 @@ function responder() {
   let respuesta = "";
   let nuevoTema = detectarTema(texto);
 
-  // 1. Saludos y despedidas
-  if (/^(hola|hols|buenas|buen|buenos|buenas noches|buenas tardes|que tal|como va|saludos)/i.test(texto)) {
+  // 1. Respuestas de salida o negatividad (Resetean el tema activo)
+  if (/^(no|nop|ninguna|ninguno|otra consulta|otro tema|cambiar|nada|ningun|para nada)$/i.test(texto) || texto === "no gracias") {
+    respuesta = `¡De acuerdo! ¿Sobre qué otro tema te gustaría consultar? Podés elegir uno de los botones o escribir directamente tu duda.`;
+    actualizarMemoria(null);
+  }
+  // 2. Saludos
+  else if (/^(hola|hols|buenas|buen|buenos|buenas noches|buenas tardes|que tal|como va|saludos)/i.test(texto)) {
     const saludos = [
       `¡Hola ${usuarioNombre}! ¿En qué puedo ayudarte hoy?`,
       `¡Buenas! Qué gusto saludarte, ${usuarioNombre}. ¿Qué consulta tenés?`,
@@ -179,6 +184,7 @@ function responder() {
     respuesta = saludos[Math.floor(Math.random() * saludos.length)];
     actualizarMemoria(null);
   } 
+  // 3. Despedidas
   else if (/^(chau|adios|nos vemos|hasta luego|que tengas buen dia|gracias|muchas gracias)/i.test(texto)) {
     const despedidas = [
       `¡Hasta luego, ${usuarioNombre}! Que tengas un excelente día.`,
@@ -188,7 +194,7 @@ function responder() {
     respuesta = despedidas[Math.floor(Math.random() * despedidas.length)];
     actualizarMemoria(null);
   } 
-  // 2. Si detecta un nuevo tema explícito
+  // 4. Si detecta un nuevo tema explícito
   else if (nuevoTema) {
     if (memoriaContexto.temaActivo === nuevoTema) {
       memoriaContexto.contadorRepeticiones++;
@@ -199,12 +205,12 @@ function responder() {
 
     respuesta = generarRespuestaPorTema(nuevoTema, memoriaContexto.contadorRepeticiones);
   }
-  // 3. Si NO detecta tema nuevo pero HAY tema activo en la memoria (Hilo de conversación)
+  // 5. Si NO detecta tema nuevo pero HAY tema activo en la memoria (Hilo de conversación)
   else if (memoriaContexto.temaActivo) {
     memoriaContexto.contadorRepeticiones++;
     respuesta = generarRespuestaSeguimiento(memoriaContexto.temaActivo, texto, memoriaContexto.contadorRepeticiones);
   } 
-  // 4. Sin tema previo ni coincidencia
+  // 6. Sin tema previo ni coincidencia
   else {
     respuesta = obtenerRespuestaDesconocida();
     actualizarMemoria(null);

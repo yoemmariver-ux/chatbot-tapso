@@ -2,176 +2,129 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <title>Asistente Tapso</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portal Municipal - Tapso</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css?v=8">
 </head>
 <body>
 
-  <!-- MODAL INICIAL DE NOMBRE -->
+  <!-- Modal de bienvenida flotante -->
   <div id="loginModal" class="modal">
     <div class="modal-content">
-      <h2>🏛️ ¡Bienvenido a Tapso!</h2>
-      <p>Por favor, decinos tu nombre para personalizar la atención:</p>
-      <input type="text" id="nombre" placeholder="Tu nombre aquí..." autofocus>
-      <button id="btnComenzar" class="btn-primary">Ingresar al Portal</button>
+      <h2>¡Bienvenido!</h2>
+      <p>Por favor, ingresa tu nombre para comenzar:</p>
+      <input type="text" id="nombre" placeholder="Tu nombre" autofocus onclick="playClick()">
+      <button id="btnComenzar">Comenzar</button>
     </div>
   </div>
 
-  <!-- BARRA SUPERIOR DE ACCESIBILIDAD -->
-  <div class="accessibility-bar">
-    <div class="accessibility-container">
-      <span class="acc-label">Accesibilidad:</span>
-      <button onclick="cambiarTamanioTexto(-1)" class="btn-acc" title="Reducir texto">A-</button>
-      <button onclick="cambiarTamanioTexto(1)" class="btn-acc" title="Aumentar texto">A+</button>
-      <button onclick="restablecerTamanioTexto()" class="btn-acc" title="Restablecer tamaño">A</button>
-      <button onclick="toggleAltoContraste()" class="btn-acc btn-contrast" title="Alto Contraste">👁️ Contraste</button>
+  <!-- Galería de Imágenes Flotante (Lightbox) -->
+  <div id="galleryModal" class="image-modal">
+    <span class="close-btn" onclick="cerrarGaleria()">&times;</span>
+    <button class="nav-btn prev-btn" onclick="cambiarImagen(-1)">&#10094;</button>
+    <div class="gallery-content">
+      <img id="imgGaleria" src="" alt="Galería de imágenes">
+      <p id="captionGaleria" class="gallery-caption"></p>
     </div>
+    <button class="nav-btn next-btn" onclick="cambiarImagen(1)">&#10095;</button>
   </div>
 
-  <!-- ENCABEZADO CON LOGO Y REDES SOCIALES -->
+  <!-- Encabezado superior -->
   <header>
-    <div class="header-container">
-      <div class="logo-area">
-        <img src="images/logo-muni.png" alt="Logo Municipio de Tapso" class="logo-img" onerror="this.style.display='none'">
-        <span class="escudo">🏛️</span>
-        <div>
-          <h1>Municipio de Tapso</h1>
-          <p class="subtitle">Catamarca - Santiago del Estero</p>
-        </div>
-      </div>
-      
-      <div class="header-right">
-        <div class="social-links">
-          <a href="https://facebook.com" target="_blank" title="Facebook"><i class="fab fa-facebook"></i></a>
-          <a href="https://instagram.com" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
-        </div>
-        <button onclick="toggleDarkMode()" class="theme-toggle" title="Cambiar modo claro/oscuro">🌙 / ☀️</button>
-      </div>
+    <!-- Botón de Modo Oscuro Global en la esquina superior -->
+    <button class="theme-toggle-btn" onclick="toggleDarkMode()" title="Cambiar tema">
+      🌙 <span class="theme-text">Modo Oscuro</span>
+    </button>
+
+    <div class="banner-container">
+      <img src="images/banner-tapso.png" alt="Banner Tapso" class="banner-img">
+    </div>
+
+    <div class="logo-container">
+      <img src="images/logo-tapso.png" alt="Logo Tapso" class="logo-municipio" onmouseenter="playClick()">
     </div>
   </header>
 
-  <!-- BANNER PRINCIPAL INSTITUCIONAL -->
-  <section class="hero-banner">
-    <div class="banner-content">
-      <h2>Portal Oficial de Atención Ciudadana</h2>
-      <p>Información, servicios y consultas de la comunidad de Tapso en un solo lugar.</p>
-    </div>
-  </section>
-
-  <!-- CONTENEDOR PRINCIPAL DEL CHAT -->
-  <main class="chat-container">
+  <!-- Contenedor principal -->
+  <main id="main">
     
-    <!-- CONTROLES DE AUDIO Y VOZ -->
-    <div class="audio-controls">
-      <label for="selectVoz"><i class="fas fa-volume-up"></i> Lectura de voz:</label>
-      <select id="selectVoz" class="select-voz">
-        <option value="">Cargando voces...</option>
-      </select>
-      <button id="btnToggleAudio" onclick="toggleAudio()" class="btn-audio-toggle" title="Activar/Desactivar audio">
-        🔊 Activado
-      </button>
-    </div>
+    <!-- Columna Izquierda: Información Local y Redes -->
+    <aside id="conoce">
+      <h2 class="section-title">Conocé Tapso</h2>
+      
+      <div class="item galeria-trigger" onclick="abrirGaleria('tapsofc')">
+        <img src="images/tapsofc.jpg" alt="Tapso FC" class="conoce-img ampliable">
+        <p class="info clickeable"><strong>Club Tapso FC</strong> 📸 <span>(Ver fotos)</span></p>
+      </div>
 
-    <div id="chatBox" class="chat-box">
-      <!-- Mensajes dinámicos vía JS -->
-    </div>
+      <div class="item galeria-trigger" onclick="abrirGaleria('hosteria')">
+        <img src="images/hosteria.jpg" alt="Hostería" class="conoce-img ampliable">
+        <p class="info clickeable"><strong>La histórica hostería de Tapso</strong> 📸 <span>(Ver fotos)</span></p>
+      </div>
 
-    <div class="input-area">
-      <input type="text" id="mensaje" placeholder="Escribe tu mensaje..." autocomplete="off">
-      <button id="btnEnviar" class="btn-send"><i class="fas fa-paper-plane"></i> Enviar</button>
-    </div>
+      <div class="item galeria-trigger" onclick="abrirGaleria('festival')">
+        <img src="images/festival.jpg" alt="Festival Unión de Pueblos" class="conoce-img ampliable">
+        <p class="info clickeable"><strong>Festival Unión de Pueblos</strong> 📸 <span>(Ver fotos)</span></p>
+      </div>
 
-    <div class="actions-area">
-      <button onclick="limpiar()" class="btn-clear"><i class="fas fa-broom"></i> Limpiar chat</button>
-    </div>
+      <!-- Cuadro Individual para Redes y Contacto -->
+      <div class="item contacto-box">
+        <h3 class="sub-title">Contacto y Redes</h3>
+        <div class="icons-grid">
+          <a href="https://www.facebook.com/municipalidadetapso" target="_blank" title="Facebook" onclick="playClick()">
+            <img src="images/facebook.png" alt="Facebook">
+          </a>
+          <a href="https://www.instagram.com/tapsocultura" target="_blank" title="Instagram" onclick="playClick()">
+            <img src="images/instagram.png" alt="Instagram">
+          </a>
+          <a href="https://wa.me/549XXXXXXXXXX" target="_blank" title="WhatsApp" onclick="playClick()">
+            <img src="images/watsapp.png" alt="WhatsApp">
+          </a>
+          <a href="https://maps.google.com/?q=Tapso+Catamarca" target="_blank" title="Ubicación" onclick="playClick()">
+            <img src="images/ubicacion.png" alt="Ubicación">
+          </a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Columna Central: Asistente -->
+    <section id="central">
+      <div id="chat">
+        <h2 class="section-title">Asistente Municipal</h2>
+        <div id="chatBox" class="chat-window"></div>
+        <div class="input-container">
+          <input type="text" id="mensaje" placeholder="Escribe tu mensaje..." onclick="playClick()">
+          <button id="btnEnviar">Enviar</button>
+        </div>
+        <div class="controls-single">
+          <button onclick="limpiar()">🧹 Limpiar chat</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Columna Derecha: Calendario -->
+    <aside id="calendario">
+      <h2 class="section-title">Calendario</h2>
+      <div class="item galeria-trigger" onclick="abrirGaleria('padel')">
+        <img src="images/padel-tapso.jpg" alt="Liga de Pádel Tapso" class="conoce-img ampliable">
+        <p class="info clickeable">
+          🎾 <strong>¡ARRANCA LA LIGA DE PÁDEL!</strong> 🔥<br><br>
+          📅 Comienza a finales de Septiembre<br>
+          🎾 1 fecha por semana<br>
+          👥 16 parejas<br>
+          💰 Inscripción: $20.000<br>
+          Por consultas: 3854415855<br><br>
+          <strong>CATEGORÍAS</strong><br>
+          🔵 Masculino: suma 13<br>
+          🩷 Femenino: suma 15<br><br>
+          A realizarse en cancha de Pádel ubicado en el predio del Complejo Deportivo, Tapso Catamarca.<br><br>
+          🔥 <strong>¡CUPOS LIMITADOS!</strong><br>
+          📲 Armá tu pareja e inscribite.
+        </p>
+      </div>
+    </aside>
   </main>
 
-  <!-- SECCIÓN: CONOCÉ TAPSO -->
-  <section class="info-section">
-    <h3>📍 Conocé Tapso</h3>
-    <div class="info-cards-grid">
-      <div class="info-card">
-        <i class="fas fa-map-marked-alt card-icon"></i>
-        <h4>Ubicación</h4>
-        <p>Ubicado estratégicamente sobre la Ruta Nacional N° 157, integrando las provincias de Catamarca y Santiago del Estero.</p>
-      </div>
-      <div class="info-card">
-        <i class="fas fa-history card-icon"></i>
-        <h4>Historia</h4>
-        <p>Un pueblo con rica tradición ferroviaria e historia cultural, fundado en 1826.</p>
-      </div>
-      <div class="info-card">
-        <i class="fas fa-laptop-house card-icon"></i>
-        <h4>Servicios</h4>
-        <p>Punto Digital, Hostería Municipal, complejos deportivos y atención al vecino constante.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- SECCIÓN: CALENDARIO DE EVENTOS -->
-  <section class="calendar-section">
-    <h3>📅 Calendario de Eventos</h3>
-    <div class="events-list">
-      <div class="event-item">
-        <span class="event-date">15 JUN</span>
-        <div class="event-details">
-          <h4>Aniversario de Tapso</h4>
-          <p>Festejos centrales, desfile institucional y espectáculos en vivo.</p>
-        </div>
-      </div>
-      <div class="event-item">
-        <span class="event-date">FESTIVAL</span>
-        <div class="event-details">
-          <h4>Festival Unión de Pueblos</h4>
-          <p>Encuentro de música, folclore y gastronomía regional.</p>
-        </div>
-      </div>
-      <div class="event-item">
-        <span class="event-date">ANUAL</span>
-        <div class="event-details">
-          <h4>Liga Municipal de Pádel</h4>
-          <p>Torneos locales en las instalaciones del Complejo Deportivo.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SECCIÓN GALERÍAS -->
-  <section class="gallery-section">
-    <h3>🖼️ Galería de Fotos e Instalaciones</h3>
-    <div class="gallery-buttons">
-      <button onclick="abrirGaleria('hosteria')" class="btn-gallery">🏨 Hostería Municipal</button>
-      <button onclick="abrirGaleria('tapsofc')" class="btn-gallery">⚽ Club Tapso FC</button>
-      <button onclick="abrirGaleria('festival')" class="btn-gallery">🎉 Festival Unión de Pueblos</button>
-      <button onclick="abrirGaleria('padel')" class="btn-gallery">🎾 Liga de Pádel</button>
-    </div>
-  </section>
-
-  <!-- MODAL LIGHTBOX DE GALERÍA -->
-  <div id="galleryModal" class="modal-gallery">
-    <span class="close-gallery" onclick="cerrarGaleria()">&times;</span>
-    <div class="modal-gallery-content">
-      <button class="prev" onclick="cambiarImagen(-1)">&#10094;</button>
-      <div class="image-wrapper">
-        <img id="imgGaleria" src="" alt="Imagen de galería">
-        <p id="captionGaleria" class="caption"></p>
-      </div>
-      <button class="next" onclick="cambiarImagen(1)">&#10095;</button>
-    </div>
-  </div>
-
-  <!-- CONTACTO Y WHATSAPP -->
-  <footer>
-    <div class="footer-content">
-      <p>¿Necesitás atención directa?</p>
-      <a href="https://wa.me/5493856096508" target="_blank" class="btn-whatsapp">
-        <i class="fab fa-whatsapp"></i> Contactar por WhatsApp
-      </a>
-    </div>
-  </footer>
-
-  <script src="script.js"></script>
+  <script src="script.js?v=6"></script>
 </body>
 </html>

@@ -3,12 +3,10 @@ const sndClick = new Audio('sounds/click.mp3');
 const sndSend = new Audio('sounds/send.mp3');
 const sndReceive = new Audio('sounds/receive.mp3');
 
-// Ajuste de volúmenes suaves para no molestar al usuario
 sndClick.volume = 0.2;
 sndSend.volume = 0.3;
 sndReceive.volume = 0.3;
 
-// Funciones para reproducir los sonidos
 function playClick() {
   sndClick.currentTime = 0;
   sndClick.play().catch(() => {});
@@ -24,7 +22,10 @@ function playReceive() {
   sndReceive.play().catch(() => {});
 }
 
-// CONFIGURACIÓN DE LAS GALERÍAS DE FOTOS
+// VARIABLE DE MEMORIA PARA EL HILO DE CONVERSACIÓN
+let contextoActual = null; // Guardará el último tema: 'muni', 'policia', 'futbol', 'puntodigital', 'hosteria', 'historia', 'tramites'
+
+// GALERÍAS DE FOTOS
 const galerias = {
   tapsofc: [
     { src: "images/tapsofc.jpg", caption: "Club Tapso FC - Escudo Oficial" },
@@ -49,7 +50,7 @@ const galerias = {
 let galeriaActual = [];
 let indiceActual = 0;
 
-// Carga inicial y Modal de bienvenida
+// MODAL DE BIENVENIDA
 window.onload = function() {
   const modal = document.getElementById("loginModal");
   const btnComenzar = document.getElementById("btnComenzar");
@@ -70,10 +71,21 @@ window.onload = function() {
   function iniciarSesion() {
     const nombre = nombreInput.value.trim();
     if (nombre !== "") {
-      playReceive(); // Sonido de bienvenida
+      playReceive();
       modal.style.display = "none";
       const chatBox = document.getElementById("chatBox");
-      chatBox.innerHTML += `<p>🤖 <strong>Asistente:</strong> ¡Hola <strong>${nombre}</strong>! Bienvenido al portal de Tapso. ¿En qué puedo ayudarte hoy?</p>`;
+      chatBox.innerHTML += `<p>🤖 <strong>Asistente:</strong> ¡Hola <strong>${nombre}</strong>! Bienvenido al portal de Tapso.<br>¿Sobre qué tema necesitas información hoy?</p>`;
+      chatBox.innerHTML += `
+        <div class="sugerencias-container">
+          <button class="chip-btn" onclick="enviarSugerencia('Municipalidad')">🏛️ Muni / Municipio</button>
+          <button class="chip-btn" onclick="enviarSugerencia('Policia')">👮 Policía</button>
+          <button class="chip-btn" onclick="enviarSugerencia('Tapso FC')">⚽ Fútbol (Tapso FC)</button>
+          <button class="chip-btn" onclick="enviarSugerencia('Punto Digital')">💻 Punto Digital</button>
+          <button class="chip-btn" onclick="enviarSugerencia('Hostería')">🏨 Hostería</button>
+          <button class="chip-btn" onclick="enviarSugerencia('Historia')">📜 Historia</button>
+          <button class="chip-btn" onclick="enviarSugerencia('Trámites')">📄 Trámites</button>
+        </div>
+      `;
     } else {
       playClick();
       alert("Por favor, ingresa tu nombre para continuar.");
@@ -81,7 +93,7 @@ window.onload = function() {
   }
 };
 
-// FUNCIONES DE LA GALERÍA CON SONIDO
+// GALERÍA
 function abrirGaleria(clave) {
   playClick();
   if (galerias[clave] && galerias[clave].length > 0) {
@@ -95,7 +107,6 @@ function abrirGaleria(clave) {
 function mostrarImagenGaleria() {
   const imgElement = document.getElementById("imgGaleria");
   const captionElement = document.getElementById("captionGaleria");
-  
   imgElement.src = galeriaActual[indiceActual].src;
   captionElement.textContent = `${galeriaActual[indiceActual].caption} (${indiceActual + 1}/${galeriaActual.length})`;
 }
@@ -103,11 +114,8 @@ function mostrarImagenGaleria() {
 function cambiarImagen(direccion) {
   playClick();
   indiceActual += direccion;
-  if (indiceActual < 0) {
-    indiceActual = galeriaActual.length - 1; // Vuelve a la última foto
-  } else if (indiceActual >= galeriaActual.length) {
-    indiceActual = 0; // Vuelve a la primera foto
-  }
+  if (indiceActual < 0) indiceActual = galeriaActual.length - 1;
+  else if (indiceActual >= galeriaActual.length) indiceActual = 0;
   mostrarImagenGaleria();
 }
 
@@ -116,7 +124,6 @@ function cerrarGaleria() {
   document.getElementById("galleryModal").style.display = "none";
 }
 
-// Navegación por teclado en la galería
 document.addEventListener("keydown", function(event) {
   const modal = document.getElementById("galleryModal");
   if (modal.style.display === "flex") {
@@ -126,7 +133,12 @@ document.addEventListener("keydown", function(event) {
   }
 });
 
-// Eventos para enviar mensajes en el chat
+// ENVÍO DE MENSAJES Y SUGERENCIAS
+function enviarSugerencia(texto) {
+  document.getElementById("mensaje").value = texto;
+  enviarMensaje();
+}
+
 document.getElementById("btnEnviar").onclick = enviarMensaje;
 
 document.getElementById("mensaje").addEventListener("keypress", function(event) {
@@ -140,27 +152,23 @@ function enviarMensaje() {
   const mensaje = mensajeInput.value.trim();
   
   if (mensaje !== "") {
-    playSend(); // Sonido al enviar mensaje
-    
+    playSend();
     const chatBox = document.getElementById("chatBox");
     
-    // Mostrar mensaje del usuario
     chatBox.innerHTML += `<p>👤 <strong>Tú:</strong> ${mensaje}</p>`;
     mensajeInput.value = "";
     chatBox.scrollTop = chatBox.scrollHeight;
     
-    // Obtener y mostrar la respuesta del asistente
-    const respuesta = obtenerRespuesta(mensaje);
+    const respuesta = obtenerRespuestaConHilo(mensaje);
     
     setTimeout(() => {
-      playReceive(); // Sonido cuando responde el bot
+      playReceive();
       chatBox.innerHTML += `<p>🤖 <strong>Asistente:</strong> ${respuesta}</p>`;
       chatBox.scrollTop = chatBox.scrollHeight;
     }, 400);
   }
 }
 
-// Función para normalizar texto (quita tildes y mayúsculas)
 function normalizarTexto(texto) {
   return texto
     .toLowerCase()
@@ -169,139 +177,101 @@ function normalizarTexto(texto) {
     .replace(/[^a-z0-9\s]/g, "");
 }
 
-// Lógica de Preguntas y Respuestas del Bot
-function obtenerRespuesta(mensaje) {
+// LÓGICA DE RESPUESTA CON SEGUIMIENTO DE HILO (CONTEXTO)
+function obtenerRespuestaConHilo(mensaje) {
   const msg = normalizarTexto(mensaje);
 
-  // 1. Intendente / Autoridades
-  if (
-    msg.includes("intendente") || 
-    msg.includes("gobierna") || 
-    msg.includes("autoridad") || 
-    msg.includes("mario sosa")
-  ) {
-    return "El intendente actual de Tapso es **Mario Sosa**. La municipalidad cuenta con sus secretarías y áreas de Cultura, Educación, Deportes y Producción.";
+  // 1. MUNICIPALIDAD / MUNI
+  if (msg.includes("muni") || msg.includes("municipio") || msg.includes("municipalidad") || msg.includes("intendente") || msg.includes("mario sosa")) {
+    contextoActual = "muni";
+    return "La **Municipalidad de Tapso** es encabezada por el intendente Mario Sosa. El edificio central atiende de lunes a viernes de 8:00 a 12:00 hs y de 17:00 a 20:00 hs. ¿Querés saber sobre trámites, secretarías o ubicación?";
   }
 
-  // 2. Policía / Comisaría
-  if (
-    msg.includes("policia") || 
-    msg.includes("comisaria") || 
-    msg.includes("patrulla")
-  ) {
-    return "La comisaría de Tapso se encuentra en el centro del pueblo.";
+  // 2. POLICÍA
+  if (msg.includes("policia") || msg.includes("comisaria") || msg.includes("seguridad") || msg.includes("patrulla")) {
+    contextoActual = "policia";
+    return "La **Comisaría de Tapso** brinda servicio de prevención y guardia las 24 hs. Se ubica en la zona central del pueblo. ¿Necesitás realizar alguna exposición civil o trámite policial?";
   }
 
-  // 3. Localidades específicas
-  const localidades = [
-    "achalco", "ayapaso", "simogasta", "colonia achalco", 
-    "los morteros", "choya viejo", "la calera", "la chilca", 
-    "puerta de molle yaco", "pozo grande", "albigasta"
-  ];
+  // 3. FÚTBOL / TAPSO FC
+  if (msg.includes("futbol") || msg.includes("tapsofc") || msg.includes("tapso fc") || msg.includes("cancha") || msg.includes("equipo")) {
+    contextoActual = "futbol";
+    return "El **Club Tapso FC** representa al pueblo en los torneos locales y regionales. También contás con las actividades de la Liga de Pádel en el Complejo Deportivo. ¿Querés ver fotos o saber de los entrenamientos?";
+  }
 
-  for (let loc of localidades) {
-    if (msg.includes(loc)) {
-      return `**${loc.toUpperCase()}** forma parte de la jurisdicción de la Municipalidad de Tapso.`;
+  // 4. PUNTO DIGITAL
+  if (msg.includes("punto digital") || msg.includes("computacion") || msg.includes("curso") || msg.includes("internet") || msg.includes("excel") || msg.includes("word")) {
+    contextoActual = "puntodigital";
+    return "El **Punto Digital Tapso** ofrece cursos gratuitos de informática, capacitaciones laborales, acceso libre a internet y apoyo en trámites online. ¿Te gustaría conocer los horarios o los cursos disponibles?";
+  }
+
+  // 5. HOSTERÍA
+  if (msg.includes("hosteria") || msg.includes("hospedaje") || msg.includes("alojamiento") || msg.includes("turismo")) {
+    contextoActual = "hosteria";
+    return "La **Histórica Hostería de Tapso** es un punto emblemático del pueblo, ideal para eventos culturales y alojamiento de visitantes. Podés ver las fotos en la sección 'Conocé Tapso'. ¿Querés saber más de sus instalaciones?";
+  }
+
+  // 6. HISTORIA / BICENTENARIO
+  if (msg.includes("historia") || msg.includes("fundacion") || msg.includes("bicentenario") || msg.includes("200 anos") || msg.includes("origen")) {
+    contextoActual = "historia";
+    return "Tapso fue fundado en **1826** y se encamina a celebrar su Bicentenario en 2026. Es una comunidad con profunda raíz ferroviaria y cultural en El Alto, Catamarca.";
+  }
+
+  // 7. TRÁMITES
+  if (msg.includes("tramite") || msg.includes("tramites") || msg.includes("carnet") || msg.includes("licencia") || msg.includes("gestion")) {
+    contextoActual = "tramites";
+    return "Para realizar **trámites municipales** (licencias, tasas, certificaciones) podés dirigirte a la Municipalidad en horario de mañana (8:00 a 12:00 hs). En el Punto Digital también se asesora con trámites online (ANSES, AFIP, etc.).";
+  }
+
+  // --- HILO DE CONVERSACIÓN (SEGUIMIENTO SEGÚN EL CONTEXTO) ---
+  if (contextoActual === "muni") {
+    if (msg.includes("horario") || msg.includes("cuando") || msg.includes("abre")) {
+      return "El horario de la **Municipalidad** es de Lunes a Viernes de 8:00 a 12:00 hs y de 17:00 a 20:00 hs.";
+    }
+    if (msg.includes("donde") || msg.includes("ubicacion") || msg.includes("queda")) {
+      return "La Municipalidad está ubicada en el centro de Tapso, departamento El Alto, Catamarca.";
     }
   }
 
-  // 4. Distritos / Localidades
-  if (
-    msg.includes("distrito") || 
-    msg.includes("localidad") || 
-    msg.includes("barrio") || 
-    msg.includes("zona") || 
-    msg.includes("lugares pertenecen")
-  ) {
-    return "La jurisdicción de Tapso comprende los siguientes distritos y localidades: **Tapso, Achalco, Ayapaso, Simogasta, Colonia Achalco, Los Morteros, Choya Viejo, La Calera, La Chilca, La Puerta de Molle Yaco, Pozo Grande y Albigasta**.";
+  if (contextoActual === "policia") {
+    if (msg.includes("donde") || msg.includes("ubicacion") || msg.includes("queda")) {
+      return "La Comisaría está ubicada en el casco céntrico de Tapso, sobre la avenida principal.";
+    }
+    if (msg.includes("horario") || msg.includes("atencion")) {
+      return "La Comisaría tiene guardia permanente activa las 24 horas.";
+    }
   }
 
-  // 5. Hostería
-  if (msg.includes("hosteria")) {
-    return "La histórica hostería de Tapso es un espacio cultural y turístico del pueblo, donde se realizan eventos, reuniones y actividades comunitarias.";
+  if (contextoActual === "puntodigital") {
+    if (msg.includes("donde") || msg.includes("ubicacion")) {
+      return "El Punto Digital funciona dentro de las instalaciones municipales de Tapso.";
+    }
+    if (msg.includes("curso") || msg.includes("que hay")) {
+      return "Hay cursos de alfabetización digital, procesador de texto (Word), planillas de cálculo (Excel) y capacitaciones administrativas con certificación.";
+    }
   }
 
-  // 6. Historia / Fundación / Bicentenario
-  if (
-    msg.includes("historia") || 
-    msg.includes("fundo") || 
-    msg.includes("fundacion") || 
-    msg.includes("significa tapso") || 
-    msg.includes("bicentenario") || 
-    msg.includes("200 anos")
-  ) {
-    return "Tapso fue fundado en 1826 y en 2026 celebra su bicentenario. Es un pueblo con dos siglos de historia, orgullo y futuro.";
+  if (contextoActual === "futbol") {
+    if (msg.includes("foto") || msg.includes("imagenes") || msg.includes("ver")) {
+      abrirGaleria('tapsofc');
+      return "¡Te abrí la galería del **Club Tapso FC** para que veas las fotos!";
+    }
   }
 
-  // 7. Horarios de atención
-  if (
-    msg.includes("horario") || 
-    msg.includes("abre") || 
-    msg.includes("atienden") || 
-    msg.includes("atencion")
-  ) {
-    return "El municipio atiende de lunes a viernes de 8:00 a 12:00 hs y de 17:00 a 20:00 hs.";
+  if (contextoActual === "hosteria") {
+    if (msg.includes("foto") || msg.includes("ver") || msg.includes("imagenes")) {
+      abrirGaleria('hosteria');
+      return "¡Aquí tenés las fotos de la **Hostería de Tapso**!";
+    }
   }
 
-  // 8. Ubicación del municipio
-  if (
-    msg.includes("ubicacion") || 
-    msg.includes("ubicado") || 
-    msg.includes("donde queda") || 
-    msg.includes("direccion") || 
-    msg.includes("donde esta")
-  ) {
-    return "La Municipalidad de Tapso se encuentra en Tapso, departamento El Alto, provincia de Catamarca.";
-  }
-
-  // 9. Liga de Pádel
-  if (
-    msg.includes("padel") || 
-    msg.includes("torneo") || 
-    msg.includes("liga")
-  ) {
-    return "La inscripción cuesta $20.000. Se juega en la cancha de pádel del Complejo Deportivo de Tapso. Consultas e inscripciones al 📞 3854415855.";
-  }
-
-  // 10. Punto Digital / Cursos
-  if (
-    msg.includes("punto digital") || 
-    msg.includes("word") || 
-    msg.includes("excel") || 
-    msg.includes("curso") || 
-    msg.includes("capacitacion")
-  ) {
-    return "El Punto Digital de Tapso ofrece clases de Word, Excel, acceso a internet, capacitaciones, acompañamiento en trámites digitales y actividades educativas.";
-  }
-
-  // 11. Eventos / Cultura / Festivales
-  if (
-    msg.includes("actividades") || 
-    msg.includes("evento") || 
-    msg.includes("cultura") || 
-    msg.includes("festival") || 
-    msg.includes("union de pueblos")
-  ) {
-    return "Se realizan talleres, festivales como la “Unión de Pueblos”, actividades deportivas en el Complejo Deportivo y celebraciones del aniversario.";
-  }
-
-  // 12. Consultas generales sobre Municipalidad
-  if (
-    msg.includes("muni") || 
-    msg.includes("municipalidad") || 
-    msg.includes("municipio") || 
-    msg.includes("ayuntamiento")
-  ) {
-    return "La Municipalidad de Tapso se encuentra en Tapso, departamento El Alto, Catamarca. Atiende de Lunes a Viernes de 8:00 a 12:00 y de 17:00 a 20:00 hs.";
-  }
-
-  // Mensaje por defecto
-  return "Lo siento, no entendí bien tu consulta. Podés preguntarme sobre el **intendente (Mario Sosa)**, **horarios**, **ubicación**, **policía**, **distritos**, **Punto Digital**, la **liga de pádel** o **actividades culturales**.";
+  // Respuesta por defecto si no detecta tema ni hilo
+  return "Entiendo. Podés preguntarme específicamente sobre **muni**, **policía**, **fútbol (Tapso FC)**, **Punto Digital**, **hostería**, **historia** o **trámites**.";
 }
 
-// Funciones auxiliares con sonido
 function limpiar() {
   playClick();
+  contextoActual = null; // Reinicia la memoria del hilo
   document.getElementById("chatBox").innerHTML = "";
 }
 

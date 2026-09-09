@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>Asistente Tapso</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <link rel="stylesheet" href="style.css?v=5">
+  <link rel="stylesheet" href="style.css?v=7">
 </head>
 <body>
 
@@ -13,7 +13,7 @@
     <div class="modal-content">
       <h2>¡Bienvenido!</h2>
       <p>Por favor, ingresa tu nombre para comenzar:</p>
-      <input type="text" id="nombre" placeholder="Tu nombre" autofocus>
+      <input type="text" id="nombre" placeholder="Tu nombre" autofocus onclick="playClick()">
       <button id="btnComenzar">Comenzar</button>
     </div>
   </div>
@@ -31,28 +31,25 @@
 
   <!-- Encabezado superior -->
   <header>
-    <!-- Banner de la bandera -->
     <div class="banner-container">
       <img src="images/banner-tapso.png" alt="Banner Tapso" class="banner-img">
     </div>
 
-    <!-- Logo del Municipio -->
     <div class="logo-container">
-      <img src="images/logo-tapso.png" alt="Logo Tapso" class="logo-municipio">
+      <img src="images/logo-tapso.png" alt="Logo Tapso" class="logo-municipio" onmouseenter="playClick()">
     </div>
 
-    <!-- Redes sociales -->
     <div class="icons">
-      <a href="https://www.facebook.com/municipalidadetapso" target="_blank" title="Facebook">
+      <a href="https://www.facebook.com/municipalidadetapso" target="_blank" title="Facebook" onclick="playClick()">
         <img src="images/facebook.png" alt="Facebook">
       </a>
-      <a href="https://www.instagram.com/tapsocultura" target="_blank" title="Instagram">
+      <a href="https://www.instagram.com/tapsocultura" target="_blank" title="Instagram" onclick="playClick()">
         <img src="images/instagram.png" alt="Instagram">
       </a>
-      <a href="https://wa.me/549XXXXXXXXXX" target="_blank" title="WhatsApp">
+      <a href="https://wa.me/549XXXXXXXXXX" target="_blank" title="WhatsApp" onclick="playClick()">
         <img src="images/watsapp.png" alt="WhatsApp">
       </a>
-      <a href="https://maps.google.com/?q=Tapso+Catamarca" target="_blank" title="Ubicación">
+      <a href="https://maps.google.com/?q=Tapso+Catamarca" target="_blank" title="Ubicación" onclick="playClick()">
         <img src="images/ubicacion.png" alt="Ubicación">
       </a>
     </div>
@@ -60,37 +57,31 @@
 
   <!-- Contenedor principal -->
   <main id="main">
-    
-    <!-- Izquierda: Conocé Tapso -->
     <aside id="conoce">
       <h2 class="section-title">Conocé Tapso</h2>
       
-      <!-- Item: Club Tapso FC -->
       <div class="item galeria-trigger" onclick="abrirGaleria('tapsofc')">
         <img src="images/tapsofc.jpg" alt="Tapso FC" class="conoce-img ampliable">
         <p class="info clickeable"><strong>Club Tapso FC</strong> 📸 <span>(Ver fotos)</span></p>
       </div>
 
-      <!-- Item: Hostería -->
       <div class="item galeria-trigger" onclick="abrirGaleria('hosteria')">
         <img src="images/hosteria.jpg" alt="Hostería" class="conoce-img ampliable">
         <p class="info clickeable"><strong>La histórica hostería de Tapso</strong> 📸 <span>(Ver fotos)</span></p>
       </div>
 
-      <!-- Item: Festival -->
       <div class="item galeria-trigger" onclick="abrirGaleria('festival')">
         <img src="images/festival.jpg" alt="Festival Unión de Pueblos" class="conoce-img ampliable">
         <p class="info clickeable"><strong>Festival Unión de Pueblos</strong> 📸 <span>(Ver fotos)</span></p>
       </div>
     </aside>
 
-    <!-- Centro: Asistente Virtual / Chat -->
     <section id="central">
       <div id="chat">
         <h2 class="section-title">Asistente Municipal</h2>
         <div id="chatBox" class="chat-window"></div>
         <div class="input-container">
-          <input type="text" id="mensaje" placeholder="Escribe tu mensaje...">
+          <input type="text" id="mensaje" placeholder="Escribe tu mensaje..." onclick="playClick()">
           <button id="btnEnviar">Enviar</button>
         </div>
         <div class="controls">
@@ -100,7 +91,6 @@
       </div>
     </section>
 
-    <!-- Derecha: Calendario -->
     <aside id="calendario">
       <h2 class="section-title">Calendario</h2>
       <div class="item galeria-trigger" onclick="abrirGaleria('padel')">
@@ -121,9 +111,8 @@
         </p>
       </div>
     </aside>
-
   </main>
 
-  <script src="script.js?v=4"></script>
+  <script src="script.js?v=6"></script>
 </body>
 </html>

@@ -1,6 +1,28 @@
-// Variable para almacenar el nombre del usuario y el contexto
+// Variable para almacenar el nombre del usuario y contexto
 let usuarioNombre = "Vecino/a";
 let contextoActual = null;
+
+// Base de datos de imágenes para la Galería (Lightbox)
+const galerias = {
+  tapsofc: [
+    { src: 'images/tapsofc.jpg', caption: 'Club Tapso FC - Plantel Principal' },
+    { src: 'images/tapsofc2.jpg', caption: 'Encuentro deportivo local' }
+  ],
+  hosteria: [
+    { src: 'images/hosteria.jpg', caption: 'Fachada de la Histórica Hostería de Tapso' },
+    { src: 'images/hosteria2.jpg', caption: 'Instalaciones y alrededores' }
+  ],
+  festival: [
+    { src: 'images/festival.jpg', caption: 'Festival Unión de Pueblos' },
+    { src: 'images/festival2.jpg', caption: 'Escenario y show en vivo' }
+  ],
+  padel: [
+    { src: 'images/padel-tapso.jpg', caption: 'Torneo y Liga de Pádel Tapso' }
+  ]
+};
+
+let galeriaActual = [];
+let indiceImagen = 0;
 
 // Respuestas variadas para cuando NO se encuentra la información
 const respuestasDesconocidas = [
@@ -11,13 +33,40 @@ const respuestasDesconocidas = [
   "Esa consulta excede mi conocimiento actual. Para ayudarte mejor, te recomiendo ponerte en contacto por **WhatsApp** desde el cuadro de redes oficiales."
 ];
 
-// Función para obtener una respuesta variante
 function obtenerRespuestaDesconocida() {
   const indice = Math.floor(Math.random() * respuestasDesconocidas.length);
   return respuestasDesconocidas[indice];
 }
 
-// Al cargar la página
+// ----------------------------------------------------
+// EFECTO DE SONIDO (AUDIO SINTETIZADO)
+// ----------------------------------------------------
+function playClick() {
+  try {
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(600, audioCtx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(200, audioCtx.currentTime + 0.08);
+    
+    gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.08);
+    
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    
+    osc.start();
+    osc.stop(audioCtx.currentTime + 0.08);
+  } catch (e) {
+    // Manejo en caso de que el navegador bloquee audio automático
+  }
+}
+
+// ----------------------------------------------------
+// INICIALIZACIÓN
+// ----------------------------------------------------
 document.addEventListener("DOMContentLoaded", function() {
   const modal = document.getElementById("loginModal");
   const btnComenzar = document.getElementById("btnComenzar");
@@ -27,6 +76,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
   if (btnComenzar) {
     btnComenzar.addEventListener("click", function() {
+      playClick();
       const nombreIngresado = inputNombre.value.trim();
       if (nombreIngresado !== "") {
         usuarioNombre = nombreIngresado;
@@ -36,7 +86,6 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   }
 
-  // Permitir presionar Enter en el modal de nombre
   if (inputNombre) {
     inputNombre.addEventListener("keypress", function(e) {
       if (e.key === "Enter") {
@@ -45,22 +94,26 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   }
 
-  // Permitir presionar Enter en el chat
   const inputMensaje = document.getElementById("mensaje");
   const btnEnviar = document.getElementById("btnEnviar");
 
   if (inputMensaje && btnEnviar) {
     inputMensaje.addEventListener("keypress", function(e) {
       if (e.key === "Enter") {
-        btnEnviar.click();
+        responder();
       }
     });
 
-    btnEnviar.addEventListener("click", responder);
+    btnEnviar.addEventListener("click", function() {
+      playClick();
+      responder();
+    });
   }
 });
 
-// Función para mostrar el saludo de bienvenida
+// ----------------------------------------------------
+// ASISTENTE DE CHAT
+// ----------------------------------------------------
 function mostrarSaludoInicial() {
   const chatBox = document.getElementById("chatBox");
   chatBox.innerHTML = `
@@ -69,7 +122,6 @@ function mostrarSaludoInicial() {
   mostrarSugerenciasIniciales();
 }
 
-// Muestra los botones de sugerencias
 function mostrarSugerenciasIniciales() {
   const chatBox = document.getElementById("chatBox");
   let contenedorChips = document.getElementById("sugerencias-container");
@@ -92,7 +144,6 @@ function mostrarSugerenciasIniciales() {
   `;
 }
 
-// Procesa el mensaje ingresado
 function responder() {
   const input = document.getElementById("mensaje");
   const texto = input.value.trim().toLowerCase();
@@ -100,13 +151,12 @@ function responder() {
 
   if (texto === "") return;
 
-  // Mostrar mensaje del usuario
   chatBox.innerHTML += `<p>👤 <strong>Tú:</strong> ${input.value}</p>`;
   input.value = "";
 
   let respuesta = "";
 
-  // 1. Detección de Saludos (hola, hols, buenas, buen dia, etc.)
+  // Detección de Saludos
   if (/^(hola|hols|buenas|buen|buenos|buenas noches|buenas tardes|que tal|como va|saludos)/i.test(texto)) {
     const saludos = [
       `¡Hola ${usuarioNombre}! ¿En qué puedo ayudarte hoy?`,
@@ -116,7 +166,7 @@ function responder() {
     respuesta = saludos[Math.floor(Math.random() * saludos.length)];
     contextoActual = null;
   }
-  // 2. Detección de Despedidas (chau, adios, nos vemos, etc.)
+  // Detección de Despedidas
   else if (/^(chau|adios|nos vemos|hasta luego|que tengas buen dia|gracias|muchas gracias)/i.test(texto)) {
     const despedidas = [
       `¡Hasta luego, ${usuarioNombre}! Que tengas un excelente día.`,
@@ -126,7 +176,7 @@ function responder() {
     respuesta = despedidas[Math.floor(Math.random() * despedidas.length)];
     contextoActual = null;
   }
-  // 3. Consultas por temas de la Base de Conocimiento
+  // Base de Conocimientos
   else if (texto.includes("muni") || texto.includes("municipalidad")) {
     respuesta = "La Municipalidad de Tapso está a tu disposición para trámites institucionales y atención vecinal.";
     contextoActual = "muni";
@@ -149,39 +199,79 @@ function responder() {
     respuesta = "Podés realizar trámites administrativos presencialmente en el Municipio o consultar vía WhatsApp.";
     contextoActual = "tramites";
   } else {
-    // Si no coincide con ninguna palabra clave, elige una respuesta variante que sugiere WhatsApp
     respuesta = obtenerRespuestaDesconocida();
     contextoActual = null;
   }
 
-  // Responder en el chat con formato y scroll automático
   chatBox.innerHTML += `<p>🤖 <strong>Asistente:</strong> ${formatearTexto(respuesta)}</p>`;
   chatBox.scrollTop = chatBox.scrollHeight;
 }
 
-// Función auxiliar para formatear negritas en el chat
 function formatearTexto(str) {
   return str.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
 }
 
-// Función al hacer clic en los chips/sugerencias
 function enviarSugerencia(palabra) {
+  playClick();
   const input = document.getElementById("mensaje");
   input.value = palabra;
   responder();
 }
 
-// Función para LIMPIAR el chat y RESTAURAR el saludo
 function limpiar() {
+  playClick();
   mostrarSaludoInicial();
 }
 
-// Función para alternar Modo Oscuro
 function toggleDarkMode() {
+  playClick();
   document.body.classList.toggle("dark-mode");
 }
 
-// Efecto de sonido básico (Click)
-function playClick() {
-  // Función para reproducir sonido de interacción si se desea asociar un audio
+// ----------------------------------------------------
+// GALERÍA DE IMÁGENES (LIGHTBOX)
+// ----------------------------------------------------
+function abrirGaleria(categoria) {
+  playClick();
+  if (!galerias[categoria] || galerias[categoria].length === 0) return;
+
+  galeriaActual = galerias[categoria];
+  indiceImagen = 0;
+
+  const modalGaleria = document.getElementById("galleryModal");
+  if (modalGaleria) {
+    modalGaleria.style.display = "flex";
+    actualizarImagenGaleria();
+  }
+}
+
+function actualizarImagenGaleria() {
+  const imgElem = document.getElementById("imgGaleria");
+  const captionElem = document.getElementById("captionGaleria");
+
+  if (imgElem && captionElem && galeriaActual[indiceImagen]) {
+    imgElem.src = galeriaActual[indiceImagen].src;
+    captionElem.innerText = galeriaActual[indiceImagen].caption;
+  }
+}
+
+function cambiarImagen(direccion) {
+  playClick();
+  indiceImagen += direccion;
+
+  if (indiceImagen < 0) {
+    indiceImagen = galeriaActual.length - 1;
+  } else if (indiceImagen >= galeriaActual.length) {
+    indiceImagen = 0;
+  }
+
+  actualizarImagenGaleria();
+}
+
+function cerrarGaleria() {
+  playClick();
+  const modalGaleria = document.getElementById("galleryModal");
+  if (modalGaleria) {
+    modalGaleria.style.display = "none";
+  }
 }

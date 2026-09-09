@@ -49,8 +49,23 @@ header { position: relative; width: 100%; text-align: center; background-color: 
 .banner-img { width: 100%; max-height: 250px; object-fit: cover; display: block; animation: flamear 6s ease-in-out infinite alternate; }
 @keyframes flamear { 0% { transform: scale(1.02) skewY(0deg); } 100% { transform: scale(1.02) skewY(-0.3deg); } }
 
+/* LOGO AGRANDADO Y ADAPTADO A MODO OSCURO */
 .logo-container { margin: 20px 0 20px 0; }
-.logo-municipio { width: 200px; height: auto; cursor: pointer; }
+.logo-municipio {
+  width: 250px; /* Tamaño más grande */
+  height: auto;
+  cursor: pointer;
+  transition: transform 0.2s ease, filter 0.3s ease;
+  display: inline-block;
+}
+
+body.dark-mode .logo-container {
+  background-color: rgba(255, 255, 255, 0.95); /* Fondo contenedor claro para resaltar en modo oscuro */
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+}
 
 /* ESTRUCTURA PRINCIPAL */
 #main { display: flex; justify-content: space-between; align-items: flex-start; padding: 20px; max-width: 1300px; margin: 0 auto; gap: 20px; }
@@ -63,7 +78,7 @@ header { position: relative; width: 100%; text-align: center; background-color: 
 .conoce-img { width: 100%; border-radius: 6px; max-height: 180px; object-fit: cover; margin-bottom: 10px; }
 .info { font-size: 0.9em; color: #444; line-height: 1.4; text-align: left; }
 
-/* CUADRO INDIVIDUAL DE CONTACTO Y REDES */
+/* CUADRO INDIVIDUAL DE REDES Y CONTACTO */
 .contacto-box {
   cursor: default !important;
   border: 1px solid #e2e8f0;
@@ -78,21 +93,60 @@ header { position: relative; width: 100%; text-align: center; background-color: 
   padding-bottom: 6px;
 }
 
-.icons-grid {
+/* REDES SOCIALES CENTRADAS */
+.icons-grid-centered {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
-  padding: 5px 0;
+  gap: 20px;
+  padding: 8px 0;
 }
 
-.icons-grid img {
-  width: 42px;
-  height: 42px;
+.icons-grid-centered img {
+  width: 44px;
+  height: 44px;
   transition: transform 0.2s ease;
 }
 
-.icons-grid img:hover {
+.icons-grid-centered img:hover {
   transform: scale(1.15);
+}
+
+/* BOTÓN DESTACADO DE WHATSAPP ABAJO DE TODO */
+.whatsapp-card-container {
+  margin-top: 15px;
+  margin-bottom: 20px;
+}
+
+.whatsapp-btn-main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background-color: #25d366;
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 0.95em;
+  padding: 12px 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3);
+  transition: all 0.2s ease;
+}
+
+.whatsapp-btn-main img {
+  width: 32px;
+  height: 32px;
+}
+
+.whatsapp-btn-main:hover {
+  background-color: #1ebc57;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(37, 211, 102, 0.4);
+}
+
+body.dark-mode .whatsapp-btn-main {
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.5);
 }
 
 /* CHATBOX Y CHIPS */

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>Asistente Tapso</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css?v=8">
+  <link rel="stylesheet" href="style.css?v=9">
 </head>
 <body>
 
@@ -48,7 +48,7 @@
   <!-- Contenedor principal -->
   <main id="main">
     
-    <!-- Columna Izquierda: Información Local y Redes -->
+    <!-- Columna Izquierda: Información Local, Redes y WhatsApp -->
     <aside id="conoce">
       <h2 class="section-title">Conocé Tapso</h2>
       
@@ -67,23 +67,28 @@
         <p class="info clickeable"><strong>Festival Unión de Pueblos</strong> 📸 <span>(Ver fotos)</span></p>
       </div>
 
-      <!-- Cuadro Individual para Redes y Contacto -->
+      <!-- Cuadro Individual para Redes Sociales Centradas -->
       <div class="item contacto-box">
-        <h3 class="sub-title">Contacto y Redes</h3>
-        <div class="icons-grid">
+        <h3 class="sub-title">Redes Oficiales</h3>
+        <div class="icons-grid-centered">
           <a href="https://www.facebook.com/municipalidadetapso" target="_blank" title="Facebook" onclick="playClick()">
             <img src="images/facebook.png" alt="Facebook">
           </a>
           <a href="https://www.instagram.com/tapsocultura" target="_blank" title="Instagram" onclick="playClick()">
             <img src="images/instagram.png" alt="Instagram">
           </a>
-          <a href="https://wa.me/549XXXXXXXXXX" target="_blank" title="WhatsApp" onclick="playClick()">
-            <img src="images/watsapp.png" alt="WhatsApp">
-          </a>
           <a href="https://maps.google.com/?q=Tapso+Catamarca" target="_blank" title="Ubicación" onclick="playClick()">
             <img src="images/ubicacion.png" alt="Ubicación">
           </a>
         </div>
+      </div>
+
+      <!-- Botón de WhatsApp Destacado Abajo de Todo -->
+      <div class="whatsapp-card-container">
+        <a href="https://wa.me/549XXXXXXXXXX" target="_blank" class="whatsapp-btn-main" onclick="playClick()">
+          <img src="images/watsapp.png" alt="WhatsApp">
+          <span>¿Tenés dudas? Escribinos por WhatsApp</span>
+        </a>
       </div>
     </aside>
 
@@ -125,6 +130,6 @@
     </aside>
   </main>
 
-  <script src="script.js?v=6"></script>
+  <script src="script.js?v=7"></script>
 </body>
 </html>

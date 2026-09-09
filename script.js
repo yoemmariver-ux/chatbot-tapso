@@ -26,20 +26,23 @@ function playReceive() {
 }
 
 // ----------------------------------------------------
-// BASE DE DATOS DE GALERÍAS DE IMÁGENES
+// BASE DE DATOS DE GALERÍAS DE IMÁGENES (NOMBRES EXACTOS)
 // ----------------------------------------------------
 const galerias = {
   tapsofc: [
-    { src: 'images/tapsofc.jpg', caption: 'Club Tapso FC - Plantel Principal' },
-    { src: 'images/tapsofc2.jpg', caption: 'Encuentro deportivo local' }
+    { src: 'images/tapsofc.jpg', caption: 'Club Tapso FC - Escudo Oficial' },
+    { src: 'images/tapsofc1.jpg', caption: 'Club Tapso FC - Institucional' },
+    { src: 'images/tapsofc2.jpg', caption: 'Club Tapso FC - Plantel Principal' }
   ],
   hosteria: [
-    { src: 'images/hosteria.jpg', caption: 'Fachada de la Histórica Hostería de Tapso' },
-    { src: 'images/hosteria2.jpg', caption: 'Instalaciones y alrededores' }
+    { src: 'images/hosteria.jpg', caption: 'La Histórica Hostería de Tapso - Entrada Principal' },
+    { src: 'images/hosteria1.jpg', caption: 'Hostería de Tapso - Fachada Exterior' },
+    { src: 'images/hosteria2.jpg', caption: 'Hostería de Tapso - Comedor y Galería' },
+    { src: 'images/hosteria3.jpg', caption: 'Hostería de Tapso - Sala de Estar y TV' },
+    { src: 'images/hosteria4.jpg', caption: 'Hostería de Tapso - Habitaciones' }
   ],
   festival: [
-    { src: 'images/festival.jpg', caption: 'Festival Unión de Pueblos' },
-    { src: 'images/festival2.jpg', caption: 'Escenario y show en vivo' }
+    { src: 'images/festival.jpg', caption: 'Festival Unión de Pueblos' }
   ],
   padel: [
     { src: 'images/padel-tapso.jpg', caption: 'Torneo y Liga de Pádel Tapso' }

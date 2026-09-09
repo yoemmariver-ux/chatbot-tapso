@@ -55,7 +55,9 @@ header { position: relative; width: 100%; text-align: center; background-color: 
 /* ESTRUCTURA PRINCIPAL */
 #main { display: flex; justify-content: space-between; align-items: flex-start; padding: 20px; max-width: 1300px; margin: 0 auto; gap: 20px; }
 #conoce, #calendario { flex: 1; max-width: 300px; }
-#central { flex: 2; background-color: #ffffff; padding: 20px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+#central { flex: 2; display: flex; flex-direction: column; gap: 20px; }
+
+#chat { background-color: #ffffff; padding: 20px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
 
 .section-title { font-size: 1.3em; color: #0056b3; text-align: center; margin-top: 0; margin-bottom: 15px; border-bottom: 2px solid #e0e0e0; padding-bottom: 5px; }
 
@@ -63,36 +65,52 @@ header { position: relative; width: 100%; text-align: center; background-color: 
 .conoce-img { width: 100%; border-radius: 6px; max-height: 180px; object-fit: cover; margin-bottom: 10px; }
 .info { font-size: 0.9em; color: #444; line-height: 1.4; text-align: left; }
 
-/* CUADRO INDIVIDUAL DE CONTACTO Y REDES */
-.contacto-box {
-  cursor: default !important;
+/* BLOQUE CENTRADO DESTACADO DE REDES Y CONTACTO */
+.contacto-banner {
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 18px 20px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
   border: 1px solid #e2e8f0;
 }
 
-.sub-title {
-  font-size: 1em;
+.sub-title-contacto {
+  font-size: 1.05em;
   color: #0056b3;
   margin-top: 0;
-  margin-bottom: 12px;
-  border-bottom: 1px dashed #cbd5e1;
-  padding-bottom: 6px;
+  margin-bottom: 15px;
+  font-weight: bold;
 }
 
-.icons-grid {
+.icons-row {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  padding: 5px 0;
+  flex-wrap: wrap;
+  gap: 15px;
 }
 
-.icons-grid img {
-  width: 42px;
-  height: 42px;
-  transition: transform 0.2s ease;
+.icons-row a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: #555;
+  font-size: 0.85em;
+  font-weight: bold;
+  transition: transform 0.2s ease, color 0.2s ease;
 }
 
-.icons-grid img:hover {
-  transform: scale(1.15);
+.icons-row a:hover {
+  transform: translateY(-3px);
+  color: #0056b3;
+}
+
+.icons-row img {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 6px;
 }
 
 /* CHATBOX Y CHIPS */
@@ -111,10 +129,12 @@ header { position: relative; width: 100%; text-align: center; background-color: 
 
 /* MODO OSCURO */
 body.dark-mode { background-color: #181818; color: #f0f0f0; }
-body.dark-mode header, body.dark-mode #central, body.dark-mode .item, body.dark-mode .modal-content { background-color: #242424; color: #ffffff; }
+body.dark-mode header, body.dark-mode #chat, body.dark-mode .contacto-banner, body.dark-mode .item, body.dark-mode .modal-content { background-color: #242424; color: #ffffff; }
 body.dark-mode .chat-window { background-color: #2d2d2d; border-color: #444; }
 body.dark-mode .theme-toggle-btn { background-color: #333; color: #fff; border-color: #555; }
-body.dark-mode .sub-title { color: #64b5f6; border-bottom-color: #444; }
+body.dark-mode .sub-title-contacto { color: #64b5f6; }
+body.dark-mode .icons-row a { color: #ccc; }
+body.dark-mode .icons-row a:hover { color: #64b5f6; }
 body.dark-mode .chip-btn { background-color: #333; color: #64b5f6; border-color: #444; }
 body.dark-mode .chip-btn:hover { background-color: #0056b3; color: #ffffff; }
 

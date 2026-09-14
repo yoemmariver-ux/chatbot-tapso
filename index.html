@@ -18,43 +18,35 @@
     </div>
   </div>
 
-  <!-- BANNER SUPERIOR DE PUNTA A PUNTA -->
+  <!-- BANNER SUPERIOR DE PUNTA A PUNTA CON EFECTO BANDERA -->
   <header class="header-banner">
     <button class="btn-modo-top" id="btnModoOscuro">🌙 Modo</button>
     <img src="banner.jpg" alt="Banner Tapso" class="banner-img">
   </header>
 
-  <!-- SUB-HEADER: CLIMA Y LOGO MUNICIPAL -->
-  <div class="header-sub-container">
-    <!-- WIDGET CLIMA (Ubicado a la izquierda, sobre Conocé Tapso) -->
-    <div class="clima-container" id="climaContainer">
-      <div class="clima-icono" id="climaIcono">☀️</div>
-      <div class="clima-info">
-        <span class="clima-temp" id="climaTemp">--°C</span>
-        <span class="clima-ciudad">Tapso, Catamarca</span>
-      </div>
-    </div>
-
-    <!-- LOGO MUNICIPAL CENTRADO -->
-    <div class="logo-container-center">
-      <img src="logo.png" alt="Logo Municipio de Tapso" class="logo-img">
-    </div>
-
-    <!-- ESPACIO RESERVADO PARA MANTENER EL CENTRADO DEL LOGO EN PC -->
-    <div class="header-spacer"></div>
-  </div>
-
-  <!-- LAYOUT PRINCIPAL -->
+  <!-- LAYOUT PRINCIPAL (3 COLUMNAS) -->
   <main class="main-layout">
-    <!-- COLUMNA IZQUIERDA: CONOCÉ TAPSO -->
+    
+    <!-- COLUMNA IZQUIERDA -->
     <aside>
+      <!-- WIDGET DEL CLIMA (Alineado arriba de Conocé Tapso y a la altura del logo) -->
+      <div class="clima-container" id="climaContainer">
+        <div class="clima-icono" id="climaIcono">☀️</div>
+        <div class="clima-info">
+          <span class="clima-temp" id="climaTemp">--°C</span>
+          <span class="clima-ciudad">Tapso, Catamarca</span>
+        </div>
+      </div>
+
       <h2 class="titulo-seccion">Conocé Tapso</h2>
+      
       <div class="card-lateral">
         <img src="lugar1.jpg" alt="Lugar Turístico" class="card-img gallery-trigger" data-caption="Atractivos Turísticos de Tapso">
         <div class="card-texto">
           <p>Descubrí los rincones naturales e históricos de nuestra localidad.</p>
         </div>
       </div>
+
       <div class="card-lateral">
         <img src="lugar2.jpg" alt="Cultura y Tradición" class="card-img gallery-trigger" data-caption="Cultura y Tradición en Tapso">
         <div class="card-texto">
@@ -63,8 +55,13 @@
       </div>
     </aside>
 
-    <!-- COLUMNA CENTRAL: ASISTENTE MUNICIPAL (CHAT) -->
+    <!-- COLUMNA CENTRAL: LOGO Y CHAT -->
     <section class="columna-chat">
+      <!-- LOGO DEL MUNICIPIO CENTRADO -->
+      <div class="logo-container-center">
+        <img src="logo.png" alt="Logo Municipio de Tapso" class="logo-img">
+      </div>
+
       <div class="chat-card">
         <h2 class="chat-titulo">🤖 Asistente Municipal</h2>
         <div class="chat-box" id="chatBox">
@@ -103,6 +100,7 @@
         </div>
       </div>
     </aside>
+
   </main>
 
   <!-- MODAL DE GALERÍA EN PANTALLA COMPLETA (LIGHTBOX) -->

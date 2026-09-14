@@ -52,16 +52,15 @@ document.addEventListener("DOMContentLoaded", () => {
   function procesarConsulta(mensaje) {
     agregarMensaje(mensaje, "usuario");
     
-    // Respuesta simulada del asistente
     setTimeout(() => {
-      let respuesta = "Gracias por escribirnos. Para procesar tu solicitud adecuadamente, pods comunicarte con la mesa de entrada de la Municipalidad de Tapso.";
+      let respuesta = "Gracias por escribirnos. Para procesar tu solicitud adecuadamente, podés comunicarte con la mesa de entrada de la Municipalidad de Tapso.";
       const msgMinus = mensaje.toLowerCase();
 
       if (msgMinus.includes("horario")) {
-        respuesta = "El horario de atencion municipal es de Lunes a Viernes de 07:00 a 13:00 hs.";
+        respuesta = "El horario de atención municipal es de Lunes a Viernes de 07:00 a 13:00 hs.";
       } else if (msgMinus.includes("tramite") || msgMinus.includes("trámite")) {
-        respuesta = "Podes realizar trámites de rentas, licencias y habilitaciones comerciales presencialmente en el municipio.";
-      } else if (msgMinus.includes("contacto") || msgMinus.includes("telefono")) {
+        respuesta = "Podés realizar trámites de rentas, licencias y habilitaciones comerciales presencialmente en el municipio.";
+      } else if (msgMinus.includes("contacto") || msgMinus.includes("telefono") || msgMinus.includes("teléfono")) {
         respuesta = "Teléfono de contacto municipal: (383) 123-4567 | Punto Digital Tapso.";
       }
 
@@ -170,7 +169,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!tempElem || !iconoElem) return;
 
-    // Coordenadas aproximadas de Tapso, Catamarca
     const lat = -28.32;
     const lon = -65.11;
     const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`;
@@ -185,7 +183,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         tempElem.textContent = `${temp}°C`;
 
-        // Selección de emoji según código meteorológico
         if (code === 0) iconoElem.textContent = "☀️";
         else if (code >= 1 && code <= 3) iconoElem.textContent = "⛅";
         else if (code >= 45 && code <= 48) iconoElem.textContent = "🌫️";

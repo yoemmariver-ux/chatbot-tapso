@@ -189,28 +189,44 @@ body.dark-mode .chip-btn:hover {
 }
 
 /* ====================================================
-   CONTENEDOR DE SUB-HEADER (CLIMA Y LOGO)
+   LAYOUT PRINCIPAL EN PC (3 COLUMNAS)
    ==================================================== */
-.header-sub-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+.main-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr 300px;
+  gap: 20px;
   max-width: 1300px;
-  margin: 10px auto 0 auto;
+  margin: 15px auto 20px auto;
   padding: 0 15px;
 }
 
-/* WIDGET CLIMA (Misma altura que el logo: 75px) */
+.titulo-seccion {
+  font-size: 1.2rem;
+  color: #006064;
+  margin-bottom: 12px;
+  border-bottom: 2px solid #00838f;
+  padding-bottom: 4px;
+}
+
+body.dark-mode .titulo-seccion {
+  color: #4dd0e1;
+  border-bottom-color: #4dd0e1;
+}
+
+/* ====================================================
+   WIDGET CLIMA (COLUMNA IZQUIERDA)
+   ==================================================== */
 .clima-container {
   display: flex;
   align-items: center;
   gap: 12px;
   height: 75px;
-  width: 280px; /* Alineado al ancho de "Conocé Tapso" */
   background: #ffffff;
   padding: 10px 15px;
   border-radius: 8px;
+  margin-bottom: 15px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  box-sizing: border-box;
 }
 
 .clima-icono {
@@ -242,44 +258,23 @@ body.dark-mode .clima-ciudad {
   color: #aaaaaa;
 }
 
+/* ====================================================
+   LOGO (COLUMNA CENTRAL)
+   ==================================================== */
 .logo-container-center {
   text-align: center;
-  flex: 1;
+  margin-bottom: 15px;
+  height: 75px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .logo-img {
   height: 75px;
   width: auto;
-  display: inline-block;
-}
-
-.header-spacer {
-  width: 280px; /* Equilibra la barra para centrar el logo en PC */
-}
-
-/* ====================================================
-   LAYOUT EN PC (3 COLUMNAS MANTENIDAS)
-   ==================================================== */
-.main-layout {
-  display: grid;
-  grid-template-columns: 280px 1fr 300px;
-  gap: 20px;
-  max-width: 1300px;
-  margin: 10px auto 20px auto;
-  padding: 0 15px;
-}
-
-.titulo-seccion {
-  font-size: 1.2rem;
-  color: #006064;
-  margin-bottom: 12px;
-  border-bottom: 2px solid #00838f;
-  padding-bottom: 4px;
-}
-
-body.dark-mode .titulo-seccion {
-  color: #4dd0e1;
-  border-bottom-color: #4dd0e1;
+  max-width: 100%;
+  object-fit: contain;
 }
 
 /* ====================================================
@@ -309,15 +304,6 @@ body.dark-mode .titulo-seccion {
 .card-texto {
   margin-top: 8px;
   font-size: 0.9rem;
-}
-
-.card-texto a {
-  color: #00838f;
-  text-decoration: none;
-}
-
-body.dark-mode .card-texto a {
-  color: #80deea;
 }
 
 /* ====================================================
@@ -589,22 +575,6 @@ body.dark-mode .detalle-evento {
    DISEÑO RESPONSIVO Y ORDEN EN CELULARES
    ==================================================== */
 @media (max-width: 992px) {
-  .header-sub-container {
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .header-spacer {
-    display: none;
-  }
-
-  .clima-container {
-    width: 100%;
-    max-width: 320px;
-    justify-content: center;
-    height: 65px;
-  }
-
   .banner-img {
     height: 120px;
   }

@@ -12,6 +12,7 @@ let esperandoEleccionSubtema = null; // Guardará la categoría sobre la que se 
 const soundClick = new Audio('sounds/click.mp3');
 const soundSend = new Audio('sounds/send.mp3');
 const soundReceive = new Audio('sounds/receive.mp3');
+const soundBienvenida = new Audio('sounds/bienvenida.mp3'); // Tu audio grabado local
 
 function playClick() {
   soundClick.currentTime = 0;
@@ -28,21 +29,16 @@ function playReceive() {
 }
 
 // ----------------------------------------------------
-// SÍNTESIS DE VOZ DINÁMICA NATIVA (Sin OpenAI / Sin CORS)
+// SÍNTESIS DE VOZ NATIVA (Para leer el nombre del chat)
 // ----------------------------------------------------
 function hablarTexto(mensaje) {
   if ('speechSynthesis' in window) {
-    // Cancela cualquier audio que se esté reproduciendo previamente
     window.speechSynthesis.cancel();
-
     const utterance = new SpeechSynthesisUtterance(mensaje);
     utterance.lang = 'es-AR'; // Voz configurada en español de Argentina
-    utterance.rate = 1.0;     // Velocidad normal
-    utterance.pitch = 1.0;    // Tono normal
-
+    utterance.rate = 1.0;     
+    utterance.pitch = 1.0;    
     window.speechSynthesis.speak(utterance);
-  } else {
-    console.warn("Este navegador no soporta síntesis de voz nativa.");
   }
 }
 
@@ -202,7 +198,7 @@ const modulosConocimiento = {
       },
       policia_santiago: {
         palabrasClave: ["santiago", "destacamento 15", "frias", "frías"],
-        respuesta: "**Policía de Santiago del Estero:** En el sector este funciona el Destacamento N° 15, en coordinación con la Comisaría Comunitaria N° 23 de Frías."
+        respuesta: "**Policía de Santiago del Estero:** En el sector este funciona el Destacamento N° 15, en coordination con la Comisaría Comunitaria N° 23 de Frías."
       }
     }
   },
@@ -260,10 +256,23 @@ document.addEventListener("DOMContentLoaded", function() {
         usuarioNombre = nombreIngresado;
       }
       modal.style.display = "none";
+      
+      // 1. Dibuja el saludo inicial con el nombre en el chat
       mostrarSaludoInicial();
 
-      // Saludo vocal adaptado dinámicamente al nombre ingresado
-      hablarTexto(`¡Hola ${usuarioNombre}! Bienvenido al portal oficial de la Municipalidad de Tapso. Soy tu asistente virtual, ¿en qué te puedo ayudar hoy?`);
+      // 2. Reproduce tu audio .mp3 grabado localmente desde la carpeta 'sounds/'
+      soundBienvenida.currentTime = 0;
+      soundBienvenida.play().catch((err) => {
+        console.warn("No se pudo reproducir sounds/bienvenida.mp3:", err);
+      });
+
+      // 3. Lee automáticamente la primera línea del chat para incluir el nombre personalizado
+      setTimeout(() => {
+        const primerParrafo = document.querySelector("#chatBox p");
+        if (primerParrafo) {
+          hablarTexto(primerParrafo.innerText);
+        }
+      }, 400);
     });
   }
 
@@ -387,7 +396,7 @@ function responder() {
       let moduloGenericoEncontrado = null;
       let claveModulo = null;
 
-      for (const [key, modulo] of Object.entries(modulosConocimiento)) {
+      for (const [key, modulo] of Object.entries(modulosConocementos || modulosConocimiento)) {
         if (modulo.palabrasClaveGenericas.some(kw => texto.includes(kw))) {
           moduloGenericoEncontrado = modulo.preguntaGenerica;
           claveModulo = key;

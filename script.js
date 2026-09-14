@@ -28,51 +28,21 @@ function playReceive() {
 }
 
 // ----------------------------------------------------
-// SÍNTESIS DE VOZ HIPERREALISTA (OPENAI TEXT-TO-SPEECH)
+// SÍNTESIS DE VOZ DINÁMICA NATIVA (Sin OpenAI / Sin CORS)
 // ----------------------------------------------------
-async function hablarTexto(mensaje) {
-  // =========================================================
-  // PEGÁ TU CLAVE DE OPENAI AQUÍ ADENTRO DE LAS COMILLAS:
-  const OPENAI_API_KEY = "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";
-  // =========================================================
+function hablarTexto(mensaje) {
+  if ('speechSynthesis' in window) {
+    // Cancela cualquier audio que se esté reproduciendo previamente
+    window.speechSynthesis.cancel();
 
-  // Si no pusiste la clave, usa la voz básica del navegador como respaldo
-  if (OPENAI_API_KEY.includes("PEGAR_AQUI_TU_API_KEY")) {
-    if ('speechSynthesis' in window) {
-      window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(mensaje);
-      utterance.lang = 'es-AR';
-      window.speechSynthesis.speak(utterance);
-    }
-    return;
-  }
+    const utterance = new SpeechSynthesisUtterance(mensaje);
+    utterance.lang = 'es-AR'; // Voz configurada en español de Argentina
+    utterance.rate = 1.0;     // Velocidad normal
+    utterance.pitch = 1.0;    // Tono normal
 
-  try {
-    const response = await fetch("https://api.openai.com/v1/audio/speech", {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${OPENAI_API_KEY}`,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        model: "tts-1",
-        input: mensaje,
-        voice: "nova" // Opciones: 'nova', 'alloy', 'onyx', 'echo', 'fable', 'shimmer'
-      })
-    });
-
-    if (!response.ok) {
-      console.error("Error al generar voz con OpenAI:", response.status, response.statusText);
-      return;
-    }
-
-    const blob = await response.blob();
-    const audioUrl = URL.createObjectURL(blob);
-    const audio = new Audio(audioUrl);
-    audio.play();
-
-  } catch (error) {
-    console.error("Error al conectar con OpenAI:", error);
+    window.speechSynthesis.speak(utterance);
+  } else {
+    console.warn("Este navegador no soporta síntesis de voz nativa.");
   }
 }
 
@@ -292,7 +262,7 @@ document.addEventListener("DOMContentLoaded", function() {
       modal.style.display = "none";
       mostrarSaludoInicial();
 
-      // Saludo por voz actualizado de la Municipalidad de Tapso
+      // Saludo vocal adaptado dinámicamente al nombre ingresado
       hablarTexto(`¡Hola ${usuarioNombre}! Bienvenido al portal oficial de la Municipalidad de Tapso. Soy tu asistente virtual, ¿en qué te puedo ayudar hoy?`);
     });
   }

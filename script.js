@@ -19,7 +19,7 @@ function cargarFechaActualWidget() {
 
   // Capitalizar primera letra (Ej: "Lunes, 14 Septiembre")
   fechaTexto = fechaTexto.charAt(0).toUpperCase() + fechaTexto.slice(1);
-  fechaTexto = fechaTexto.replace(" de ", " "); // Formato limpio como el widget de la foto
+  fechaTexto = fechaTexto.replace(" de ", " "); // Formato limpio
 
   elemFecha.textContent = fechaTexto;
 }
@@ -278,7 +278,7 @@ document.addEventListener("DOMContentLoaded", function() {
       
       if (modal) modal.style.display = "none";
       mostrarSaludoInicial();
-      hablarTexto(`Bienvenido ${usuarioNombre}`);
+      hablarTexto(`¡Bienvenido ${usuarioNombre}! ¿Cómo estás? ¡Estoy para ayudarte!`);
     });
   }
 
@@ -317,7 +317,7 @@ function mostrarSaludoInicial() {
 
   chatBox.innerHTML = `
     <div class="chat-mensaje asistente">
-      🤖 <strong>Asistente:</strong> ¡Hola <strong>${usuarioNombre}</strong>! Bienvenido/a al portal de Tapso. ¿En qué te puedo ayudar hoy?
+      🤖 <strong>Asistente:</strong> ¡Bienvenido/a, <strong>${usuarioNombre}</strong>! ¿Cómo estás? ¡Estoy para ayudarte!
     </div>
   `;
   mostrarSugerenciasIniciales();

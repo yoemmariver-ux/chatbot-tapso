@@ -4,7 +4,7 @@ let temaActual = null;
 let contadorConsultasTema = 0;
 
 // Estado para controlar el flujo de conversación interactivo
-let esperandoEleccionSubtema = null; // Guardará la categoría sobre la que se ofreció elegir
+let esperandoEleccionSubtema = null;
 
 // ----------------------------------------------------
 // SISTEMA DE AUDIO (Carpeta 'sounds/')
@@ -33,14 +33,11 @@ function playReceive() {
 // ----------------------------------------------------
 function hablarTexto(mensaje) {
   if ('speechSynthesis' in window) {
-    // Cancelar cualquier audio anterior
     window.speechSynthesis.cancel();
-
     const utterance = new SpeechSynthesisUtterance(mensaje);
-    utterance.lang = 'es-AR'; // Voz en español
-    utterance.rate = 1.0;     // Velocidad de lectura
-    utterance.pitch = 1.0;    // Tono
-
+    utterance.lang = 'es-AR';
+    utterance.rate = 1.0;
+    utterance.pitch = 1.0;
     window.speechSynthesis.speak(utterance);
   }
 }
@@ -62,6 +59,9 @@ const galerias = {
     { src: 'images/hosteria4.jpg', caption: 'Hostería de Tapso - Habitaciones' }
   ],
   festival: [
+    { src: 'images/festival.jpg', caption: 'Festival Unión de Pueblos' }
+  ],
+  festivales: [
     { src: 'images/festival.jpg', caption: 'Festival Unión de Pueblos' }
   ],
   padel: [
@@ -225,9 +225,6 @@ const modulosConocimiento = {
   }
 };
 
-// ----------------------------------------------------
-// RESPUESTAS VARIADAS PARA INFORMACIÓN NO ENCONTRADA
-// ----------------------------------------------------
 const respuestasDesconocidas = [
   "Lo siento, por el momento no cuento con esa información específica. Te sugiero consultar directamente al Municipio a través de nuestro botón de **WhatsApp** en la sección de contacto.",
   "No tengo esa respuesta en mi base de datos actual. Si querés una atención más personalizada, podés enviarnos un mensaje por **WhatsApp** usando el enlace que está abajo.",
@@ -247,28 +244,27 @@ function obtenerRespuestaDesconocida() {
 document.addEventListener("DOMContentLoaded", function() {
   const modal = document.getElementById("loginModal");
   const btnComenzar = document.getElementById("btnComenzar");
-  const inputNombre = document.getElementById("nombre");
+  const inputNombre = document.getElementById("nombreInput") || document.getElementById("nombre");
 
   if (modal) modal.style.display = "flex";
 
   if (btnComenzar) {
     btnComenzar.addEventListener("click", function() {
       playClick();
-      const nombreIngresado = inputNombre.value.trim();
-      if (nombreIngresado !== "") {
-        usuarioNombre = nombreIngresado;
+      
+      if (inputNombre && inputNombre.value.trim() !== "") {
+        usuarioNombre = inputNombre.value.trim();
       }
-      modal.style.display = "none";
+      
+      if (modal) modal.style.display = "none";
       mostrarSaludoInicial();
-
-      // Reproducir por voz únicamente "Bienvenido [Nombre]"
       hablarTexto(`Bienvenido ${usuarioNombre}`);
     });
   }
 
   if (inputNombre) {
     inputNombre.addEventListener("keypress", function(e) {
-      if (e.key === "Enter") {
+      if (e.key === "Enter" && btnComenzar) {
         btnComenzar.click();
       }
     });
@@ -277,13 +273,15 @@ document.addEventListener("DOMContentLoaded", function() {
   const inputMensaje = document.getElementById("mensaje");
   const btnEnviar = document.getElementById("btnEnviar");
 
-  if (inputMensaje && btnEnviar) {
+  if (inputMensaje) {
     inputMensaje.addEventListener("keypress", function(e) {
       if (e.key === "Enter") {
         responder();
       }
     });
+  }
 
+  if (btnEnviar) {
     btnEnviar.addEventListener("click", function() {
       responder();
     });
@@ -291,26 +289,23 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 // ----------------------------------------------------
-// LÓGICA DEL CHAT Y ASISTENTE VIRTUAL DE CONVERSACIÓN
+// LÓGICA DEL CHAT Y ASISTENTE VIRTUAL
 // ----------------------------------------------------
 function mostrarSaludoInicial() {
   const chatBox = document.getElementById("chatBox");
+  if (!chatBox) return;
+
   chatBox.innerHTML = `
-    <p>🤖 <strong>Asistente:</strong> ¡Hola <strong>${usuarioNombre}</strong>! Bienvenido/a al portal de Tapso. ¿En qué te puedo ayudar hoy?</p>
+    <div class="chat-mensaje asistente">
+      🤖 <strong>Asistente:</strong> ¡Hola <strong>${usuarioNombre}</strong>! Bienvenido/a al portal de Tapso. ¿En qué te puedo ayudar hoy?
+    </div>
   `;
   mostrarSugerenciasIniciales();
 }
 
 function mostrarSugerenciasIniciales() {
-  const chatBox = document.getElementById("chatBox");
-  let contenedorChips = document.getElementById("sugerencias-container");
-
-  if (!contenedorChips) {
-    contenedorChips = document.createElement("div");
-    contenedorChips.id = "sugerencias-container";
-    contenedorChips.className = "sugerencias-container";
-    chatBox.parentNode.insertBefore(contenedorChips, chatBox.nextSibling);
-  }
+  const contenedorChips = document.getElementById("sugerencias-container");
+  if (!contenedorChips) return;
 
   contenedorChips.innerHTML = `
     <button class="chip-btn" onclick="enviarSugerencia('Lugares y Distritos')">📍 Lugares y Distritos</button>
@@ -326,21 +321,26 @@ function mostrarSugerenciasIniciales() {
 
 function responder() {
   const input = document.getElementById("mensaje");
+  if (!input) return;
+
   const textoOriginal = input.value.trim();
   const texto = textoOriginal.toLowerCase();
   const chatBox = document.getElementById("chatBox");
 
-  if (texto === "") return;
+  if (texto === "" || !chatBox) return;
 
-  // Sonido de envío
   playSend();
 
-  chatBox.innerHTML += `<p>👤 <strong>Tú:</strong> ${textoOriginal}</p>`;
+  // Insertar mensaje del usuario con clase CSS
+  chatBox.innerHTML += `
+    <div class="chat-mensaje usuario">
+      👤 <strong>Tú:</strong> ${textoOriginal}
+    </div>
+  `;
   input.value = "";
 
   let respuesta = "";
 
-  // 1. EVALUAR SALUDOS
   if (/^(hola|hols|buenas|buen|buenos|buenas noches|buenas tardes|que tal|como va|saludos)/i.test(texto)) {
     const saludos = [
       `¡Hola ${usuarioNombre}! ¿En qué puedo ayudarte hoy?`,
@@ -350,7 +350,6 @@ function responder() {
     respuesta = saludos[Math.floor(Math.random() * saludos.length)];
     esperandoEleccionSubtema = null;
   }
-  // 2. EVALUAR DESPEDIDAS
   else if (/^(chau|adios|nos vemos|hasta luego|que tengas buen dia|gracias|muchas gracias)/i.test(texto)) {
     const despedidas = [
       `¡Hasta luego, ${usuarioNombre}! Que tengas un excelente día.`,
@@ -360,12 +359,10 @@ function responder() {
     respuesta = despedidas[Math.floor(Math.random() * despedidas.length)];
     esperandoEleccionSubtema = null;
   }
-  // 3. EVALUAR UBICACIÓN DIRECTA
   else if (["ubicacion", "ubicación", "donde queda", "dónde queda", "como llegar", "cómo llegar", "mapa", "ruta 157"].some(kw => texto.includes(kw))) {
     respuesta = "Tapso cuenta con una particularidad geopolítica: se encuentra dividida entre dos provincias. El sector oeste pertenece al Departamento El Alto (Catamarca) y el sector este al Departamento Choya (Santiago del Estero). La línea de separación son las vías del ferrocarril. Se ubica estratégicamente sobre la Ruta Nacional N° 157.";
     esperandoEleccionSubtema = null;
   }
-  // 4. EVALUAR SUBTEMAS DIRECTOS
   else {
     let subtemaEncontrado = null;
     for (const modulo of Object.values(modulosConocimiento)) {
@@ -382,7 +379,6 @@ function responder() {
       respuesta = subtemaEncontrado;
       esperandoEleccionSubtema = null;
     }
-    // 5. EVALUAR SI ES UNA CONSULTA GENÉRICA
     else {
       let moduloGenericoEncontrado = null;
       let claveModulo = null;
@@ -399,11 +395,9 @@ function responder() {
         respuesta = moduloGenericoEncontrado;
         esperandoEleccionSubtema = claveModulo;
       }
-      // 6. SI ESTÁBAMOS ESPERANDO UNA ELECCIÓN Y DICE "SÍ / BUENO / DALE"
       else if (esperandoEleccionSubtema && /^(si|sí|bueno|dale|a ver|contame|obvio)/i.test(texto)) {
         respuesta = `¡Bárbaro! Escribime cuál de las opciones que te mencioné te gustaría conocer más a fondo.`;
       }
-      // 7. RESPUESTA NO ENCONTRADA
       else {
         respuesta = obtenerRespuestaDesconocida();
         esperandoEleccionSubtema = null;
@@ -411,10 +405,14 @@ function responder() {
     }
   }
 
-  // Simulación de delay y sonido de recepción
   setTimeout(() => {
     playReceive();
-    chatBox.innerHTML += `<p>🤖 <strong>Asistente:</strong> ${formatearTexto(respuesta)}</p>`;
+    // Insertar mensaje del asistente con clase CSS
+    chatBox.innerHTML += `
+      <div class="chat-mensaje asistente">
+        🤖 <strong>Asistente:</strong> ${formatearTexto(respuesta)}
+      </div>
+    `;
     chatBox.scrollTop = chatBox.scrollHeight;
   }, 300);
 }
@@ -425,11 +423,18 @@ function formatearTexto(str) {
 
 function enviarSugerencia(palabra) {
   const input = document.getElementById("mensaje");
-  input.value = palabra;
+  if (input) {
+    input.value = palabra;
+    responder();
+  }
+}
+
+// Alias de funciones para compatibilidad con HTML
+function enviarMensaje() {
   responder();
 }
 
-function limpiar() {
+function limpiarChat() {
   playClick();
   temaActual = null;
   contadorConsultasTema = 0;
@@ -437,9 +442,13 @@ function limpiar() {
   mostrarSaludoInicial();
 }
 
-function toggleDarkMode() {
+function toggleModo() {
   playClick();
   document.body.classList.toggle("dark-mode");
+}
+
+function toggleDarkMode() {
+  toggleModo();
 }
 
 // ----------------------------------------------------
@@ -450,6 +459,18 @@ function abrirGaleria(categoria) {
   if (!galerias[categoria] || galerias[categoria].length === 0) return;
 
   galeriaActual = galerias[categoria];
+  indiceImagen = 0;
+
+  const modalGaleria = document.getElementById("galleryModal");
+  if (modalGaleria) {
+    modalGaleria.style.display = "flex";
+    actualizarImagenGaleria();
+  }
+}
+
+function abrirImagenUnica(src, caption) {
+  playClick();
+  galeriaActual = [{ src: src, caption: caption }];
   indiceImagen = 0;
 
   const modalGaleria = document.getElementById("galleryModal");

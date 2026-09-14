@@ -18,7 +18,7 @@
     </div>
   </div>
 
-  <!-- BANNER SUPERIOR CON MODO OSCURO ARRIBA Y LOGO MUNICIPAL -->
+  <!-- BANNER SUPERIOR CON MODO OSCURO Y LOGO MUNICIPAL -->
   <header class="header-banner">
     <button id="btnModo" class="btn-modo-top" onclick="toggleModo()">🌙 Modo Oscuro</button>
     <img src="images/banner-tapso.png" alt="Municipalidad de Tapso - 200 Años" class="banner-img">
@@ -71,21 +71,12 @@
         <div id="chatBox" class="chat-box"></div>
 
         <!-- SUGERENCIAS / FLUJO DE CONVERSACIÓN -->
-        <div class="sugerencias-container">
-          <button class="chip-btn" onclick="enviarSugerencia('Autoridades')">🏛️ Autoridades</button>
-          <button class="chip-btn" onclick="enviarSugerencia('Ubicación')">📍 Ubicación</button>
-          <button class="chip-btn" onclick="enviarSugerencia('Historia')">📜 Historia</button>
-          <button class="chip-btn" onclick="enviarSugerencia('Policía')">👮 Policía</button>
-          <button class="chip-btn" onclick="enviarSugerencia('Punto Digital')">💻 Punto Digital</button>
-          <button class="chip-btn" onclick="enviarSugerencia('Hostería')">🏨 Hostería</button>
-          <button class="chip-btn" onclick="enviarSugerencia('Festivales')">🎉 Festivales</button>
-          <button class="chip-btn" onclick="enviarSugerencia('Turismo')">🍃 Turismo</button>
-        </div>
+        <div id="sugerencias-container" class="sugerencias-container"></div>
 
         <!-- ENTRADA DE MENSAJE -->
         <div class="input-container">
           <input type="text" id="mensaje" placeholder="Escribí tu consulta..." autocomplete="off">
-          <button id="btnEnviar" onclick="enviarMensaje()">Enviar</button>
+          <button id="btnEnviar">Enviar</button>
         </div>
 
         <div class="controles-inferiores">

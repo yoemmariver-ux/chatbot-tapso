@@ -63,7 +63,7 @@ let indiceImagen = 0;
 // ----------------------------------------------------
 const modulosConocimiento = {
   lugares: {
-    palabrasClaveGenericas: ["lugares", "distritos", "parajes", "barrios", "localidades"],
+    palabrasClaveGenericas: ["lugar", "lugares", "distrito", "distritos", "paraje", "parajes", "barrio", "barrios", "localidad", "localidades", "zona", "zonas"],
     preguntaGenerica: "¡En Tapso y sus alrededores hay varias zonas y parajes destacados! Tenemos **Colonia Achalco**, **Ayapaso**, **La Aguadita / Serranías**, el **Centro Cívico** y el **Barrio de la Estación**. ¿Te gustaría saber sobre alguno de ellos en especial?",
     subtemas: {
       achalco: {
@@ -320,72 +320,74 @@ function responder() {
 
   let respuesta = "";
 
-  // 1. REVISAR SI EL USUARIO PIDE UN SUBTEMA DIRECTO EN CUALQUIER MÓDULO
-  let subtemaDirectoEncontrado = null;
-  for (const modulo of Object.values(modulosConocimiento)) {
-    for (const sub of Object.values(modulo.subtemas)) {
-      if (sub.palabrasClave.some(kw => texto.includes(kw))) {
-        subtemaDirectoEncontrado = sub.respuesta;
-        break;
-      }
-    }
-    if (subtemaDirectoEncontrado) break;
+  // 1. EVALUAR SALUDOS
+  if (/^(hola|hols|buenas|buen|buenos|buenas noches|buenas tardes|que tal|como va|saludos)/i.test(texto)) {
+    const saludos = [
+      `¡Hola ${usuarioNombre}! ¿En qué puedo ayudarte hoy?`,
+      `¡Buenas! Qué gusto saludarte, ${usuarioNombre}. ¿Qué consulta tenés?`,
+      `¡Hola, ${usuarioNombre}! Contame, ¿sobre qué tema de Tapso te gustaría consultar?`
+    ];
+    respuesta = saludos[Math.floor(Math.random() * saludos.length)];
+    esperandoEleccionSubtema = null;
   }
-
-  if (subtemaDirectoEncontrado) {
-    respuesta = subtemaDirectoEncontrado;
-    esperandoEleccionSubtema = null; // Reiniciar flujo
+  // 2. EVALUAR DESPEDIDAS
+  else if (/^(chau|adios|nos vemos|hasta luego|que tengas buen dia|gracias|muchas gracias)/i.test(texto)) {
+    const despedidas = [
+      `¡Hasta luego, ${usuarioNombre}! Que tengas un excelente día.`,
+      `¡De nada, ${usuarioNombre}! Quedo a tu disposición si necesitas algo más.`,
+      `¡Nos vemos! Un saludo cordial de parte de la Municipalidad de Tapso.`
+    ];
+    respuesta = despedidas[Math.floor(Math.random() * despedidas.length)];
+    esperandoEleccionSubtema = null;
   }
-  // 2. BUSCAR SI ES UNA CONSULTA GENÉRICA SOBRE ALGUN MÓDULO
+  // 3. EVALUAR UBICACIÓN DIRECTA
+  else if (["ubicacion", "ubicación", "donde queda", "dónde queda", "como llegar", "cómo llegar", "mapa", "ruta 157"].some(kw => texto.includes(kw))) {
+    respuesta = "Tapso cuenta con una particularidad geopolítica: se encuentra dividida entre dos provincias. El sector oeste pertenece al Departamento El Alto (Catamarca) y el sector este al Departamento Choya (Santiago del Estero). La línea de separación son las vías del ferrocarril. Se ubica estratégicamente sobre la Ruta Nacional N° 157.";
+    esperandoEleccionSubtema = null;
+  }
+  // 4. EVALUAR SUBTEMAS DIRECTOS (Si el usuario escribió "Ayapaso", "Mario Sosa", etc.)
   else {
-    let moduloGenericoEncontrado = null;
-    let claveModulo = null;
-
-    for (const [key, modulo] of Object.entries(modulosConocimiento)) {
-      if (modulo.palabrasClaveGenericas.some(kw => texto.includes(kw))) {
-        moduloGenericoEncontrado = modulo.preguntaGenerica;
-        claveModulo = key;
-        break;
+    let subtemaEncontrado = null;
+    for (const modulo of Object.values(modulosConocimiento)) {
+      for (const sub of Object.values(modulo.subtemas)) {
+        if (sub.palabrasClave.some(kw => texto.includes(kw))) {
+          subtemaEncontrado = sub.respuesta;
+          break;
+        }
       }
+      if (subtemaEncontrado) break;
     }
 
-    if (moduloGenericoEncontrado) {
-      respuesta = moduloGenericoEncontrado;
-      esperandoEleccionSubtema = claveModulo;
-    }
-    // 3. SI EL USUARIO DIJO "SI / BUENO / DALE" LUEGO DE UNA PREGUNTA GENÉRICA
-    else if (esperandoEleccionSubtema && /^(si|sí|bueno|dale|a ver|contame|obvio)/i.test(texto)) {
-      respuesta = `¡Bárbaro! Escribime de cuál de las opciones que te mencioné te gustaría obtener más detalles.`;
-    }
-    // 4. UBICACIÓN GEOGRÁFICA DIRECTA
-    else if (["ubicacion", "ubicación", "donde queda", "dónde queda", "como llegar", "cómo llegar", "mapa", "ruta 157"].some(kw => texto.includes(kw))) {
-      respuesta = "Tapso cuenta con una particularidad geopolítica: se encuentra dividida entre dos provincias. El sector oeste pertenece al Departamento El Alto (Catamarca) y el sector este al Departamento Choya (Santiago del Estero). La línea de separación son las vías del ferrocarril. Se ubica estratégicamente sobre la Ruta Nacional N° 157.";
+    if (subtemaEncontrado) {
+      respuesta = subtemaEncontrado;
       esperandoEleccionSubtema = null;
     }
-    // 5. SALUDOS
-    else if (/^(hola|hols|buenas|buen|buenos|buenas noches|buenas tardes|que tal|como va|saludos)/i.test(texto)) {
-      const saludos = [
-        `¡Hola ${usuarioNombre}! ¿En qué puedo ayudarte hoy?`,
-        `¡Buenas! Qué gusto saludarte, ${usuarioNombre}. ¿Qué consulta tenés?`,
-        `¡Hola, ${usuarioNombre}! Contame, ¿sobre qué tema de Tapso te gustaría consultar?`
-      ];
-      respuesta = saludos[Math.floor(Math.random() * saludos.length)];
-      esperandoEleccionSubtema = null;
-    }
-    // 6. DESPEDIDAS
-    else if (/^(chau|adios|nos vemos|hasta luego|que tengas buen dia|gracias|muchas gracias)/i.test(texto)) {
-      const despedidas = [
-        `¡Hasta luego, ${usuarioNombre}! Que tengas un excelente día.`,
-        `¡De nada, ${usuarioNombre}! Quedo a tu disposición si necesitas algo más.`,
-        `¡Nos vemos! Un saludo cordial de parte de la Municipalidad de Tapso.`
-      ];
-      respuesta = despedidas[Math.floor(Math.random() * despedidas.length)];
-      esperandoEleccionSubtema = null;
-    }
-    // 7. RESPUESTA NO ENCONTRADA
+    // 5. EVALUAR SI ES UNA CONSULTA GENÉRICA ("lugares", "distritos", "festivales", etc.)
     else {
-      respuesta = obtenerRespuestaDesconocida();
-      esperandoEleccionSubtema = null;
+      let moduloGenericoEncontrado = null;
+      let claveModulo = null;
+
+      for (const [key, modulo] of Object.entries(modulosConocimiento)) {
+        if (modulo.palabrasClaveGenericas.some(kw => texto.includes(kw))) {
+          moduloGenericoEncontrado = modulo.preguntaGenerica;
+          claveModulo = key;
+          break;
+        }
+      }
+
+      if (moduloGenericoEncontrado) {
+        respuesta = moduloGenericoEncontrado;
+        esperandoEleccionSubtema = claveModulo;
+      }
+      // 6. SI ESTÁBAMOS ESPERANDO UNA ELECCIÓN Y DICE "SÍ / BUENO / DALE"
+      else if (esperandoEleccionSubtema && /^(si|sí|bueno|dale|a ver|contame|obvio)/i.test(texto)) {
+        respuesta = `¡Bárbaro! Escribime cuál de las opciones que te mencioné te gustaría conocer más a fondo.`;
+      }
+      // 7. RESPUESTA NO ENCONTRADA
+      else {
+        respuesta = obtenerRespuestaDesconocida();
+        esperandoEleccionSubtema = null;
+      }
     }
   }
 

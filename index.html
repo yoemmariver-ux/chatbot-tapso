@@ -116,14 +116,16 @@
   <!-- MODAL / LIGHTBOX DE GALERÍA EN PANTALLA COMPLETA -->
   <div id="galleryModal" class="modal-overlay-fullscreen" style="display: none;">
     <span class="close-btn-fullscreen" onclick="cerrarGaleria()">&times;</span>
+    
+    <!-- Flechas laterales de navegación -->
+    <button class="nav-arrow nav-prev" onclick="cambiarImagen(-1)">&#10094;</button>
+
     <div class="gallery-content-fullscreen">
       <img id="imgGaleria" src="" alt="Imagen ampliada">
       <p id="captionGaleria"></p>
-      <div id="galleryNav" class="gallery-nav">
-        <button onclick="cambiarImagen(-1)">&#10094; Anterior</button>
-        <button onclick="cambiarImagen(1)">Siguiente &#10095;</button>
-      </div>
     </div>
+
+    <button class="nav-arrow nav-next" onclick="cambiarImagen(1)">&#10095;</button>
   </div>
 
   <script src="script.js"></script>

@@ -331,7 +331,6 @@ function responder() {
 
   playSend();
 
-  // Insertar mensaje del usuario con clase CSS
   chatBox.innerHTML += `
     <div class="chat-mensaje usuario">
       👤 <strong>Tú:</strong> ${textoOriginal}
@@ -407,7 +406,6 @@ function responder() {
 
   setTimeout(() => {
     playReceive();
-    // Insertar mensaje del asistente con clase CSS
     chatBox.innerHTML += `
       <div class="chat-mensaje asistente">
         🤖 <strong>Asistente:</strong> ${formatearTexto(respuesta)}
@@ -429,7 +427,6 @@ function enviarSugerencia(palabra) {
   }
 }
 
-// Alias de funciones para compatibilidad con HTML
 function enviarMensaje() {
   responder();
 }
@@ -510,3 +507,15 @@ function cerrarGaleria() {
     modalGaleria.style.display = "none";
   }
 }
+
+// ----------------------------------------------------
+// EVENTO: CIERRE CON LA TECLA ESC
+// ----------------------------------------------------
+document.addEventListener("keydown", function(event) {
+  if (event.key === "Escape" || event.key === "Esc") {
+    const modalGaleria = document.getElementById("galleryModal");
+    if (modalGaleria && modalGaleria.style.display !== "none") {
+      cerrarGaleria();
+    }
+  }
+});

@@ -46,6 +46,9 @@ const galerias = {
   ],
   padel: [
     { src: 'images/padel-tapso.jpg', caption: 'Torneo y Liga de Pádel Tapso' }
+  ],
+  turismo: [
+    { src: 'images/visita-tapso.jpg', caption: 'Visitá Tapso - Turismo, Espectáculos y Festivales' }
   ]
 };
 

@@ -3,6 +3,9 @@ let usuarioNombre = "Vecino/a";
 let temaActual = null;
 let contadorConsultasTema = 0;
 
+// Estado para controlar el flujo de conversación interactivo
+let esperandoEleccionSubtema = null; // Guardará la categoría sobre la que se ofreció elegir
+
 // ----------------------------------------------------
 // SISTEMA DE AUDIO (Carpeta 'sounds/')
 // ----------------------------------------------------
@@ -26,7 +29,7 @@ function playReceive() {
 }
 
 // ----------------------------------------------------
-// BASE DE DATOS DE GALERÍAS DE IMÁGENES (NOMBRES EXACTOS)
+// BASE DE DATOS DE GALERÍAS DE IMÁGENES
 // ----------------------------------------------------
 const galerias = {
   tapsofc: [
@@ -56,58 +59,152 @@ let galeriaActual = [];
 let indiceImagen = 0;
 
 // ----------------------------------------------------
-// BASE DE CONOCIMIENTO DE PREGUNTAS CLAVE DE TAPSO
+// BASE DE CONOCIMIENTO MODULAR Y DETALLADA DE TAPSO
 // ----------------------------------------------------
-const conocimientoTapso = {
-  ubicacion_geografica_tapso: {
-    clave: "ubicacion_geografica_tapso",
-    palabrasClave: ["ubicacion", "ubicación", "donde queda", "dónde queda", "como llegar", "cómo llegar", "mapa", "ruta 157", "el alto", "choya", "limites", "límites", "santiago del estero", "catamarca", "geografia", "geografía", "dos provincias"],
-    respuesta: "Tapso cuenta con una particularidad geopolítica: se encuentra dividida entre dos provincias. El sector oeste pertenece al Departamento El Alto (Catamarca) y el sector este al Departamento Choya (Santiago del Estero). La línea de separación son las vías del ferrocarril. Se ubica estratégicamente sobre la Ruta Nacional N° 157."
+const modulosConocimiento = {
+  lugares: {
+    palabrasClaveGenericas: ["lugares", "distritos", "parajes", "barrios", "localidades"],
+    preguntaGenerica: "¡En Tapso y sus alrededores hay varias zonas y parajes destacados! Tenemos **Colonia Achalco**, **Ayapaso**, **La Aguadita / Serranías**, el **Centro Cívico** y el **Barrio de la Estación**. ¿Te gustaría saber sobre alguno de ellos en especial?",
+    subtemas: {
+      achalco: {
+        palabrasClave: ["achalco", "colonia achalco"],
+        respuesta: "**Colonia Achalco:** Destacada por su actividad agropecuaria, el tradicional Festival de 'El Colono' y la Subcomisaría de Colonia de Achalco."
+      },
+      ayapaso: {
+        palabrasClave: ["ayapaso", "aya paso"],
+        respuesta: "**Ayapaso:** Paraje histórico catamarqueño cuya principal referencia es la histórica Iglesia de Nuestra Señora del Rosario."
+      },
+      la_aguadita: {
+        palabrasClave: ["aguadita", "la aguadita", "serranias", "serranías"],
+        respuesta: "**La Aguadita / Serranías:** Zona ideal para senderismo y turismo natural en las sierras de El Alto, famosa por sus vestigios de arte rupestre."
+      },
+      estacion: {
+        palabrasClave: ["estacion", "estación", "vias", "vías", "ferrocarril"],
+        respuesta: "**Barrio de la Estación:** Sector histórico en torno a las vías del ferrocarril, eje divisorio entre Catamarca y Santiago del Estero."
+      },
+      centro_civico: {
+        palabrasClave: ["centro civico", "centro cívico", "plaza central"],
+        respuesta: "**Centro Cívico:** Sector oeste (Catamarca) donde se ubica el Municipio, la plaza principal, el Punto Digital y las oficinas administrativas."
+      }
+    }
   },
-  historia_fundacion_tapso: {
-    clave: "historia_fundacion_tapso",
-    palabrasClave: ["historia", "fundacion", "fundación", "fundador", "origen", "nombre", "quichua", "significado", "cuantos años tiene", "cuántos años tiene", "bicentenario", "200 años", "pasado", "vias", "vías", "ferrocarril", "tren"],
-    respuesta: "El nombre Tapso proviene del vocablo quichua que significa **'Franja Estrecha de Tierra'**. Fue fundada oficialmente el 15 de junio de 1826 y celebró su Bicentenario (200 años) el 19 de junio de 2026. Su crecimiento estuvo históricamente ligado al desarrollo de las líneas férreas."
+  autoridades: {
+    palabrasClaveGenericas: ["autoridades", "gobierno", "intendente", "comisionado", "quien gobierna", "quién gobierna"],
+    preguntaGenerica: "Dado que Tapso limita entre dos provincias, la gestión se organiza por sectores. Podés consultar sobre la **Gestión Catamarca (Intendencia)** o la **Comisión Municipal (Santiago del Estero)**. ¿Sobre cuál te gustaría saber más?",
+    subtemas: {
+      catamarca: {
+        palabrasClave: ["catamarca", "mario sosa", "intendente", "intendencia", "centro civico"],
+        respuesta: "**Gestión Catamarca:** El sector catamarqueño (Dpto. El Alto) está administrado por el Municipio de Tapso, a cargo del Intendente **Dr. Mario Sosa** (Unión por la Patria) en el Centro Cívico."
+      },
+      santiago: {
+        palabrasClave: ["santiago", "santiago del estero", "ruly vega", "comisionado"],
+        respuesta: "**Comisión Santiago del Estero:** El sector santiagueño (Dpto. Choya) está bajo la responsabilidad del comisionado municipal **Ruly Vega**."
+      }
+    }
   },
-  municipalidad_autoridades_tapso: {
-    clave: "municipalidad_autoridades_tapso",
-    palabrasClave: ["muni", "municipalidad", "intendente", "gobierno", "comisionado", "autoridades", "mario sosa", "ruly vega", "gestion", "gestión", "gobernar", "oficina municipal", "centro civico", "centro cívico"],
-    respuesta: "La gestión se administra en plena coordinación: el sector de Catamarca está gobernado por el Municipio de Tapso, a cargo del Intendente **Dr. Mario Sosa** (Unión por la Patria) en el Centro Cívico; mientras que el sector de Santiago del Estero cuenta con el comisionado municipal **Ruly Vega**."
+  festivales: {
+    palabrasClaveGenericas: ["festivales", "festival", "fiestas", "eventos", "peñas", "celebraciones"],
+    preguntaGenerica: "¡En Tapso celebramos varias fechas importantes durante el año! Destacan el **Aniversario de Tapso**, el **Festival 'Unión de Pueblos'** y el **Festival de 'El Colono'**. ¿Te gustaría saber detalles de alguno en particular?",
+    subtemas: {
+      aniversario: {
+        palabrasClave: ["aniversario", "cumpleaños", "15 de junio", "bicentenario"],
+        respuesta: "**Aniversario de Tapso (15 de Junio):** Se festeja con desfiles cívicos, agrupaciones gauchas, espectáculos artísticos y peñas folclóricas."
+      },
+      union_pueblos: {
+        palabrasClave: ["union de pueblos", "unión de pueblos"],
+        respuesta: "**Festival 'Unión de Pueblos':** El encuentro folclórico insignia de la región que reúne músicos locales y provinciales."
+      },
+      el_colono: {
+        palabrasClave: ["el colono", "colono"],
+        respuesta: "**Festival de 'El Colono':** Se realiza en Colonia Achalco, celebrando las tradiciones rurales con música nativa y comidas típicas."
+      }
+    }
   },
-  hosteria_alojamiento_tapso: {
-    clave: "hosteria_alojamiento_tapso",
-    palabrasClave: ["hosteria", "hostería", "alojamiento", "hospedaje", "turismo", "dormir", "hotel", "quedarse", "pileta", "piscina", "habitaciones", "precio", "reserva", "telefono hosteria", "teléfono hostería", "servicios", "wifi", "aire acondicionado"],
-    respuesta: "La Hostería Municipal de Tapso está sobre la Ruta Nacional N° 157. Ofrece habitaciones con baño privado, aire acondicionado, TV de pantalla plana, Wi-Fi gratuito, estacionamiento, restaurante/bar y piscina al aire libre. Teléfono de contacto directo: **385 6096508**."
+  servicios: {
+    palabrasClaveGenericas: ["punto digital", "tramites", "trámites", "internet", "anses", "cursos"],
+    preguntaGenerica: "El **Punto Digital Tapso** ofrece varios servicios gratuitos: **Trámites online (ANSES, Boleto, etc.)**, **Cursos y Capacitaciones** y **Espacio de Entretenimiento / Cine**. ¿Sobre cuál de estos servicios querés consultar?",
+    subtemas: {
+      tramites: {
+        palabrasClave: ["tramite", "trámite", "anses", "boleto", "mi argentina", "validar"],
+        respuesta: "**Trámites Online:** En Punto Digital podés realizar de forma gratuita gestiones de ANSES, validación de Mi Argentina, Boleto Estudiantil y asesoramiento digital."
+      },
+      cursos: {
+        palabrasClave: ["cursos", "capacitacion", "capacitación", "taller", "computacion", "computación"],
+        respuesta: "**Cursos y Capacitaciones:** Se dictan talleres de alfabetización digital, informática para administración y habilidades tecnológicas."
+      },
+      entretenimiento: {
+        palabrasClave: ["entretenimiento", "videojuegos", "juegos", "cine", "proyecciones"],
+        respuesta: "**Entretenimiento:** Cuenta con una sala equipada con consolas de videojuegos para jóvenes y espacio de proyecciones audiovisuales."
+      }
+    }
   },
-  punto_digital_tapso: {
-    clave: "punto_digital_tapso",
-    palabrasClave: ["punto digital", "digital", "internet", "capacitacion", "capacitación", "computadoras", "cursos", "wifi publico", "wifi público", "tecnologia", "tecnología", "tramites", "trámites", "anses", "validar identidad", "mi argentina", "videojuegos", "jovenes", "jóvenes"],
-    respuesta: "El Punto Digital Tapso es un espacio público y gratuito con computadoras e internet libre para trámites online (ANSES, Boleto Estudiantil, etc.), sala de videojuegos para jóvenes, área de proyecciones audiovisuales y cursos de habilidades digitales."
+  deportes_turismo: {
+    palabrasClaveGenericas: ["turismo", "deportes", "deporte", "actividades", "que hacer", "qué hacer"],
+    preguntaGenerica: "Tapso tiene una oferta variada para disfrutar. Hay opciones de **Turismo e Historia (Museo e Iglesias)**, **Deportes (Pádel, Fútbol, Hockey)** y **Aventura (Mountain Bike y Rally)**. ¿Qué temática te interesa?",
+    subtemas: {
+      patrimonio: {
+        palabrasClave: ["museo", "iglesia", "patrimonio", "histórico", "historico"],
+        respuesta: "**Patrimonio Cultural:** Podés visitar la Iglesia principal de Tapso, el Museo Municipal (piezas arqueológicas y ferroviarias) y la histórica Iglesia de Ayapaso."
+      },
+      deportes_locales: {
+        palabrasClave: ["padel", "pádel", "futbol", "fútbol", "hockey", "cancha"],
+        respuesta: "**Deportes:** Contamos con la cancha de hockey de césped sintético, el Club Tapso FC y la nueva Liga de Pádel en el Complejo Deportivo."
+      },
+      aventura: {
+        palabrasClave: ["rally", "mountain bike", "mtb", "senderismo"],
+        respuesta: "**Deportes de Aventura:** Recorridos de Mountain Bike por senderos serranos y fechas del Rally Regional en nuestros caminos."
+      }
+    }
   },
-  seguridad_policia_tapso: {
-    clave: "seguridad_policia_tapso",
-    palabrasClave: ["policia", "policía", "comisaria", "comisaría", "destacamento", "seguridad", "denuncia", "destacamento 15", "comisaria de tapso", "comisaría de tapso", "emergencia", "patrullero", "oficiales", "achalco"],
-    respuesta: "En la parte catamarqueña opera la Comisaría de Tapso de la Policía de Catamarca (con apoyo de la Subcomisaría de Colonia de Achalco). En el sector santiagueño funciona el Destacamento Policial N° 15, articulando controles con la Comisaría Comunitaria N° 23 de Frías."
+  hosteria: {
+    palabrasClaveGenericas: ["hosteria", "hostería", "alojamiento", "hospedaje", "hotel", "dormir"],
+    preguntaGenerica: "La **Hostería Municipal de Tapso** está sobre la Ruta 157. Podés consultar sobre **Servicios y Comodidades**, **Contacto / Reservas** o **Piscina y Restaurante**. ¿Qué dato necesitás?",
+    subtemas: {
+      servicios_h: {
+        palabrasClave: ["servicios", "habitaciones", "aire", "wifi", "estacionamiento"],
+        respuesta: "**Servicios de Hostería:** Habitaciones con baño privado, aire acondicionado, TV de pantalla plana, Wi-Fi libre y estacionamiento."
+      },
+      contacto_h: {
+        palabrasClave: ["contacto", "reserva", "reservar", "telefono", "teléfono", "precio"],
+        respuesta: "**Reservas y Contacto:** Podés hacer tus consultas y reservas llamando directamente al **385 6096508**."
+      },
+      resto_piscina: {
+        palabrasClave: ["restaurante", "bar", "pileta", "piscina", "comedor"],
+        respuesta: "**Restaurante y Piscina:** Cuenta con servicio de comedor/bar y piscina al aire libre para visitantes y alojados."
+      }
+    }
   },
-  festivales_aniversario_tapso: {
-    clave: "festivales_aniversario_tapso",
-    palabrasClave: ["festival", "festivales", "fiesta", "aniversario", "cumpleaños del pueblo", "15 de junio", "union de pueblos", "unión de pueblos", "el colono", "folklore", "desfile", "peña", "musica", "música", "comidas tipicas", "comidas típicas", "evento"],
-    respuesta: "Las festividades principales son: el **Aniversario de Tapso** (15 de junio, con desfiles cívicos y agrupaciones gauchas), el **Festival 'Unión de Pueblos'** (encuentro folclórico insignia) y el **Festival de 'El Colono'** en Colonia Achalco (música nativa y comidas típicas)."
+  policia: {
+    palabrasClaveGenericas: ["policia", "policía", "seguridad", "comisaria", "comisaría", "destacamento"],
+    preguntaGenerica: "La cobertura de seguridad depende del sector: tenemos la **Comisaría de Tapso (Catamarca)** y el **Destacamento Policial N° 15 (Santiago del Estero)**. ¿De cuál precisás información?",
+    subtemas: {
+      policia_catamarca: {
+        palabrasClave: ["catamarca", "comisaria tapso", "comisaría tapso", "achalco"],
+        respuesta: "**Policía de Catamarca:** En el sector oeste opera la Comisaría de Tapso con apoyo de la Subcomisaría de Colonia de Achalco."
+      },
+      policia_santiago: {
+        palabrasClave: ["santiago", "destacamento 15", "frias", "frías"],
+        respuesta: "**Policía de Santiago del Estero:** En el sector este funciona el Destacamento N° 15, en coordinación con la Comisaría Comunitaria N° 23 de Frías."
+      }
+    }
   },
-  turismo_deportes_tapso: {
-    clave: "turismo_deportes_tapso",
-    palabrasClave: ["que hacer", "qué hacer", "pasear", "museo", "iglesia", "la aguadita", "arte rupestre", "arqueologia", "arqueología", "sierra", "naturaleza", "rally", "hockey", "cancha", "deporte", "mountain bike"],
-    respuesta: "Podés visitar la Iglesia local, el Museo Municipal (arqueológico y ferroviario), la Iglesia de Ntra. Sra. del Rosario en Ayapaso, y los senderos a las serranías de El Alto / La Aguadita (arte rupestre). En deportes destaca la cancha de hockey de césped sintético y las competencias de Mountain Bike y Rally Regional."
-  },
-  futbol: {
-    clave: "futbol",
-    palabrasClave: ["futbol", "fútbol", "tapso fc", "club"],
-    respuesta: "El Club Tapso FC es un orgullo deportivo local. Podés hacer clic en la tarjeta correspondiente en la columna de la izquierda para ver su galería de fotos."
-  },
-  padel: {
-    clave: "padel",
-    palabrasClave: ["padel", "pádel", "liga", "torneo", "cancha de padel"],
-    respuesta: "¡Arranca la Liga de Pádel! Comienza a finales de septiembre en el Complejo Deportivo con categorías masculina (suma 13) y femenina (suma 15). Consultas al 3854415855."
+  historia: {
+    palabrasClaveGenericas: ["historia", "fundacion", "fundación", "origen", "nombre", "quichua"],
+    preguntaGenerica: "Tapso posee una rica historia. Podés consultar sobre el **Significado del Nombre**, la **Fecha de Fundación / Bicentenario** o el **Origen Ferroviario**. ¿Qué te gustaría conocer?",
+    subtemas: {
+      nombre: {
+        palabrasClave: ["nombre", "quichua", "significado"],
+        respuesta: "**Origen del Nombre:** 'Tapso' proviene de un vocablo quichua que significa **'Franja Estrecha de Tierra'**."
+      },
+      fundacion: {
+        palabrasClave: ["fundacion", "fundación", "fecha", "bicentenario", "200 años", "1826"],
+        respuesta: "**Fundación y Bicentenario:** Fue fundada oficialmente el 15 de junio de 1826 y celebró su Bicentenario (200 años) el 19 de junio de 2026."
+      },
+      ferrocarril: {
+        palabrasClave: ["tren", "vias", "vías", "ferrocarril"],
+        respuesta: "**Origen Ferroviario:** La localidad nació y creció a la par del trazado de las líneas del ferrocarril, que marcaron su identidad."
+      }
+    }
   }
 };
 
@@ -174,7 +271,7 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 // ----------------------------------------------------
-// LÓGICA DEL CHAT Y ASISTENTE VIRTUAL
+// LÓGICA DEL CHAT Y ASISTENTE VIRTUAL DE CONVERSACIÓN
 // ----------------------------------------------------
 function mostrarSaludoInicial() {
   const chatBox = document.getElementById("chatBox");
@@ -196,6 +293,7 @@ function mostrarSugerenciasIniciales() {
   }
 
   contenedorChips.innerHTML = `
+    <button class="chip-btn" onclick="enviarSugerencia('Lugares y Distritos')">📍 Lugares y Distritos</button>
     <button class="chip-btn" onclick="enviarSugerencia('Autoridades')">🏛️ Autoridades</button>
     <button class="chip-btn" onclick="enviarSugerencia('Ubicación')">📍 Ubicación</button>
     <button class="chip-btn" onclick="enviarSugerencia('Historia')">📜 Historia</button>
@@ -203,13 +301,13 @@ function mostrarSugerenciasIniciales() {
     <button class="chip-btn" onclick="enviarSugerencia('Punto Digital')">💻 Punto Digital</button>
     <button class="chip-btn" onclick="enviarSugerencia('Hostería')">🏨 Hostería</button>
     <button class="chip-btn" onclick="enviarSugerencia('Festivales')">🎉 Festivales</button>
-    <button class="chip-btn" onclick="enviarSugerencia('Turismo')">🌲 Turismo</button>
   `;
 }
 
 function responder() {
   const input = document.getElementById("mensaje");
-  const texto = input.value.trim().toLowerCase();
+  const textoOriginal = input.value.trim();
+  const texto = textoOriginal.toLowerCase();
   const chatBox = document.getElementById("chatBox");
 
   if (texto === "") return;
@@ -217,66 +315,77 @@ function responder() {
   // Sonido de envío
   playSend();
 
-  chatBox.innerHTML += `<p>👤 <strong>Tú:</strong> ${input.value}</p>`;
+  chatBox.innerHTML += `<p>👤 <strong>Tú:</strong> ${textoOriginal}</p>`;
   input.value = "";
 
   let respuesta = "";
 
-  // 1. Manejo de Saludos
-  if (/^(hola|hols|buenas|buen|buenos|buenas noches|buenas tardes|que tal|como va|saludos)/i.test(texto)) {
-    const saludos = [
-      `¡Hola ${usuarioNombre}! ¿En qué puedo ayudarte hoy?`,
-      `¡Buenas! Qué gusto saludarte, ${usuarioNombre}. ¿Qué consulta tenés?`,
-      `¡Hola, ${usuarioNombre}! Contame, ¿sobre qué tema de Tapso te gustaría consultar?`
-    ];
-    respuesta = saludos[Math.floor(Math.random() * saludos.length)];
-    temaActual = null;
-    contadorConsultasTema = 0;
+  // 1. REVISAR SI EL USUARIO PIDE UN SUBTEMA DIRECTO EN CUALQUIER MÓDULO
+  let subtemaDirectoEncontrado = null;
+  for (const modulo of Object.values(modulosConocimiento)) {
+    for (const sub of Object.values(modulo.subtemas)) {
+      if (sub.palabrasClave.some(kw => texto.includes(kw))) {
+        subtemaDirectoEncontrado = sub.respuesta;
+        break;
+      }
+    }
+    if (subtemaDirectoEncontrado) break;
   }
-  // 2. Manejo de Despedidas
-  else if (/^(chau|adios|nos vemos|hasta luego|que tengas buen dia|gracias|muchas gracias)/i.test(texto)) {
-    const despedidas = [
-      `¡Hasta luego, ${usuarioNombre}! Que tengas un excelente día.`,
-      `¡De nada, ${usuarioNombre}! Quedo a tu disposición si necesitas algo más.`,
-      `¡Nos vemos! Un saludo cordial de parte de la Municipalidad de Tapso.`
-    ];
-    respuesta = despedidas[Math.floor(Math.random() * despedidas.length)];
-    temaActual = null;
-    contadorConsultasTema = 0;
-  }
-  // 3. Procesamiento de Preguntas Clave y Memoria de Tema
-  else {
-    let temaDetectado = null;
-    let respuestaTema = null;
 
-    // Buscar coincidencia en la base de datos
-    for (const item of Object.values(conocimientoTapso)) {
-      if (item.palabrasClave.some(kw => texto.includes(kw))) {
-        temaDetectado = item.clave;
-        respuestaTema = item.respuesta;
+  if (subtemaDirectoEncontrado) {
+    respuesta = subtemaDirectoEncontrado;
+    esperandoEleccionSubtema = null; // Reiniciar flujo
+  }
+  // 2. BUSCAR SI ES UNA CONSULTA GENÉRICA SOBRE ALGUN MÓDULO
+  else {
+    let moduloGenericoEncontrado = null;
+    let claveModulo = null;
+
+    for (const [key, modulo] of Object.entries(modulosConocimiento)) {
+      if (modulo.palabrasClaveGenericas.some(kw => texto.includes(kw))) {
+        moduloGenericoEncontrado = modulo.preguntaGenerica;
+        claveModulo = key;
         break;
       }
     }
 
-    if (temaDetectado) {
-      if (temaDetectado === temaActual) {
-        contadorConsultasTema++;
-        if (contadorConsultasTema >= 2) {
-          respuesta = `No dispongo de más información sobre este tema por el momento. ¿Te puedo ayudar con alguna otra consulta sobre Tapso?`;
-          temaActual = null;
-          contadorConsultasTema = 0;
-        } else {
-          respuesta = respuestaTema;
-        }
-      } else {
-        temaActual = temaDetectado;
-        contadorConsultasTema = 1;
-        respuesta = respuestaTema;
-      }
-    } else {
+    if (moduloGenericoEncontrado) {
+      respuesta = moduloGenericoEncontrado;
+      esperandoEleccionSubtema = claveModulo;
+    }
+    // 3. SI EL USUARIO DIJO "SI / BUENO / DALE" LUEGO DE UNA PREGUNTA GENÉRICA
+    else if (esperandoEleccionSubtema && /^(si|sí|bueno|dale|a ver|contame|obvio)/i.test(texto)) {
+      respuesta = `¡Bárbaro! Escribime de cuál de las opciones que te mencioné te gustaría obtener más detalles.`;
+    }
+    // 4. UBICACIÓN GEOGRÁFICA DIRECTA
+    else if (["ubicacion", "ubicación", "donde queda", "dónde queda", "como llegar", "cómo llegar", "mapa", "ruta 157"].some(kw => texto.includes(kw))) {
+      respuesta = "Tapso cuenta con una particularidad geopolítica: se encuentra dividida entre dos provincias. El sector oeste pertenece al Departamento El Alto (Catamarca) y el sector este al Departamento Choya (Santiago del Estero). La línea de separación son las vías del ferrocarril. Se ubica estratégicamente sobre la Ruta Nacional N° 157.";
+      esperandoEleccionSubtema = null;
+    }
+    // 5. SALUDOS
+    else if (/^(hola|hols|buenas|buen|buenos|buenas noches|buenas tardes|que tal|como va|saludos)/i.test(texto)) {
+      const saludos = [
+        `¡Hola ${usuarioNombre}! ¿En qué puedo ayudarte hoy?`,
+        `¡Buenas! Qué gusto saludarte, ${usuarioNombre}. ¿Qué consulta tenés?`,
+        `¡Hola, ${usuarioNombre}! Contame, ¿sobre qué tema de Tapso te gustaría consultar?`
+      ];
+      respuesta = saludos[Math.floor(Math.random() * saludos.length)];
+      esperandoEleccionSubtema = null;
+    }
+    // 6. DESPEDIDAS
+    else if (/^(chau|adios|nos vemos|hasta luego|que tengas buen dia|gracias|muchas gracias)/i.test(texto)) {
+      const despedidas = [
+        `¡Hasta luego, ${usuarioNombre}! Que tengas un excelente día.`,
+        `¡De nada, ${usuarioNombre}! Quedo a tu disposición si necesitas algo más.`,
+        `¡Nos vemos! Un saludo cordial de parte de la Municipalidad de Tapso.`
+      ];
+      respuesta = despedidas[Math.floor(Math.random() * despedidas.length)];
+      esperandoEleccionSubtema = null;
+    }
+    // 7. RESPUESTA NO ENCONTRADA
+    else {
       respuesta = obtenerRespuestaDesconocida();
-      temaActual = null;
-      contadorConsultasTema = 0;
+      esperandoEleccionSubtema = null;
     }
   }
 
@@ -302,6 +411,7 @@ function limpiar() {
   playClick();
   temaActual = null;
   contadorConsultasTema = 0;
+  esperandoEleccionSubtema = null;
   mostrarSaludoInicial();
 }
 

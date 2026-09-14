@@ -187,9 +187,75 @@ body.dark-mode .chip-btn:hover {
   background: rgba(0, 0, 0, 0.7);
 }
 
+/* ====================================================
+   SECCIÓN SUB-BANNER (CLIMA Y LOGO MUNICIPAL)
+   ==================================================== */
+.header-sub-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 10px 15px 5px 15px;
+}
+
+.clima-container {
+  position: absolute;
+  left: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(0, 131, 143, 0.08);
+  border: 1px solid #00838f;
+  padding: 6px 14px;
+  border-radius: 20px;
+  color: #004d40;
+  font-size: 0.85rem;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+body.dark-mode .clima-container {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: #4dd0e1;
+  color: #e0e0e0;
+}
+
+.clima-icono {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.clima-info {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.clima-temp {
+  font-weight: bold;
+  font-size: 0.95rem;
+  color: #006064;
+}
+
+body.dark-mode .clima-temp {
+  color: #4dd0e1;
+}
+
+.clima-estado {
+  font-size: 0.75rem;
+  opacity: 0.85;
+}
+
+.clima-lugar {
+  font-size: 0.7rem;
+  opacity: 0.75;
+  font-weight: 500;
+}
+
 .logo-container-center {
   text-align: center;
-  padding: 15px 0 5px 0;
+  padding: 5px 0;
 }
 
 .logo-img {
@@ -530,6 +596,24 @@ body.dark-mode .detalle-evento {
    DISEÑO RESPONSIVO Y ORDEN EN CELULARES
    ==================================================== */
 @media (max-width: 992px) {
+  .header-sub-container {
+    flex-direction: column;
+    gap: 8px;
+    padding-top: 10px;
+    padding-bottom: 5px;
+  }
+
+  .logo-container-center {
+    order: 1; /* 1º Logo del municipio */
+    padding: 0;
+  }
+
+  .clima-container {
+    position: static;
+    order: 2; /* 2º Clima debajo del logo y antes de la ventana de chat */
+    margin: 0 auto;
+  }
+
   .main-layout {
     display: flex;
     flex-direction: column;
@@ -541,7 +625,7 @@ body.dark-mode .detalle-evento {
 
   /* Orden de secciones en celular */
   .columna-chat {
-    order: 1; /* 1º Asistente */
+    order: 1; /* 1º Asistente (queda entre clima y conocé tapso) */
   }
 
   .main-layout > aside:first-of-type {

@@ -26,12 +26,12 @@
 
   <!-- CONTENEDOR SUB-BANNER: WIDGET DE CLIMA Y LOGO MUNICIPAL -->
   <div class="header-sub-container">
-    <!-- WIDGET CLIMA TIPO TARJETA -->
+    <!-- WIDGET CLIMA TIPO TARJETA (CON HORA Y ANIMACIONES) -->
     <div id="climaContainer" class="clima-widget">
       <div class="clima-left">
-        <span class="clima-estado" id="climaEstado">Algo nublado</span>
+        <span class="clima-estado" id="climaEstado">Cargando...</span>
         <div class="clima-temp-box">
-          <span class="clima-temp" id="climaTemp">27</span><span class="clima-grado">°</span>
+          <span class="clima-temp" id="climaTemp">--</span><span class="clima-grado">°C</span>
         </div>
       </div>
 
@@ -39,10 +39,11 @@
 
       <div class="clima-right">
         <span class="clima-fecha" id="climaFecha">Cargando fecha...</span>
+        <span class="clima-hora" id="climaHora">00:00:00</span>
         <span class="clima-lugar">📍 Tapso, Catamarca</span>
       </div>
 
-      <div class="clima-sol-3d" id="climaIcono">☀️</div>
+      <div class="clima-sol-3d brilloSol" id="climaIcono">☀️</div>
     </div>
 
     <!-- LOGO MUNICIPAL CENTRADO -->

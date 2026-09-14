@@ -261,6 +261,13 @@ body.dark-mode .clima-widget {
   white-space: nowrap;
 }
 
+.clima-hora {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #fff8e1;
+  letter-spacing: 0.5px;
+}
+
 .clima-lugar {
   font-size: 0.75rem;
   opacity: 0.95;
@@ -272,12 +279,52 @@ body.dark-mode .clima-widget {
   line-height: 1;
   margin-left: 2px;
   filter: drop-shadow(0 0 10px rgba(255, 223, 0, 0.8));
+}
+
+/* Animaciones dinámicas del ícono según el clima */
+.brilloSol {
   animation: brilloSol 3s ease-in-out infinite alternate;
 }
 
 @keyframes brilloSol {
   0% { transform: scale(1); filter: drop-shadow(0 0 8px rgba(255, 223, 0, 0.6)); }
-  100% { transform: scale(1.06); filter: drop-shadow(0 0 14px rgba(255, 223, 0, 0.9)); }
+  100% { transform: scale(1.08); filter: drop-shadow(0 0 16px rgba(255, 223, 0, 0.95)); }
+}
+
+.pulsoLuna {
+  animation: pulsoLuna 4s ease-in-out infinite alternate;
+}
+
+@keyframes pulsoLuna {
+  0% { transform: scale(1); filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.5)); }
+  100% { transform: scale(1.06); filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.8)); }
+}
+
+.flotarNube {
+  animation: flotarNube 3.5s ease-in-out infinite alternate;
+}
+
+@keyframes flotarNube {
+  0% { transform: translateX(-2px) translateY(0); }
+  100% { transform: translateX(3px) translateY(-3px); }
+}
+
+.lluviaAnim {
+  animation: lluviaAnim 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes lluviaAnim {
+  0% { transform: translateY(-2px); }
+  100% { transform: translateY(2px); }
+}
+
+.tormentaAnim {
+  animation: tormentaAnim 0.8s ease-in-out infinite alternate;
+}
+
+@keyframes tormentaAnim {
+  0% { transform: scale(1) rotate(-2deg); }
+  100% { transform: scale(1.08) rotate(2deg); }
 }
 
 .logo-container-center {

@@ -7,21 +7,85 @@ let contadorConsultasTema = 0;
 let esperandoEleccionSubtema = null;
 
 // ----------------------------------------------------
-// FECHA DINÁMICA EN ESPAÑOL PARA EL WIDGET
+// FECHA, HORA Y CLIMA EN VIVO CON ANIMACIONES (OPEN-METEO API)
 // ----------------------------------------------------
-function cargarFechaActualWidget() {
+function mapearClima(code, isDay) {
+  // Códigos WMO de la API de Open-Meteo
+  if (code === 0) {
+    return isDay 
+      ? { estado: "Despejado", icono: "☀️", animacion: "brilloSol" }
+      : { estado: "Despejado", icono: "🌙", animacion: "pulsoLuna" };
+  } else if (code === 1 || code === 2) {
+    return isDay
+      ? { estado: "Algo nublado", icono: "🌤️", animacion: "flotarNube" }
+      : { estado: "Algo nublado", icono: "🌤️", animacion: "flotarNube" };
+  } else if (code === 3) {
+    return { estado: "Nublado", icono: "☁️", animacion: "flotarNube" };
+  } else if ([45, 48].includes(code)) {
+    return { estado: "Niebla", icono: "🌫️", animacion: "flotarNube" };
+  } else if ([51, 53, 55, 61, 63, 65, 80, 81, 82].includes(code)) {
+    return { estado: "Lluvia", icono: "🌧️", animacion: "lluviaAnim" };
+  } else if ([95, 96, 99].includes(code)) {
+    return { estado: "Tormenta", icono: "⛈️", animacion: "tormentaAnim" };
+  } else {
+    return { estado: "Parcialmente nublado", icono: "⛅", animacion: "flotarNube" };
+  }
+}
+
+async function cargarClimaYFechaWidget() {
   const elemFecha = document.getElementById("climaFecha");
-  if (!elemFecha) return;
+  const elemHora = document.getElementById("climaHora");
+  const elemTemp = document.getElementById("climaTemp");
+  const elemEstado = document.getElementById("climaEstado");
+  const elemIcono = document.getElementById("climaIcono");
 
-  const hoy = new Date();
-  const opciones = { weekday: 'long', day: 'numeric', month: 'long' };
-  let fechaTexto = hoy.toLocaleDateString('es-AR', opciones);
+  // 1. Actualizar Fecha y Hora en tiempo real
+  function actualizarRelojYFecha() {
+    const hoy = new Date();
 
-  // Capitalizar primera letra (Ej: "Lunes, 14 Septiembre")
-  fechaTexto = fechaTexto.charAt(0).toUpperCase() + fechaTexto.slice(1);
-  fechaTexto = fechaTexto.replace(" de ", " "); // Formato limpio
+    if (elemFecha) {
+      const opciones = { weekday: 'long', day: 'numeric', month: 'long' };
+      let fechaTexto = hoy.toLocaleDateString('es-AR', opciones);
+      fechaTexto = fechaTexto.charAt(0).toUpperCase() + fechaTexto.slice(1);
+      fechaTexto = fechaTexto.replace(" de ", " ");
+      elemFecha.textContent = fechaTexto;
+    }
 
-  elemFecha.textContent = fechaTexto;
+    if (elemHora) {
+      const horas = String(hoy.getHours()).padStart(2, '0');
+      const minutos = String(hoy.getMinutes()).padStart(2, '0');
+      const segundos = String(hoy.getSeconds()).padStart(2, '0');
+      elemHora.textContent = `${horas}:${minutos}:${segundos}`;
+    }
+  }
+
+  actualizarRelojYFecha();
+  setInterval(actualizarRelojYFecha, 1000); // Se actualiza la hora cada segundo
+
+  // 2. Cargar Clima en Vivo para Tapso (Coordenadas: -28.36, -65.12)
+  try {
+    const url = "https://api.open-meteo.com/v1/forecast?latitude=-28.36&longitude=-65.12&current_weather=true";
+    const respuesta = await fetch(url);
+    const datos = await respuesta.json();
+
+    if (datos && datos.current_weather) {
+      const temp = Math.round(datos.current_weather.temperature);
+      const code = datos.current_weather.weathercode;
+      const isDay = datos.current_weather.is_day === 1;
+
+      const climaInfo = mapearClima(code, isDay);
+
+      if (elemTemp) elemTemp.textContent = temp;
+      if (elemEstado) elemEstado.textContent = climaInfo.estado;
+      
+      if (elemIcono) {
+        elemIcono.textContent = climaInfo.icono;
+        elemIcono.className = "clima-sol-3d " + climaInfo.animacion;
+      }
+    }
+  } catch (error) {
+    console.log("No se pudo obtener el clima en tiempo real, manteniendo valores por defecto.");
+  }
 }
 
 // ----------------------------------------------------
@@ -260,7 +324,7 @@ function obtenerRespuestaDesconocida() {
 // INICIALIZACIÓN DE LA APLICACIÓN
 // ----------------------------------------------------
 document.addEventListener("DOMContentLoaded", function() {
-  cargarFechaActualWidget();
+  cargarClimaYFechaWidget();
 
   const modal = document.getElementById("loginModal");
   const btnComenzar = document.getElementById("btnComenzar");

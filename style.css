@@ -8,9 +8,301 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   background-color: #f4f7fb;
   color: #333333;
+  transition: background-color 0.3s, color 0.3s;
 }
 
-/* Modal de Inicio */
+/* BANNER SUPERIOR A 100% ANCHO */
+.header-banner {
+  width: 100%;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e0e0e0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.banner-img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  display: block;
+}
+
+.logo-container {
+  width: 100%;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #e2e8f0;
+  transition: background-color 0.3s;
+}
+
+.logo-img {
+  max-height: 65px;
+  object-fit: contain;
+}
+
+/* LAYOUT PRINCIPAL DE 3 COLUMNAS */
+.main-layout {
+  display: flex;
+  max-width: 1240px;
+  margin: 15px auto;
+  padding: 0 15px;
+  gap: 15px;
+  align-items: flex-start;
+}
+
+.columna-lateral {
+  flex: 1;
+  max-width: 280px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.titulo-seccion {
+  font-size: 1.05rem;
+  color: #0d47a1;
+  text-align: center;
+  margin-bottom: 2px;
+}
+
+.card-lateral {
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  border: 1px solid #e2e8f0;
+  text-align: center;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.card-img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  background-color: #f8fafc;
+  border-radius: 6px;
+  display: block;
+  cursor: pointer;
+  transition: transform 0.2s, opacity 0.2s;
+}
+
+.card-img:hover {
+  opacity: 0.9;
+  transform: scale(1.01);
+}
+
+.card-texto {
+  font-size: 0.85rem;
+  margin-top: 8px;
+  color: #444;
+}
+
+.card-texto a {
+  color: #0d47a1;
+  text-decoration: none;
+  font-size: 0.8rem;
+}
+
+.card-texto a:hover {
+  text-decoration: underline;
+}
+
+/* COLUMNA CENTRAL CHAT */
+.columna-chat {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-card {
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 16px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  border: 1px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.chat-titulo {
+  font-size: 1.15rem;
+  color: #0d47a1;
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.chat-box {
+  height: 310px;
+  overflow-y: auto;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 12px;
+  background-color: #fdfdfd;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.chat-mensaje {
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.4;
+  padding: 8px 12px;
+  border-radius: 8px;
+  max-width: 88%;
+}
+
+.chat-mensaje.asistente {
+  background-color: #f1f5f9;
+  align-self: flex-start;
+  color: #334155;
+}
+
+.chat-mensaje.usuario {
+  background-color: #e0f2fe;
+  align-self: flex-end;
+  color: #0369a1;
+}
+
+/* SUGERENCIAS (CHIPS) */
+.sugerencias-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 12px 0 8px 0;
+  justify-content: center;
+}
+
+.chip-btn {
+  background-color: #e8eef8;
+  color: #2c5282;
+  border: 1px solid #cbd5e1;
+  padding: 5px 10px;
+  border-radius: 14px;
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.chip-btn:hover {
+  background-color: #dbeafe;
+}
+
+/* INPUT Y BOTONES DEL CHAT */
+.input-container {
+  display: flex;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.input-container input {
+  flex: 1;
+  padding: 9px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 0.88rem;
+  outline: none;
+}
+
+.input-container button {
+  background-color: #27ae60;
+  color: white;
+  border: none;
+  padding: 9px 18px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.input-container button:hover {
+  background-color: #219653;
+}
+
+.controles-inferiores {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  gap: 6px;
+}
+
+.btn-voz, .btn-modo {
+  background-color: #0d47a1;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 0.78rem;
+  cursor: pointer;
+}
+
+.btn-limpiar {
+  background-color: #e2e8f0;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  color: #64748b;
+  font-size: 0.78rem;
+  cursor: pointer;
+}
+
+/* TARJETA PÁDEL */
+.card-evento {
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  border: 1px solid #e2e8f0;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.card-img-evento {
+  width: 100%;
+  height: auto;
+  max-height: 200px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.evento-info h3 {
+  font-size: 0.82rem;
+  color: #1e293b;
+  margin-bottom: 6px;
+}
+
+.evento-info p {
+  font-size: 0.75rem;
+  color: #475569;
+  margin-bottom: 3px;
+  line-height: 1.25;
+}
+
+.subtitulo-evento {
+  font-weight: bold;
+  margin-top: 6px;
+  color: #0f172a;
+}
+
+.detalle-evento {
+  margin-top: 6px;
+  font-style: italic;
+}
+
+.destacado-evento {
+  font-weight: bold;
+  color: #d97706;
+  margin-top: 6px;
+}
+
+/* MODAL DE INICIO Y GALERÍA */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -68,279 +360,6 @@ body {
   cursor: pointer;
 }
 
-.modal-content button:hover {
-  background-color: #219653;
-}
-
-/* Banner Superior */
-.header-banner {
-  width: 100%;
-  background-color: #ffffff;
-  border-bottom: 1px solid #e0e0e0;
-}
-
-.banner-container {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  text-align: center;
-}
-
-.banner-img {
-  width: 100%;
-  max-height: 180px;
-  object-fit: contain;
-  display: block;
-}
-
-/* Layout Principal */
-.main-layout {
-  display: flex;
-  max-width: 1240px;
-  margin: 15px auto;
-  padding: 0 15px;
-  gap: 15px;
-  align-items: flex-start;
-}
-
-/* Columnas Laterales */
-.columna-lateral {
-  flex: 1;
-  max-width: 280px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.titulo-seccion {
-  font-size: 1.05rem;
-  color: #0d47a1;
-  text-align: center;
-  margin-bottom: 2px;
-}
-
-.card-lateral {
-  background: #ffffff;
-  border-radius: 10px;
-  padding: 10px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-  border: 1px solid #e2e8f0;
-  text-align: center;
-}
-
-.card-img {
-  width: 100%;
-  height: 160px;
-  object-fit: contain;
-  background-color: #f8fafc;
-  border-radius: 6px;
-  display: block;
-}
-
-.card-texto {
-  font-size: 0.85rem;
-  margin-top: 8px;
-  color: #444;
-}
-
-.card-texto a {
-  color: #0d47a1;
-  text-decoration: none;
-  font-size: 0.8rem;
-}
-
-.card-texto a:hover {
-  text-decoration: underline;
-}
-
-/* Columna Central Chat */
-.columna-chat {
-  flex: 2;
-  display: flex;
-  flex-direction: column;
-}
-
-.chat-card {
-  background: #ffffff;
-  border-radius: 10px;
-  padding: 16px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-  border: 1px solid #e2e8f0;
-  display: flex;
-  flex-direction: column;
-}
-
-.chat-titulo {
-  font-size: 1.15rem;
-  color: #0d47a1;
-  text-align: center;
-  margin-bottom: 12px;
-}
-
-.chat-box {
-  height: 310px;
-  overflow-y: auto;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
-  padding: 12px;
-  background-color: #fdfdfd;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.chat-mensaje {
-  margin: 0;
-  font-size: 0.88rem;
-  line-height: 1.4;
-  padding: 8px 12px;
-  border-radius: 8px;
-  max-width: 88%;
-}
-
-.chat-mensaje.asistente {
-  background-color: #f1f5f9;
-  align-self: flex-start;
-  color: #334155;
-}
-
-.chat-mensaje.usuario {
-  background-color: #e0f2fe;
-  align-self: flex-end;
-  color: #0369a1;
-}
-
-/* Sugerencias Chips */
-.sugerencias-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin: 12px 0 8px 0;
-  justify-content: center;
-}
-
-.chip-btn {
-  background-color: #e8eef8;
-  color: #2c5282;
-  border: 1px solid #cbd5e1;
-  padding: 5px 10px;
-  border-radius: 14px;
-  font-size: 0.78rem;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-.chip-btn:hover {
-  background-color: #dbeafe;
-}
-
-/* Input Chat */
-.input-container {
-  display: flex;
-  gap: 8px;
-  margin-top: 4px;
-}
-
-.input-container input {
-  flex: 1;
-  padding: 9px 12px;
-  border: 1px solid #cbd5e1;
-  border-radius: 6px;
-  font-size: 0.88rem;
-  outline: none;
-}
-
-.input-container button {
-  background-color: #27ae60;
-  color: white;
-  border: none;
-  padding: 9px 18px;
-  border-radius: 6px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.input-container button:hover {
-  background-color: #219653;
-}
-
-.controles-inferiores {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 10px;
-}
-
-.btn-voz {
-  background-color: #0d47a1;
-  color: white;
-  border: none;
-  padding: 5px 10px;
-  border-radius: 4px;
-  font-size: 0.78rem;
-  cursor: pointer;
-}
-
-.btn-limpiar {
-  background-color: #e2e8f0;
-  border: none;
-  padding: 5px 10px;
-  border-radius: 4px;
-  color: #64748b;
-  font-size: 0.78rem;
-  cursor: pointer;
-}
-
-/* Tarjeta Pádel */
-.card-evento {
-  background: #ffffff;
-  border-radius: 10px;
-  padding: 10px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-  border: 1px solid #e2e8f0;
-}
-
-.card-img-evento {
-  width: 100%;
-  height: auto;
-  max-height: 200px;
-  object-fit: cover;
-  border-radius: 6px;
-  margin-bottom: 8px;
-  display: block;
-}
-
-.evento-info h3 {
-  font-size: 0.82rem;
-  color: #1e293b;
-  margin-bottom: 6px;
-}
-
-.evento-info p {
-  font-size: 0.75rem;
-  color: #475569;
-  margin-bottom: 3px;
-  line-height: 1.25;
-}
-
-.subtitulo-evento {
-  font-weight: bold;
-  margin-top: 6px;
-  color: #0f172a;
-}
-
-.detalle-evento {
-  margin-top: 6px;
-  font-style: italic;
-}
-
-.destacado-evento {
-  font-weight: bold;
-  color: #d97706;
-  margin-top: 6px;
-}
-
-/* Modal Galería */
 .gallery-content {
   background: #fff;
   padding: 20px;
@@ -380,4 +399,62 @@ body {
   padding: 6px 12px;
   border-radius: 4px;
   cursor: pointer;
+}
+
+/* MODO OSCURO (DARK MODE) */
+body.dark-mode {
+  background-color: #0f172a;
+  color: #f1f5f9;
+}
+
+body.dark-mode .header-banner,
+body.dark-mode .logo-container {
+  background-color: #1e293b;
+  border-color: #334155;
+}
+
+body.dark-mode .card-lateral,
+body.dark-mode .chat-card,
+body.dark-mode .card-evento,
+body.dark-mode .modal-content,
+body.dark-mode .gallery-content {
+  background-color: #1e293b;
+  border-color: #334155;
+  color: #f1f5f9;
+}
+
+body.dark-mode .titulo-seccion,
+body.dark-mode .chat-titulo,
+body.dark-mode .modal-content h2 {
+  color: #60a5fa;
+}
+
+body.dark-mode .chat-box {
+  background-color: #0f172a;
+  border-color: #334155;
+}
+
+body.dark-mode .chat-mensaje.asistente {
+  background-color: #334155;
+  color: #f1f5f9;
+}
+
+body.dark-mode .chat-mensaje.usuario {
+  background-color: #0284c7;
+  color: #ffffff;
+}
+
+body.dark-mode .chip-btn {
+  background-color: #334155;
+  color: #93c5fd;
+  border-color: #475569;
+}
+
+body.dark-mode .card-texto,
+body.dark-mode .evento-info p {
+  color: #cbd5e1;
+}
+
+body.dark-mode .card-texto a {
+  color: #60a5fa;
 }

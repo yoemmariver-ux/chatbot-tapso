@@ -11,14 +11,37 @@ body {
   transition: background-color 0.3s, color 0.3s;
 }
 
-/* BANNER SUPERIOR A 100% ANCHO */
+/* BANNER SUPERIOR CON MODO OSCURO */
 .header-banner {
+  position: relative;
   width: 100%;
   background-color: #ffffff;
   border-bottom: 1px solid #e0e0e0;
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.btn-modo-top {
+  position: absolute;
+  top: 12px;
+  right: 15px;
+  z-index: 100;
+  background-color: rgba(13, 71, 161, 0.85);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.btn-modo-top:hover {
+  background-color: #0d47a1;
+  transform: scale(1.03);
 }
 
 .banner-img {
@@ -92,7 +115,7 @@ body {
 
 .card-img:hover {
   opacity: 0.9;
-  transform: scale(1.01);
+  transform: scale(1.02);
 }
 
 .card-texto {
@@ -137,7 +160,7 @@ body {
 }
 
 .chat-box {
-  height: 310px;
+  height: 330px;
   overflow-y: auto;
   border: 1px solid #e2e8f0;
   border-radius: 8px;
@@ -152,9 +175,9 @@ body {
 .chat-mensaje {
   margin: 0;
   font-size: 0.88rem;
-  line-height: 1.4;
-  padding: 8px 12px;
-  border-radius: 8px;
+  line-height: 1.45;
+  padding: 10px 14px;
+  border-radius: 10px;
   max-width: 88%;
 }
 
@@ -226,26 +249,15 @@ body {
 
 .controles-inferiores {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   margin-top: 10px;
-  gap: 6px;
-}
-
-.btn-voz, .btn-modo {
-  background-color: #0d47a1;
-  color: white;
-  border: none;
-  padding: 5px 10px;
-  border-radius: 4px;
-  font-size: 0.78rem;
-  cursor: pointer;
 }
 
 .btn-limpiar {
   background-color: #e2e8f0;
   border: none;
-  padding: 5px 10px;
+  padding: 5px 12px;
   border-radius: 4px;
   color: #64748b;
   font-size: 0.78rem;
@@ -270,6 +282,12 @@ body {
   border-radius: 6px;
   margin-bottom: 8px;
   display: block;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.card-img-evento:hover {
+  transform: scale(1.02);
 }
 
 .evento-info h3 {
@@ -302,7 +320,7 @@ body {
   margin-top: 6px;
 }
 
-/* MODAL DE INICIO Y GALERÍA */
+/* MODAL DE INICIO */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -360,45 +378,80 @@ body {
   cursor: pointer;
 }
 
-.gallery-content {
-  background: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  position: relative;
-  max-width: 480px;
-  width: 90%;
+/* GALERÍA EN PANTALLA COMPLETA */
+.modal-overlay-fullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(10, 15, 25, 0.95);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 3000;
+}
+
+.close-btn-fullscreen {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 42px;
+  color: #ffffff;
+  cursor: pointer;
+  z-index: 3100;
+  font-weight: bold;
+  transition: color 0.2s;
+}
+
+.close-btn-fullscreen:hover {
+  color: #f87171;
+}
+
+.gallery-content-fullscreen {
+  width: 92vw;
+  height: 88vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   text-align: center;
 }
 
-.gallery-content img {
-  width: 100%;
-  max-height: 320px;
-  border-radius: 6px;
-  object-fit: cover;
+.gallery-content-fullscreen img {
+  max-width: 90vw;
+  max-height: 75vh;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
 }
 
-.close-btn {
-  position: absolute;
-  top: 8px;
-  right: 12px;
-  font-size: 24px;
-  cursor: pointer;
+.gallery-content-fullscreen p {
+  color: #f1f5f9;
+  font-size: 1.1rem;
+  margin-top: 15px;
+  font-weight: 500;
 }
 
 .gallery-nav {
-  margin-top: 10px;
+  margin-top: 15px;
   display: flex;
-  justify-content: center;
-  gap: 10px;
+  gap: 15px;
 }
 
 .gallery-nav button {
   background: #0d47a1;
   color: white;
   border: none;
-  padding: 6px 12px;
-  border-radius: 4px;
+  padding: 10px 20px;
+  border-radius: 6px;
   cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: bold;
+}
+
+.gallery-nav button:hover {
+  background: #1e40af;
 }
 
 /* MODO OSCURO (DARK MODE) */
@@ -416,8 +469,7 @@ body.dark-mode .logo-container {
 body.dark-mode .card-lateral,
 body.dark-mode .chat-card,
 body.dark-mode .card-evento,
-body.dark-mode .modal-content,
-body.dark-mode .gallery-content {
+body.dark-mode .modal-content {
   background-color: #1e293b;
   border-color: #334155;
   color: #f1f5f9;

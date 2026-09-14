@@ -1,46 +1,6 @@
 let nombreUsuario = "Vecino/a";
-let vozActiva = true;
 let modoOscuro = false;
-
-// Respuestas del Asistente
-const respuestas = {
-  "autoridades": {
-    texto: "🏛️ **Autoridades Municipales:**\n• Intendente: Gestión Municipal de Tapso.\n• Centro Cívico: Ruta Nac. 157, Tapso, Catamarca.\n\n¿Te gustaría saber los horarios de atención al público?",
-    seguimiento: "horarios"
-  },
-  "horarios": {
-    texto: "🕒 **Horarios de atención:**\nLunes a viernes de 07:30 a 13:00 hs. ¿Querés que te comunique con algún área específica?"
-  },
-  "ubicación": {
-    texto: "📍 **Ubicación:**\nTapso se encuentra ubicado en el departamento El Alto, provincia de Catamarca, sobre la Ruta Nacional 157.",
-    seguimiento: "cómo llegar"
-  },
-  "cómo llegar": {
-    texto: "🚗 Podes acceder por la Ruta Nacional 157, tanto desde Frías como desde Recreo. ¿Necesitás datos de transporte de colectivos?"
-  },
-  "historia": {
-    texto: "📜 **Historia de Tapso:**\nTapso es un pueblo ferroviario e histórico con más de 200 años de identidad y cultura en el este catamarqueño."
-  },
-  "policía": {
-    texto: "👮 **Comisaría / Policía de Tapso:**\nAnte emergencias, comunicate al **101** o dirigite a la seccional local sobre la calle principal."
-  },
-  "punto digital": {
-    texto: "💻 **Punto Digital Tapso:**\nBrinda acceso libre a internet, capacitaciones laborales, trámites de ANSES y asistencia tecnológica gratuita.",
-    seguimiento: "cursos"
-  },
-  "cursos": {
-    texto: "🎓 Actualmente se dictan talleres de informática y gestión administrativa. ¿Querés inscribirte o consultar requisitos?"
-  },
-  "hostería": {
-    texto: "🏨 **Hostería Municipal:**\nOfrece alojamiento cómodo para visitantes y turistas. Podés consultar disponibilidad directamente en el Centro Cívico."
-  },
-  "festivales": {
-    texto: "🎉 **Festivales y Eventos:**\nTapso celebra anualmente el Festival Unión de Pueblos, fiestas patrias y encuentros culturales comunitarios."
-  },
-  "turismo": {
-    texto: "🍃 **Turismo Tapso:**\nDisfrutá de nuestros espacios verdes, el Complejo Deportivo y circuitos locales. ¿Querés ver la galería de fotos?"
-  }
-};
+let estadoConversacion = null;
 
 // Fotos para Galerías
 const galerias = {
@@ -66,7 +26,6 @@ const galerias = {
 
 let galeriaActual = [];
 let indiceImagen = 0;
-let ultimoSeguimiento = null;
 
 // Modal de Nombre al iniciar
 document.addEventListener("DOMContentLoaded", () => {
@@ -90,11 +49,10 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-// Saludo Inicial sin comillas ni formato raro
+// Saludo Inicial
 function saludarInicial() {
   const saludo = `¡Hola ${nombreUsuario}! Bienvenido/a al portal de Tapso. ¿En qué te puedo ayudar hoy?`;
   agregarMensaje(saludo, "asistente");
-  hablarTexto(saludo);
 }
 
 // Alternar Modo Claro / Modo Oscuro
@@ -107,27 +65,6 @@ function toggleModo() {
   }
 }
 
-function toggleVoz() {
-  vozActiva = !vozActiva;
-  const btnVoz = document.getElementById("btnVoz");
-  if (vozActiva) {
-    btnVoz.innerText = "🔊 Voz: Activada";
-  } else {
-    btnVoz.innerText = "🔇 Voz: Desactivada";
-    window.speechSynthesis.cancel();
-  }
-}
-
-function hablarTexto(textoLimpieza) {
-  if (!vozActiva || !('speechSynthesis' in window)) return;
-  window.speechSynthesis.cancel();
-  const textoLimpio = textoLimpieza.replace(/[*#_]/g, '');
-  const utterance = new SpeechSynthesisUtterance(textoLimpio);
-  utterance.lang = 'es-AR';
-  utterance.rate = 1.0;
-  window.speechSynthesis.speak(utterance);
-}
-
 function enviarMensaje() {
   const input = document.getElementById("mensaje");
   const texto = input.value.trim();
@@ -138,14 +75,14 @@ function enviarMensaje() {
 
   setTimeout(() => {
     procesarRespuesta(texto);
-  }, 350);
+  }, 300);
 }
 
 function enviarSugerencia(clave) {
   agregarMensaje(clave, "usuario");
   setTimeout(() => {
     procesarRespuesta(clave);
-  }, 350);
+  }, 300);
 }
 
 function agregarMensaje(texto, emisor) {
@@ -163,35 +100,95 @@ function agregarMensaje(texto, emisor) {
   chatBox.scrollTop = chatBox.scrollHeight;
 }
 
+// FLUJO DE CONVERSACIÓN NATURAL (SIN FORMATOS NI TITULOS EN NEGRITA REPETIDOS)
 function procesarRespuesta(consulta) {
-  const query = consulta.toLowerCase();
-  let respuestaObj = null;
+  const query = consulta.toLowerCase().trim();
 
-  if (ultimoSeguimiento && (query.includes("sí") || query.includes("si") || query.includes("dale") || query.includes("bueno"))) {
-    respuestaObj = respuestas[ultimoSeguimiento];
-    ultimoSeguimiento = null;
-  } else {
-    for (let key in respuestas) {
-      if (query.includes(key)) {
-        respuestaObj = respuestas[key];
-        break;
-      }
+  // MENTOR / FLUJO AUTORIDADES (CATAMARCA VS SANTIAGO)
+  if (estadoConversacion === "esperando_jurisdiccion_autoridades") {
+    if (query.includes("catamarca")) {
+      agregarMensaje("Por el lado de Catamarca, la gestión municipal corresponde al Municipio de Tapso (Dpto. El Alto). El Centro Cívico atiende de Lunes a Viernes de 07:30 a 13:00 hs.", "asistente");
+      estadoConversacion = null;
+      return;
+    } else if (query.includes("santiago") || query.includes("santiagueña")) {
+      agregarMensaje("Por el lado de Santiago del Estero, la administración corresponde a la Comisión Municipal de Tapso (Dpto. Choya).", "asistente");
+      estadoConversacion = null;
+      return;
     }
   }
 
-  if (respuestaObj) {
-    agregarMensaje(respuestaObj.texto, "asistente");
-    ultimoSeguimiento = respuestaObj.seguimiento || null;
-  } else {
-    const respuestaDefault = `Disculpá ${nombreUsuario}, no entendí del todo esa consulta. Podés tocar uno de los botones de abajo o preguntarme por Autoridades, Ubicación, Hostería, Policía o Punto Digital.`;
-    agregarMensaje(respuestaDefault, "asistente");
-    ultimoSeguimiento = null;
+  if (query.includes("autoridades") || query.includes("autoridad")) {
+    agregarMensaje("Tapso se divide entre las provincias de Catamarca y Santiago del Estero. ¿De cuál de las dos jurisdicciones te gustaría conocer las autoridades?", "asistente");
+    estadoConversacion = "esperando_jurisdiccion_autoridades";
+    return;
   }
+
+  // UBICACIÓN Y CÓMO LLEGAR
+  if (query.includes("ubicación") || query.includes("ubicacion")) {
+    agregarMensaje("Tapso se encuentra sobre la Ruta Nacional 157, en el límite interprovincial de Catamarca y Santiago del Estero. ¿Necesitás saber cómo llegar desde Frías o Recreo?", "asistente");
+    estadoConversacion = "esperando_llegar";
+    return;
+  }
+
+  if (estadoConversacion === "esperando_llegar" && (query.includes("sí") || query.includes("si") || query.includes("cómo") || query.includes("como"))) {
+    agregarMensaje("Podés acceder directamente por la Ruta Nacional 157 tanto desde Recreo (al sur) como desde Frías (al norte). Ambos accesos están totalmente pavimentados.", "asistente");
+    estadoConversacion = null;
+    return;
+  }
+
+  // PUNTO DIGITAL Y CURSOS
+  if (query.includes("punto digital")) {
+    agregarMensaje("El Punto Digital Tapso brinda acceso libre a internet, trámites de ANSES y capacitaciones gratuitas. ¿Te interesa conocer sobre los cursos disponibles?", "asistente");
+    estadoConversacion = "esperando_cursos";
+    return;
+  }
+
+  if (estadoConversacion === "esperando_cursos" && (query.includes("sí") || query.includes("si") || query.includes("curso") || query.includes("capacitaciones"))) {
+    agregarMensaje("Actualmente se dicta el curso de Informática con orientación en administración y gestión en la sede de Punto Digital.", "asistente");
+    estadoConversacion = null;
+    return;
+  }
+
+  // OTRAS SECCIONES
+  if (query.includes("hostería") || query.includes("hosteria")) {
+    agregarMensaje("La Hostería Municipal ofrece alojamiento cómodo para los visitantes. Podés acercarte al Centro Cívico para consultar disponibilidad y tarifas.", "asistente");
+    estadoConversacion = null;
+    return;
+  }
+
+  if (query.includes("festivales") || query.includes("festival")) {
+    agregarMensaje("El evento más destacado es el Festival Unión de Pueblos, que reúne música, artesanos y gastronomía de toda la región.", "asistente");
+    estadoConversacion = null;
+    return;
+  }
+
+  if (query.includes("policía") || query.includes("policia")) {
+    agregarMensaje("Ante emergencias con la seccional policial, podés comunicarte al 101 o dirigirte a la dependencia ubicada sobre la avenida principal.", "asistente");
+    estadoConversacion = null;
+    return;
+  }
+
+  if (query.includes("historia")) {
+    agregarMensaje("Tapso es una localidad con más de 200 años de historia, nacida al calor del ferrocarril y caracterizada por la unión de dos provincias.", "asistente");
+    estadoConversacion = null;
+    return;
+  }
+
+  if (query.includes("turismo")) {
+    agregarMensaje("En Tapso podés disfrutar de los espacios verdes, el Complejo Deportivo, la histórica Hostería y los circuitos locales.", "asistente");
+    estadoConversacion = null;
+    return;
+  }
+
+  // MENSAJE POR DEFECTO
+  agregarMensaje(`Disculpá ${nombreUsuario}, no logré entender bien tu consulta. Podés preguntarme sobre Autoridades, Ubicación, Punto Digital, Hostería, Festivales o Policía.`, "asistente");
+  estadoConversacion = null;
 }
 
 function limpiarChat() {
   const chatBox = document.getElementById("chatBox");
   chatBox.innerHTML = "";
+  estadoConversacion = null;
   saludarInicial();
 }
 
@@ -201,14 +198,23 @@ document.getElementById("mensaje")?.addEventListener("keypress", function(e) {
   }
 });
 
-// Lógica de Galería
+// LÓGICA DE GALERÍA Y FOTOS EN PANTALLA COMPLETA
 function abrirGaleria(categoria) {
   if (galerias[categoria]) {
     galeriaActual = galerias[categoria];
     indiceImagen = 0;
+    document.getElementById("galleryNav").style.display = galeriaActual.length > 1 ? "flex" : "none";
     mostrarImagenGaleria();
     document.getElementById("galleryModal").style.display = "flex";
   }
+}
+
+function abrirImagenUnica(src, caption) {
+  galeriaActual = [{ src: src, caption: caption }];
+  indiceImagen = 0;
+  document.getElementById("galleryNav").style.display = "none";
+  mostrarImagenGaleria();
+  document.getElementById("galleryModal").style.display = "flex";
 }
 
 function mostrarImagenGaleria() {

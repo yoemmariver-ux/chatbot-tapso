@@ -130,7 +130,7 @@ body.dark-mode .chip-btn:hover {
 }
 
 /* ====================================================
-   BANNER SUPERIOR CENTRADO (ANCHO A LA MITAD)
+   BANNER SUPERIOR DE PUNTA A PUNTA CON EFECTO BANDERA
    ==================================================== */
 .header-banner {
   position: relative;
@@ -141,10 +141,10 @@ body.dark-mode .chip-btn:hover {
 }
 
 .banner-img {
-  width: 50%; /* Cortado a la mitad de ancho */
-  height: auto;
+  width: 100%;
+  height: 180px; /* Altura estilizada manteniendo el ancho completo */
+  object-fit: cover;
   display: block;
-  margin: 0 auto; /* Centrado */
   animation: banderaOndeando 6s ease-in-out infinite;
   transform-origin: center center;
 }
@@ -199,7 +199,7 @@ body.dark-mode .chip-btn:hover {
 }
 
 /* ====================================================
-   LAYOUT EN PC (3 COLUMNAS MANTENIDO)
+   LAYOUT EN PC (3 COLUMNAS MANTENIDAS)
    ==================================================== */
 .main-layout {
   display: grid;
@@ -535,9 +535,13 @@ body.dark-mode .detalle-evento {
     flex-direction: column;
   }
 
-  /* ORDEN ESPECÍFICO PARA CELULARES */
+  .banner-img {
+    height: 120px; /* Ajuste proporcional de altura para celulares */
+  }
+
+  /* Orden de secciones en celular */
   .columna-chat {
-    order: 1; /* 1º Asistente Municipal */
+    order: 1; /* 1º Asistente */
   }
 
   .main-layout > aside:first-of-type {
@@ -546,10 +550,6 @@ body.dark-mode .detalle-evento {
 
   .main-layout > aside:last-of-type {
     order: 3; /* 3º Calendario */
-  }
-
-  .banner-img {
-    width: 85%; /* Ajuste proporcional para pantallas pequeñas */
   }
 
   .chat-card {

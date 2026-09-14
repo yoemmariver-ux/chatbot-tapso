@@ -4,10 +4,10 @@ let temaActual = null;
 let contadorConsultasTema = 0;
 
 // Estado para controlar el flujo de conversación interactivo
-let esperandoEleccionSubtema = null; // Guardará la categoría sobre la que se ofreció elegir
+let esperandoEleccionSubtema = null;
 
 // ----------------------------------------------------
-// SISTEMA DE AUDIO LOCAL (Carpeta 'sounds/')
+// SISTEMA DE AUDIO (Carpeta 'sounds/')
 // ----------------------------------------------------
 const soundClick = new Audio('sounds/click.mp3');
 const soundSend = new Audio('sounds/send.mp3');
@@ -24,25 +24,21 @@ function playSend() {
 }
 
 function playReceive() {
+  soundReceive.currentTime = 0;
   soundReceive.play().catch(() => {});
 }
 
 // ----------------------------------------------------
-// SÍNTESIS DE VOZ DINÁMICA NATIVA (Sin OpenAI / Sin CORS)
+// SÍNTESIS DE VOZ NATIVA
 // ----------------------------------------------------
 function hablarTexto(mensaje) {
   if ('speechSynthesis' in window) {
-    // Cancela cualquier audio que se esté reproduciendo previamente
     window.speechSynthesis.cancel();
-
     const utterance = new SpeechSynthesisUtterance(mensaje);
-    utterance.lang = 'es-AR'; // Voz configurada en español de Argentina
-    utterance.rate = 1.0;     // Velocidad normal
-    utterance.pitch = 1.0;    // Tono normal
-
+    utterance.lang = 'es-AR'; 
+    utterance.rate = 1.0;     
+    utterance.pitch = 1.0;    
     window.speechSynthesis.speak(utterance);
-  } else {
-    console.warn("Este navegador no soporta síntesis de voz nativa.");
   }
 }
 
@@ -260,10 +256,11 @@ document.addEventListener("DOMContentLoaded", function() {
         usuarioNombre = nombreIngresado;
       }
       modal.style.display = "none";
+      
       mostrarSaludoInicial();
 
-      // Saludo vocal adaptado dinámicamente al nombre ingresado
-      hablarTexto(`¡Hola ${usuarioNombre}! Bienvenido al portal oficial de la Municipalidad de Tapso. Soy tu asistente virtual, ¿en qué te puedo ayudar hoy?`);
+      const textoSaludo = `¡Hola ${usuarioNombre}! Bienvenido al portal oficial de la Municipalidad de Tapso. Soy tu asistente virtual, ¿en qué te puedo ayudar hoy?`;
+      hablarTexto(textoSaludo);
     });
   }
 
@@ -340,7 +337,6 @@ function responder() {
 
   let respuesta = "";
 
-  // 1. EVALUAR SALUDOS
   if (/^(hola|hols|buenas|buen|buenos|buenas noches|buenas tardes|que tal|como va|saludos)/i.test(texto)) {
     const saludos = [
       `¡Hola ${usuarioNombre}! ¿En qué puedo ayudarte hoy?`,
@@ -350,7 +346,6 @@ function responder() {
     respuesta = saludos[Math.floor(Math.random() * saludos.length)];
     esperandoEleccionSubtema = null;
   }
-  // 2. EVALUAR DESPEDIDAS
   else if (/^(chau|adios|nos vemos|hasta luego|que tengas buen dia|gracias|muchas gracias)/i.test(texto)) {
     const despedidas = [
       `¡Hasta luego, ${usuarioNombre}! Que tengas un excelente día.`,
@@ -360,12 +355,10 @@ function responder() {
     respuesta = despedidas[Math.floor(Math.random() * despedidas.length)];
     esperandoEleccionSubtema = null;
   }
-  // 3. EVALUAR UBICACIÓN DIRECTA
   else if (["ubicacion", "ubicación", "donde queda", "dónde queda", "como llegar", "cómo llegar", "mapa", "ruta 157"].some(kw => texto.includes(kw))) {
     respuesta = "Tapso cuenta con una particularidad geopolítica: se encuentra dividida entre dos provincias. El sector oeste pertenece al Departamento El Alto (Catamarca) y el sector este al Departamento Choya (Santiago del Estero). La línea de separación son las vías del ferrocarril. Se ubica estratégicamente sobre la Ruta Nacional N° 157.";
     esperandoEleccionSubtema = null;
   }
-  // 4. EVALUAR SUBTEMAS DIRECTOS
   else {
     let subtemaEncontrado = null;
     for (const modulo of Object.values(modulosConocimiento)) {
@@ -381,9 +374,7 @@ function responder() {
     if (subtemaEncontrado) {
       respuesta = subtemaEncontrado;
       esperandoEleccionSubtema = null;
-    }
-    // 5. EVALUAR SI ES UNA CONSULTA GENÉRICA
-    else {
+    } else {
       let moduloGenericoEncontrado = null;
       let claveModulo = null;
 
@@ -398,13 +389,9 @@ function responder() {
       if (moduloGenericoEncontrado) {
         respuesta = moduloGenericoEncontrado;
         esperandoEleccionSubtema = claveModulo;
-      }
-      // 6. SI ESTÁBAMOS ESPERANDO UNA ELECCIÓN Y DICE "SÍ / BUENO / DALE"
-      else if (esperandoEleccionSubtema && /^(si|sí|bueno|dale|a ver|contame|obvio)/i.test(texto)) {
+      } else if (esperandoEleccionSubtema && /^(si|sí|bueno|dale|a ver|contame|obvio)/i.test(texto)) {
         respuesta = `¡Bárbaro! Escribime cuál de las opciones que te mencioné te gustaría conocer más a fondo.`;
-      }
-      // 7. RESPUESTA NO ENCONTRADA
-      else {
+      } else {
         respuesta = obtenerRespuestaDesconocida();
         esperandoEleccionSubtema = null;
       }

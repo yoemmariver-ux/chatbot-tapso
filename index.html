@@ -2,140 +2,67 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Asistente Tapso</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css?v=9">
+  <title>Portal Oficial - Municipalidad de Tapso</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- Modal de bienvenida flotante -->
-  <div id="loginModal" class="modal">
+  <!-- MODAL DE INICIO (NOMBRE Y AUDIO DE BIENVENIDA) -->
+  <div id="loginModal" class="modal-overlay">
     <div class="modal-content">
-      <h2>¡Bienvenido!</h2>
+      <h2>Municipalidad de Tapso</h2>
       <p>Por favor, ingresa tu nombre para comenzar:</p>
-      <input type="text" id="nombre" placeholder="Tu nombre" autofocus onclick="playClick()">
+      <input type="text" id="nombre" placeholder="Tu nombre..." autocomplete="off">
       <button id="btnComenzar">Comenzar</button>
     </div>
   </div>
 
-  <!-- Galería de Imágenes Flotante (Lightbox) -->
-  <div id="galleryModal" class="image-modal">
-    <span class="close-btn" onclick="cerrarGaleria()">&times;</span>
-    <button class="nav-btn prev-btn" onclick="cambiarImagen(-1)">&#10094;</button>
-    <div class="gallery-content">
-      <img id="imgGaleria" src="" alt="Galería de imágenes">
-      <p id="captionGaleria" class="gallery-caption"></p>
-    </div>
-    <button class="nav-btn next-btn" onclick="cambiarImagen(1)">&#10095;</button>
-  </div>
-
-  <!-- Encabezado superior -->
-  <header>
-    <!-- Botón de Modo Oscuro Global en la esquina superior -->
-    <button class="theme-toggle-btn" onclick="toggleDarkMode()" title="Cambiar tema">
-      🌙 <span class="theme-text">Modo Oscuro</span>
-    </button>
-
-    <div class="banner-container">
-      <img src="images/banner-tapso.png" alt="Banner Tapso" class="banner-img">
+  <!-- ENCABEZADO CON CLIMA A LA IZQUIERDA Y LOGO/TÍTULO A LA DERECHA -->
+  <header class="header-municipal">
+    <div class="clima-header-container">
+      <a class="weatherwidget-io" href="https://forecast7.com/es/n28d40n65d10/tapso/" data-label_1="TAPSO" data-label_2="WEATHER" data-theme="original">TAPSO WEATHER</a>
+      <script>
+      !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
+      </script>
     </div>
 
-    <div class="logo-container">
-      <img src="images/logo-tapso.png" alt="Logo Tapso" class="logo-municipio" onmouseenter="playClick()">
+    <div class="logo-titulo-container">
+      <h1>Portal Oficial - Municipalidad de Tapso</h1>
     </div>
   </header>
 
-  <!-- Contenedor principal -->
-  <main id="main">
-    
-    <!-- Columna Izquierda: Información Local, Redes y WhatsApp -->
-    <aside id="conoce">
-      <h2 class="section-title">Conocé Tapso</h2>
+  <!-- CONTENEDOR PRINCIPAL DEL CHAT -->
+  <main class="main-container">
+    <div class="chat-wrapper">
+      <div id="chatBox" class="chat-box"></div>
       
-      <div class="item galeria-trigger" onclick="abrirGaleria('tapsofc')">
-        <img src="images/tapsofc.jpg" alt="Tapso FC" class="conoce-img ampliable">
-        <p class="info clickeable"><strong>Club Tapso FC</strong> 📸 <span>(Ver fotos)</span></p>
+      <div class="input-area">
+        <input type="text" id="mensaje" placeholder="Escribí tu consulta aquí..." autocomplete="off">
+        <button id="btnEnviar">Enviar</button>
       </div>
+    </div>
 
-      <div class="item galeria-trigger" onclick="abrirGaleria('hosteria')">
-        <img src="images/hosteria.jpg" alt="Hostería" class="conoce-img ampliable">
-        <p class="info clickeable"><strong>La histórica hostería de Tapso</strong> 📸 <span>(Ver fotos)</span></p>
-      </div>
-
-      <div class="item galeria-trigger" onclick="abrirGaleria('festival')">
-        <img src="images/festival.jpg" alt="Festival Unión de Pueblos" class="conoce-img ampliable">
-        <p class="info clickeable"><strong>Festival Unión de Pueblos</strong> 📸 <span>(Ver fotos)</span></p>
-      </div>
-
-      <!-- Cuadro Individual para Redes Sociales Centradas -->
-      <div class="item contacto-box">
-        <h3 class="sub-title">Redes Oficiales</h3>
-        <div class="icons-grid-centered">
-          <a href="https://www.facebook.com/municipalidadetapso" target="_blank" title="Facebook" onclick="playClick()">
-            <img src="images/facebook.png" alt="Facebook">
-          </a>
-          <a href="https://www.instagram.com/tapsocultura" target="_blank" title="Instagram" onclick="playClick()">
-            <img src="images/instagram.png" alt="Instagram">
-          </a>
-          <a href="https://maps.google.com/?q=Tapso+Catamarca" target="_blank" title="Ubicación" onclick="playClick()">
-            <img src="images/ubicacion.png" alt="Ubicación">
-          </a>
-        </div>
-      </div>
-
-      <!-- Botón de WhatsApp Destacado Abajo de Todo -->
-      <div class="whatsapp-card-container">
-        <a href="https://wa.me/549XXXXXXXXXX" target="_blank" class="whatsapp-btn-main" onclick="playClick()">
-          <img src="images/watsapp.png" alt="WhatsApp">
-          <span>¿Tenés dudas? Escribinos por WhatsApp</span>
-        </a>
-      </div>
-    </aside>
-
-    <!-- Columna Central: Asistente -->
-    <section id="central">
-      <div id="chat">
-        <h2 class="section-title">Asistente Municipal</h2>
-        <div id="chatBox" class="chat-window"></div>
-        <div class="input-container">
-          <input type="text" id="mensaje" placeholder="Escribe tu mensaje..." onclick="playClick()">
-          <button id="btnEnviar">Enviar</button>
-        </div>
-        <div class="controls-single">
-          <button onclick="limpiar()">🧹 Limpiar chat</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- Columna Derecha: Calendario -->
-    <aside id="calendario">
-      <h2 class="section-title">Calendario</h2>
-      <div class="item galeria-trigger" onclick="abrirGaleria('padel')">
-        <img src="images/padel-tapso.jpg" alt="Liga de Pádel Tapso" class="conoce-img ampliable">
-        <p class="info clickeable">
-          🎾 <strong>¡ARRANCA LA LIGA DE PÁDEL!</strong> 🔥<br><br>
-          📅 Comienza a finales de Septiembre<br>
-          🎾 1 fecha por semana<br>
-          👥 16 parejas<br>
-          💰 Inscripción: $20.000<br>
-          Por consultas: 3854415855<br><br>
-          <strong>CATEGORÍAS</strong><br>
-          🔵 Masculino: suma 13<br>
-          🩷 Femenino: suma 15<br><br>
-          A realizarse en cancha de Pádel ubicado en el predio del Complejo Deportivo, Tapso Catamarca.<br><br>
-          🔥 <strong>¡CUPOS LIMITADOS!</strong><br>
-          📲 Armá tu pareja e inscribite.
-        </p>
-      </div>
-
-      <!-- Imagen Turística al lado del Calendario (Muestra completa y clickeable) -->
-      <div class="item galeria-trigger" onclick="abrirGaleria('turismo')">
-        <img src="images/visita-tapso.jpg" alt="Visitá Tapso - Turismo" class="ampliable" style="width: 100%; height: auto; max-height: none; object-fit: contain; border-radius: 8px; display: block;">
-        <p class="info clickeable" style="margin-top: 8px;">🏛️ <strong>Visitá Tapso</strong> 📸 <span>(Ver guía turística)</span></p>
-      </div>
-    </aside>
+    <!-- BOTONES DE ACCIÓN RÁPIDA -->
+    <div class="controles-extra">
+      <button onclick="limpiar()">Reiniciar Chat</button>
+      <button onclick="toggleDarkMode()">Modo Oscuro</button>
+    </div>
   </main>
 
-  <script src="script.js?v=7"></script>
+  <!-- MODAL DE GALERÍA DE IMÁGENES -->
+  <div id="galleryModal" class="modal-overlay" style="display: none;">
+    <div class="gallery-content">
+      <span class="close-btn" onclick="cerrarGaleria()">&times;</span>
+      <img id="imgGaleria" src="" alt="Imagen de Galería">
+      <p id="captionGaleria"></p>
+      <div class="gallery-nav">
+        <button onclick="cambiarImagen(-1)">&#10094; Anterior</button>
+        <button onclick="cambiarImagen(1)">Siguiente &#10095;</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>

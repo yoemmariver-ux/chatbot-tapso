@@ -61,7 +61,6 @@ body.dark-mode .chip-btn:hover {
   background-color: #34495e;
 }
 
-/* El logo municipal permanece inalterable en Modo Oscuro */
 .logo-img,
 .dark-mode .logo-img {
   filter: none !important;
@@ -131,7 +130,7 @@ body.dark-mode .chip-btn:hover {
 }
 
 /* ====================================================
-   BANNER SUPERIOR A TODO ANCHO Y LOGO CENTRADO
+   BANNER SUPERIOR CENTRADO (ANCHO A LA MITAD)
    ==================================================== */
 .header-banner {
   position: relative;
@@ -142,9 +141,10 @@ body.dark-mode .chip-btn:hover {
 }
 
 .banner-img {
-  width: 100%;
+  width: 50%; /* Cortado a la mitad de ancho */
   height: auto;
   display: block;
+  margin: 0 auto; /* Centrado */
   animation: banderaOndeando 6s ease-in-out infinite;
   transform-origin: center center;
 }
@@ -199,7 +199,7 @@ body.dark-mode .chip-btn:hover {
 }
 
 /* ====================================================
-   LAYOUT EN 3 COLUMNAS
+   LAYOUT EN PC (3 COLUMNAS MANTENIDO)
    ==================================================== */
 .main-layout {
   display: grid;
@@ -296,7 +296,6 @@ body.dark-mode .chat-titulo {
   gap: 12px;
 }
 
-/* Burbujas de chat */
 .chat-mensaje {
   max-width: 80%;
   padding: 10px 14px;
@@ -493,7 +492,6 @@ body.dark-mode .detalle-evento {
   color: #e0e0e0;
 }
 
-/* Flechas laterales de la galería */
 .nav-arrow {
   position: absolute;
   top: 50%;
@@ -529,13 +527,31 @@ body.dark-mode .detalle-evento {
 }
 
 /* ====================================================
-   DISEÑO RESPONSIVO (PANTALLAS CHICAS Y CELULARES)
+   DISEÑO RESPONSIVO Y ORDEN EN CELULARES
    ==================================================== */
 @media (max-width: 992px) {
   .main-layout {
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
   }
-  
+
+  /* ORDEN ESPECÍFICO PARA CELULARES */
+  .columna-chat {
+    order: 1; /* 1º Asistente Municipal */
+  }
+
+  .main-layout > aside:first-of-type {
+    order: 2; /* 2º Conocé Tapso */
+  }
+
+  .main-layout > aside:last-of-type {
+    order: 3; /* 3º Calendario */
+  }
+
+  .banner-img {
+    width: 85%; /* Ajuste proporcional para pantallas pequeñas */
+  }
+
   .chat-card {
     height: 550px;
   }

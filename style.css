@@ -131,25 +131,22 @@ body.dark-mode .chip-btn:hover {
 }
 
 /* ====================================================
-   BANNER SUPERIOR Y ANIMACIÓN DE BANDERA ONDEANDO
+   BANNER SUPERIOR A TODO ANCHO Y LOGO CENTRADO
    ==================================================== */
 .header-banner {
   position: relative;
   width: 100%;
   background: #004d40;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   overflow: hidden;
-  padding: 10px 0;
+  padding: 0;
 }
 
 .banner-img {
-  max-width: 100%;
-  max-height: 160px;
-  object-fit: contain;
+  width: 100%;
+  height: auto;
+  display: block;
   animation: banderaOndeando 6s ease-in-out infinite;
-  transform-origin: left center;
+  transform-origin: center center;
 }
 
 @keyframes banderaOndeando {
@@ -157,13 +154,13 @@ body.dark-mode .chip-btn:hover {
     transform: translateY(0) rotate(0deg) skewY(0deg);
   }
   25% {
-    transform: translateY(-4px) rotate(-0.6deg) skewY(-0.4deg);
+    transform: translateY(-3px) rotate(-0.5deg) skewY(-0.3deg);
   }
   50% {
-    transform: translateY(3px) rotate(0.6deg) skewY(0.4deg);
+    transform: translateY(3px) rotate(0.5deg) skewY(0.3deg);
   }
   75% {
-    transform: translateY(-2px) rotate(-0.3deg) skewY(-0.2deg);
+    transform: translateY(-2px) rotate(-0.2deg) skewY(-0.2deg);
   }
   100% {
     transform: translateY(0) rotate(0deg) skewY(0deg);
@@ -174,9 +171,9 @@ body.dark-mode .chip-btn:hover {
   position: absolute;
   top: 15px;
   left: 15px;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(0, 0, 0, 0.4);
   color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.5);
   padding: 8px 14px;
   border-radius: 20px;
   cursor: pointer;
@@ -187,18 +184,18 @@ body.dark-mode .chip-btn:hover {
 }
 
 .btn-modo-top:hover {
-  background: rgba(255, 255, 255, 0.4);
+  background: rgba(0, 0, 0, 0.7);
 }
 
-.logo-container {
-  position: absolute;
-  top: 10px;
-  right: 15px;
+.logo-container-center {
+  text-align: center;
+  padding: 15px 0 5px 0;
 }
 
 .logo-img {
-  height: 60px;
+  height: 75px;
   width: auto;
+  display: inline-block;
 }
 
 /* ====================================================
@@ -209,7 +206,7 @@ body.dark-mode .chip-btn:hover {
   grid-template-columns: 280px 1fr 300px;
   gap: 20px;
   max-width: 1300px;
-  margin: 20px auto;
+  margin: 10px auto 20px auto;
   padding: 0 15px;
 }
 

@@ -4,7 +4,7 @@ let temaActual = null;
 let contadorConsultasTema = 0;
 
 // Estado para controlar el flujo de conversación interactivo
-let esperandoEleccionSubtema = null;
+let esperandoEleccionSubtema = null; // Guardará la categoría sobre la que se ofreció elegir
 
 // ----------------------------------------------------
 // SISTEMA DE AUDIO (Carpeta 'sounds/')
@@ -35,7 +35,7 @@ function hablarTexto(mensaje) {
   if ('speechSynthesis' in window) {
     window.speechSynthesis.cancel();
     const utterance = new SpeechSynthesisUtterance(mensaje);
-    utterance.lang = 'es-AR'; 
+    utterance.lang = 'es-AR'; // Voz configurada en español de Argentina
     utterance.rate = 1.0;     
     utterance.pitch = 1.0;    
     window.speechSynthesis.speak(utterance);
@@ -259,6 +259,7 @@ document.addEventListener("DOMContentLoaded", function() {
       
       mostrarSaludoInicial();
 
+      // Lectura fluida completa con la voz nativa del saludo inicial
       const textoSaludo = `¡Hola ${usuarioNombre}! Bienvenido al portal oficial de la Municipalidad de Tapso. Soy tu asistente virtual, ¿en qué te puedo ayudar hoy?`;
       hablarTexto(textoSaludo);
     });
@@ -337,6 +338,7 @@ function responder() {
 
   let respuesta = "";
 
+  // 1. EVALUAR SALUDOS
   if (/^(hola|hols|buenas|buen|buenos|buenas noches|buenas tardes|que tal|como va|saludos)/i.test(texto)) {
     const saludos = [
       `¡Hola ${usuarioNombre}! ¿En qué puedo ayudarte hoy?`,
@@ -346,6 +348,7 @@ function responder() {
     respuesta = saludos[Math.floor(Math.random() * saludos.length)];
     esperandoEleccionSubtema = null;
   }
+  // 2. EVALUAR DESPEDIDAS
   else if (/^(chau|adios|nos vemos|hasta luego|que tengas buen dia|gracias|muchas gracias)/i.test(texto)) {
     const despedidas = [
       `¡Hasta luego, ${usuarioNombre}! Que tengas un excelente día.`,
@@ -355,10 +358,12 @@ function responder() {
     respuesta = despedidas[Math.floor(Math.random() * despedidas.length)];
     esperandoEleccionSubtema = null;
   }
+  // 3. EVALUAR UBICACIÓN DIRECTA
   else if (["ubicacion", "ubicación", "donde queda", "dónde queda", "como llegar", "cómo llegar", "mapa", "ruta 157"].some(kw => texto.includes(kw))) {
     respuesta = "Tapso cuenta con una particularidad geopolítica: se encuentra dividida entre dos provincias. El sector oeste pertenece al Departamento El Alto (Catamarca) y el sector este al Departamento Choya (Santiago del Estero). La línea de separación son las vías del ferrocarril. Se ubica estratégicamente sobre la Ruta Nacional N° 157.";
     esperandoEleccionSubtema = null;
   }
+  // 4. EVALUAR SUBTEMAS DIRECTOS
   else {
     let subtemaEncontrado = null;
     for (const modulo of Object.values(modulosConocimiento)) {
@@ -374,7 +379,9 @@ function responder() {
     if (subtemaEncontrado) {
       respuesta = subtemaEncontrado;
       esperandoEleccionSubtema = null;
-    } else {
+    }
+    // 5. EVALUAR SI ES UNA CONSULTA GENÉRICA
+    else {
       let moduloGenericoEncontrado = null;
       let claveModulo = null;
 
@@ -389,9 +396,13 @@ function responder() {
       if (moduloGenericoEncontrado) {
         respuesta = moduloGenericoEncontrado;
         esperandoEleccionSubtema = claveModulo;
-      } else if (esperandoEleccionSubtema && /^(si|sí|bueno|dale|a ver|contame|obvio)/i.test(texto)) {
+      }
+      // 6. SI ESTÁBAMOS ESPERANDO UNA ELECCIÓN Y DICE "SÍ / BUENO / DALE"
+      else if (esperandoEleccionSubtema && /^(si|sí|bueno|dale|a ver|contame|obvio)/i.test(texto)) {
         respuesta = `¡Bárbaro! Escribime cuál de las opciones que te mencioné te gustaría conocer más a fondo.`;
-      } else {
+      }
+      // 7. RESPUESTA NO ENCONTRADA
+      else {
         respuesta = obtenerRespuestaDesconocida();
         esperandoEleccionSubtema = null;
       }

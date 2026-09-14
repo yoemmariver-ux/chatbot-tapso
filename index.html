@@ -3,113 +3,111 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portal Oficial - Municipalidad de Tapso</title>
+  <title>Municipalidad de Tapso - Portal Oficial</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- MODAL DE INICIO DE NOMBRE -->
-  <div id="loginModal" class="modal-overlay">
-    <div class="modal-content">
-      <h2>Municipalidad de Tapso</h2>
-      <p>Por favor, ingresa tu nombre para comenzar:</p>
-      <input type="text" id="nombre" placeholder="Tu nombre..." autocomplete="off">
-      <button id="btnComenzar">Comenzar</button>
-    </div>
-  </div>
-
-  <!-- ENCABEZADO Y BANNER INSTITUCIONAL -->
-  <header class="header-municipal">
-    <div class="logo-titulo-container">
-      <h1>Portal Oficial - Municipalidad de Tapso</h1>
+  <!-- BANNER SUPERIOR CON IMAGEN DE CABECERA -->
+  <header class="header-banner">
+    <div class="banner-container">
+      <img src="banner-tapso.jpg" alt="Municipalidad de Tapso - 200 Años" class="banner-img">
     </div>
   </header>
 
-  <!-- CONTENEDOR PRINCIPAL -->
-  <main class="main-container">
+  <!-- CONTENEDOR PRINCIPAL EN 3 COLUMNAS -->
+  <main class="main-layout">
     
-    <!-- SECCIÓN CHAT -->
-    <section class="chat-section">
-      <div class="chat-wrapper">
-        <div id="chatBox" class="chat-box"></div>
+    <!-- COLUMNA IZQUIERDA: CONOCÉ TAPSO -->
+    <aside class="columna-lateral">
+      <h2 class="titulo-seccion">Conocé Tapso</h2>
+      
+      <div class="card-lateral">
+        <img src="tapso-fc.jpg" alt="Club Tapso FC" class="card-img">
+        <p class="card-texto">
+          <strong>Club Tapso FC</strong> 📷 <a href="#" onclick="abrirGaleria('tapsofc'); return false;">(Ver fotos)</a>
+        </p>
+      </div>
+
+      <div class="card-lateral">
+        <img src="hosteria.jpg" alt="La histórica hostería de Tapso" class="card-img">
+        <p class="card-texto">
+          <strong>La histórica hostería de Tapso</strong> 📷 <a href="#" onclick="abrirGaleria('hosteria'); return false;">(Ver fotos)</a>
+        </p>
+      </div>
+
+      <div class="card-lateral">
+        <img src="turismo.jpg" alt="Turismo en Tapso" class="card-img">
+        <p class="card-texto">
+          <strong>Turismo y Paisajes</strong> 📷 <a href="#" onclick="abrirGaleria('turismo'); return false;">(Ver fotos)</a>
+        </p>
+      </div>
+    </aside>
+
+    <!-- COLUMNA CENTRAL: ASISTENTE MUNICIPAL (CHAT) -->
+    <section class="columna-chat">
+      <div class="chat-card">
+        <h2 class="chat-titulo">Asistente Municipal</h2>
         
-        <div class="input-area">
-          <input type="text" id="mensaje" placeholder="Escribí tu consulta aquí..." autocomplete="off">
-          <button id="btnEnviar">Enviar</button>
-        </div>
-      </div>
+        <div id="chatBox" class="chat-box"></div>
 
-      <div class="controles-extra">
-        <button onclick="limpiar()">Reiniciar Chat</button>
-        <button onclick="toggleDarkMode()">Modo Oscuro</button>
-      </div>
-    </section>
-
-    <!-- ACCESOS RÁPIDOS Y GALERÍAS -->
-    <section class="accesos-rapidos">
-      <h2>Accesos Rápidos y Galerías</h2>
-      <div class="grid-accesos">
-        <div class="card-acceso" onclick="abrirGaleria('turismo')">
-          <div class="card-icon">🏞️</div>
-          <h3>Turismo Tapso</h3>
-          <p>Conocé nuestros atractivos naturales y culturales.</p>
+        <!-- SUGERENCIAS DENTRO DEL CHAT -->
+        <div class="sugerencias-container">
+          <button class="chip-btn" onclick="enviarSugerencia('Autoridades')">🏛️ Autoridades</button>
+          <button class="chip-btn" onclick="enviarSugerencia('Ubicación')">📍 Ubicación</button>
+          <button class="chip-btn" onclick="enviarSugerencia('Historia')">📜 Historia</button>
+          <button class="chip-btn" onclick="enviarSugerencia('Policía')">👮 Policía</button>
+          <button class="chip-btn" onclick="enviarSugerencia('Punto Digital')">💻 Punto Digital</button>
+          <button class="chip-btn" onclick="enviarSugerencia('Hostería')">🏨 Hostería</button>
+          <button class="chip-btn" onclick="enviarSugerencia('Festivales')">🎉 Festivales</button>
+          <button class="chip-btn" onclick="enviarSugerencia('Turismo')">🍃 Turismo</button>
         </div>
 
-        <div class="card-acceso" onclick="abrirGaleria('hosteria')">
-          <div class="card-icon">🏨</div>
-          <h3>Hostería Municipal</h3>
-          <p>Alojamiento, habitaciones y servicios.</p>
+        <!-- ENTRADA DE MENSAJE -->
+        <div class="input-container">
+          <input type="text" id="mensaje" placeholder="Escribe tu mensaje..." autocomplete="off">
+          <button id="btnEnviar" onclick="enviarMensaje()">Enviar</button>
         </div>
 
-        <div class="card-acceso" onclick="abrirGaleria('tapsofc')">
-          <div class="card-icon">⚽</div>
-          <h3>Tapso FC</h3>
-          <p>Galería institucional y plantel deportivo.</p>
-        </div>
-
-        <div class="card-acceso" onclick="abrirGaleria('padel')">
-          <div class="card-icon">🎾</div>
-          <h3>Liga de Pádel</h3>
-          <p>Torneos y actividades deportivas.</p>
-        </div>
-
-        <div class="card-acceso" onclick="abrirGaleria('festival')">
-          <div class="card-icon">🎉</div>
-          <h3>Festivales</h3>
-          <p>Fiestas patrias y eventos culturales.</p>
+        <div class="limpiar-container">
+          <button class="btn-limpiar" onclick="limpiarChat()">/ Limpiar chat</button>
         </div>
       </div>
     </section>
 
-    <!-- CONTACTO Y ATENCIÓN CIUDADANA -->
-    <section class="contacto-seccion">
-      <h2>Vías de Contacto Oficial</h2>
-      <div class="contacto-grid">
-        <div class="contacto-card">
-          <h3>📍 Ubicación</h3>
-          <p>Centro Cívico - Tapso, Catamarca (Ruta Nac. 157)</p>
-        </div>
+    <!-- COLUMNA DERECHA: CALENDARIO / NOVEDADES -->
+    <aside class="columna-lateral">
+      <h2 class="titulo-seccion">Calendario</h2>
+      
+      <div class="card-evento">
+        <img src="padel-torneo.jpg" alt="Liga de Pádel" class="card-img-evento">
+        <div class="evento-info">
+          <h3>🎾 ¡ARRANCA LA LIGA DE PÁDEL! 🔥</h3>
+          <p>🗓️ Comienza a finales de Septiembre</p>
+          <p>📌 1 fecha por semana</p>
+          <p>👥 16 parejas</p>
+          <p>💰 Inscripción: $20.000</p>
+          <p>Por consultas: 3854415855</p>
 
-        <div class="contacto-card">
-          <h3>📱 WhatsApp Municipal</h3>
-          <p>Atención directa para consultas y trámites:</p>
-          <a href="https://wa.me/543856096508" target="_blank" class="btn-whatsapp">Enviar mensaje por WhatsApp</a>
-        </div>
+          <p class="subtitulo-evento">CATEGORÍAS</p>
+          <p>🔵 Masculino: suma 13</p>
+          <p>🩷 Femenino: suma 15</p>
 
-        <div class="contacto-card">
-          <h3>💻 Punto Digital</h3>
-          <p>Capacitaciones, ANSES y trámites online gratuitos.</p>
+          <p class="detalle-evento">A realizarse en cancha de Pádel ubicado en el predio del Complejo Deportivo, Tapso Catamarca.</p>
+
+          <p class="destacado-evento">🔥 ¡CUPOS LIMITADOS!</p>
+          <p>📲 Armá tu pareja e inscribite.</p>
         </div>
       </div>
-    </section>
+    </aside>
 
   </main>
 
-  <!-- MODAL LIGHTBOX DE GALERÍA -->
+  <!-- MODAL / LIGHTBOX DE GALERÍA -->
   <div id="galleryModal" class="modal-overlay" style="display: none;">
     <div class="gallery-content">
       <span class="close-btn" onclick="cerrarGaleria()">&times;</span>
-      <img id="imgGaleria" src="" alt="Imagen de Galería">
+      <img id="imgGaleria" src="" alt="Galería">
       <p id="captionGaleria"></p>
       <div class="gallery-nav">
         <button onclick="cambiarImagen(-1)">&#10094; Anterior</button>
@@ -117,11 +115,6 @@
       </div>
     </div>
   </div>
-
-  <!-- FOOTER -->
-  <footer class="footer-municipal">
-    <p>&copy; Municipalidad de Tapso - Gestión y Desarrollo Local</p>
-  </footer>
 
   <script src="script.js"></script>
 </body>

@@ -7,6 +7,24 @@ let contadorConsultasTema = 0;
 let esperandoEleccionSubtema = null;
 
 // ----------------------------------------------------
+// FECHA DINÁMICA EN ESPAÑOL PARA EL WIDGET
+// ----------------------------------------------------
+function cargarFechaActualWidget() {
+  const elemFecha = document.getElementById("climaFecha");
+  if (!elemFecha) return;
+
+  const hoy = new Date();
+  const opciones = { weekday: 'long', day: 'numeric', month: 'long' };
+  let fechaTexto = hoy.toLocaleDateString('es-AR', opciones);
+
+  // Capitalizar primera letra (Ej: "Lunes, 14 Septiembre")
+  fechaTexto = fechaTexto.charAt(0).toUpperCase() + fechaTexto.slice(1);
+  fechaTexto = fechaTexto.replace(" de ", " "); // Formato limpio como el widget de la foto
+
+  elemFecha.textContent = fechaTexto;
+}
+
+// ----------------------------------------------------
 // SISTEMA DE AUDIO (Carpeta 'sounds/')
 // ----------------------------------------------------
 const soundClick = new Audio('sounds/click.mp3');
@@ -242,6 +260,8 @@ function obtenerRespuestaDesconocida() {
 // INICIALIZACIÓN DE LA APLICACIÓN
 // ----------------------------------------------------
 document.addEventListener("DOMContentLoaded", function() {
+  cargarFechaActualWidget();
+
   const modal = document.getElementById("loginModal");
   const btnComenzar = document.getElementById("btnComenzar");
   const inputNombre = document.getElementById("nombreInput") || document.getElementById("nombre");

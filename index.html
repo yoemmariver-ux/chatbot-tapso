@@ -24,16 +24,25 @@
     <img src="images/banner-tapso.png" alt="Municipalidad de Tapso - 200 Años" class="banner-img">
   </header>
 
-  <!-- CONTENEDOR SUB-BANNER: CLIMA Y LOGO MUNICIPAL -->
+  <!-- CONTENEDOR SUB-BANNER: WIDGET DE CLIMA Y LOGO MUNICIPAL -->
   <div class="header-sub-container">
-    <!-- CLIMA -->
-    <div id="climaContainer" class="clima-container">
-      <span class="clima-icono">☀️</span>
-      <div class="clima-info">
-        <span class="clima-temp" id="climaTemp">22°C</span>
-        <span class="clima-estado" id="climaEstado">Despejado</span>
-        <span class="clima-lugar">Tapso, Catamarca</span>
+    <!-- WIDGET CLIMA TIPO TARJETA -->
+    <div id="climaContainer" class="clima-widget">
+      <div class="clima-left">
+        <span class="clima-estado" id="climaEstado">Algo nublado</span>
+        <div class="clima-temp-box">
+          <span class="clima-temp" id="climaTemp">27</span><span class="clima-grado">°</span>
+        </div>
       </div>
+
+      <div class="clima-divider"></div>
+
+      <div class="clima-right">
+        <span class="clima-fecha" id="climaFecha">Cargando fecha...</span>
+        <span class="clima-lugar">📍 Tapso, Catamarca</span>
+      </div>
+
+      <div class="clima-sol-3d" id="climaIcono">☀️</div>
     </div>
 
     <!-- LOGO MUNICIPAL CENTRADO -->
@@ -132,7 +141,6 @@
   <div id="galleryModal" class="modal-overlay-fullscreen" style="display: none;">
     <span class="close-btn-fullscreen" onclick="cerrarGaleria()">&times;</span>
     
-    <!-- Flechas laterales de navegación -->
     <button class="nav-arrow nav-prev" onclick="cambiarImagen(-1)">&#10094;</button>
 
     <div class="gallery-content-fullscreen">

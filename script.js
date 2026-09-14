@@ -29,6 +29,23 @@ function playReceive() {
 }
 
 // ----------------------------------------------------
+// SÍNTESIS DE VOZ (TEXT-TO-SPEECH)
+// ----------------------------------------------------
+function hablarTexto(mensaje) {
+  if ('speechSynthesis' in window) {
+    // Cancelar cualquier audio anterior
+    window.speechSynthesis.cancel();
+
+    const utterance = new SpeechSynthesisUtterance(mensaje);
+    utterance.lang = 'es-AR'; // Voz en español
+    utterance.rate = 1.0;     // Velocidad de lectura
+    utterance.pitch = 1.0;    // Tono
+
+    window.speechSynthesis.speak(utterance);
+  }
+}
+
+// ----------------------------------------------------
 // BASE DE DATOS DE GALERÍAS DE IMÁGENES
 // ----------------------------------------------------
 const galerias = {
@@ -243,6 +260,9 @@ document.addEventListener("DOMContentLoaded", function() {
       }
       modal.style.display = "none";
       mostrarSaludoInicial();
+
+      // Reproducir por voz únicamente "Bienvenido [Nombre]"
+      hablarTexto(`Bienvenido ${usuarioNombre}`);
     });
   }
 
@@ -345,7 +365,7 @@ function responder() {
     respuesta = "Tapso cuenta con una particularidad geopolítica: se encuentra dividida entre dos provincias. El sector oeste pertenece al Departamento El Alto (Catamarca) y el sector este al Departamento Choya (Santiago del Estero). La línea de separación son las vías del ferrocarril. Se ubica estratégicamente sobre la Ruta Nacional N° 157.";
     esperandoEleccionSubtema = null;
   }
-  // 4. EVALUAR SUBTEMAS DIRECTOS (Si el usuario escribió "Ayapaso", "Mario Sosa", etc.)
+  // 4. EVALUAR SUBTEMAS DIRECTOS
   else {
     let subtemaEncontrado = null;
     for (const modulo of Object.values(modulosConocimiento)) {
@@ -362,7 +382,7 @@ function responder() {
       respuesta = subtemaEncontrado;
       esperandoEleccionSubtema = null;
     }
-    // 5. EVALUAR SI ES UNA CONSULTA GENÉRICA ("lugares", "distritos", "festivales", etc.)
+    // 5. EVALUAR SI ES UNA CONSULTA GENÉRICA
     else {
       let moduloGenericoEncontrado = null;
       let claveModulo = null;

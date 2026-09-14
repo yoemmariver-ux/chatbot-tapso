@@ -50,7 +50,7 @@ const galerias = {
     { src: "hosteria.jpg", caption: "Fachada de la Hostería Municipal" }
   ],
   "turismo": [
-    { src: "turismo.jpg", caption: "Paisajes naturales de Tapso" }
+    { src: "turismo.jpg", caption: "Visita a Tapso y Paisajes naturales" }
   ]
 };
 
@@ -58,7 +58,7 @@ let galeriaActual = [];
 let indiceImagen = 0;
 let ultimoSeguimiento = null;
 
-// Evento Inicial: Modal de Nombre y Primer Mensaje
+// Evento Inicial: Modal de Nombre
 document.addEventListener("DOMContentLoaded", () => {
   const btnComenzar = document.getElementById("btnComenzar");
   const loginModal = document.getElementById("loginModal");
@@ -80,12 +80,14 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+// CORREGIDO: SALUDO INICIAL MÁS CORTO CON AUDIO ÚNICO
 function saludarInicial() {
-  const saludo = `¡Hola ${nombreUsuario}! Bienvenido/a al portal oficial de la Municipalidad de Tapso. ¿En qué te puedo ayudar hoy?`;
+  const saludo = `Hola ${nombreUsuario}, soy el asistente de Tapso, ¿en qué te puedo ayudar?`;
   agregarMensaje(saludo, "asistente");
+  hablarTexto(saludo); // Solo reproduce el audio en el saludo inicial
 }
 
-// Activar / Desactivar Voz (SpeechSynthesis)
+// Activar / Desactivar Voz
 function toggleVoz() {
   vozActiva = !vozActiva;
   const btnVoz = document.getElementById("btnVoz");
@@ -100,7 +102,6 @@ function toggleVoz() {
 function hablarTexto(textoLimpieza) {
   if (!vozActiva || !('speechSynthesis' in window)) return;
   window.speechSynthesis.cancel();
-  // Limpia asteriscos o formato Markdown de voz
   const textoLimpio = textoLimpieza.replace(/[*#_]/g, '');
   const utterance = new SpeechSynthesisUtterance(textoLimpio);
   utterance.lang = 'es-AR';
@@ -130,6 +131,7 @@ function enviarSugerencia(clave) {
   }, 350);
 }
 
+// CORREGIDO: SE QUITÓ EL HABLAR_TEXTO DE LAS RESPUESTAS SECUNDARIAS
 function agregarMensaje(texto, emisor) {
   const chatBox = document.getElementById("chatBox");
   const p = document.createElement("p");
@@ -139,7 +141,6 @@ function agregarMensaje(texto, emisor) {
     p.innerText = texto;
   } else {
     p.innerHTML = `🤖 <strong>Asistente:</strong> ${texto.replace(/\n/g, "<br>")}`;
-    hablarTexto(texto);
   }
   
   chatBox.appendChild(p);
@@ -150,7 +151,6 @@ function procesarRespuesta(consulta) {
   const query = consulta.toLowerCase();
   let respuestaObj = null;
 
-  // Verificar si responde al seguimiento anterior
   if (ultimoSeguimiento && (query.includes("sí") || query.includes("si") || query.includes("dale") || query.includes("bueno"))) {
     respuestaObj = respuestas[ultimoSeguimiento];
     ultimoSeguimiento = null;

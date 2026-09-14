@@ -8,7 +8,7 @@
 </head>
 <body>
 
-  <!-- MODAL DE INICIO (NOMBRE Y AUDIO DE BIENVENIDA) -->
+  <!-- MODAL DE INICIO (INGRESO DE NOMBRE) -->
   <div id="loginModal" class="modal-overlay">
     <div class="modal-content">
       <h2>Municipalidad de Tapso</h2>
@@ -18,39 +18,92 @@
     </div>
   </div>
 
-  <!-- ENCABEZADO CON CLIMA A LA IZQUIERDA Y LOGO/TÍTULO A LA DERECHA -->
+  <!-- ENCABEZADO Y BANNER INSTITUCIONAL -->
   <header class="header-municipal">
-    <div class="clima-header-container">
-      <a class="weatherwidget-io" href="https://forecast7.com/es/n28d40n65d10/tapso/" data-label_1="TAPSO" data-label_2="WEATHER" data-theme="original">TAPSO WEATHER</a>
-      <script>
-      !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
-      </script>
-    </div>
-
     <div class="logo-titulo-container">
       <h1>Portal Oficial - Municipalidad de Tapso</h1>
     </div>
   </header>
 
-  <!-- CONTENEDOR PRINCIPAL DEL CHAT -->
+  <!-- CONTENEDOR PRINCIPAL DEL CHAT Y ASISTENTE -->
   <main class="main-container">
-    <div class="chat-wrapper">
-      <div id="chatBox" class="chat-box"></div>
-      
-      <div class="input-area">
-        <input type="text" id="mensaje" placeholder="Escribí tu consulta aquí..." autocomplete="off">
-        <button id="btnEnviar">Enviar</button>
+    
+    <section class="chat-section">
+      <div class="chat-wrapper">
+        <div id="chatBox" class="chat-box"></div>
+        
+        <div class="input-area">
+          <input type="text" id="mensaje" placeholder="Escribí tu consulta aquí..." autocomplete="off">
+          <button id="btnEnviar">Enviar</button>
+        </div>
       </div>
-    </div>
 
-    <!-- BOTONES DE ACCIÓN RÁPIDA -->
-    <div class="controles-extra">
-      <button onclick="limpiar()">Reiniciar Chat</button>
-      <button onclick="toggleDarkMode()">Modo Oscuro</button>
-    </div>
+      <!-- BOTONES DE ACCIÓN Y CONTROLES DEL CHAT -->
+      <div class="controles-extra">
+        <button onclick="limpiar()">Reiniciar Chat</button>
+        <button onclick="toggleDarkMode()">Modo Oscuro</button>
+      </div>
+    </section>
+
+    <!-- SECCIÓN DE ACCESOS RÁPIDOS Y GALERÍAS -->
+    <section class="accesos-rapidos">
+      <h2>Accesos Rápidos y Galerías</h2>
+      <div class="grid-accesos">
+        <button class="card-acceso" onclick="abrirGaleria('turismo')">
+          <span>🏞️</span>
+          <h3>Turismo Tapso</h3>
+          <p>Conocé nuestros atractivos naturales y culturales.</p>
+        </button>
+
+        <button class="card-acceso" onclick="abrirGaleria('hosteria')">
+          <span>🏨</span>
+          <h3>Hostería Municipal</h3>
+          <p>Alojamiento, habitaciones y servicios.</p>
+        </button>
+
+        <button class="card-acceso" onclick="abrirGaleria('tapsofc')">
+          <span>⚽</span>
+          <h3>Tapso FC</h3>
+          <p>Galería institucional y plantel deportivo.</p>
+        </button>
+
+        <button class="card-acceso" onclick="abrirGaleria('padel')">
+          <span>🎾</span>
+          <h3>Liga de Pádel</h3>
+          <p>Torneos y actividades deportivas.</p>
+        </button>
+
+        <button class="card-acceso" onclick="abrirGaleria('festival')">
+          <span>🎉</span>
+          <h3>Festivales</h3>
+          <p>Fiestas patrias y eventos culturales.</p>
+        </button>
+      </div>
+    </section>
+
+    <!-- SECCIÓN DE CONTACTO Y ATENCIÓN CIUDADANA -->
+    <section class="contacto-seccion">
+      <h2>Vías de Contacto Oficial</h2>
+      <div class="contacto-grid">
+        <div class="contacto-card">
+          <h3>📍 Ubicación</h3>
+          <p>Centro Cívico - Tapso, Catamarca (Ruta Nac. 157)</p>
+        </div>
+        <div class="contacto-card">
+          <h3>📱 WhatsApp Municipal</h3>
+          <p>Atención directa para consultas y trámites:</p>
+          <a href="https://wa.me/543856096508" target="_blank" class="btn-whatsapp">Enviar mensaje por WhatsApp</a>
+        </div>
+        <div class="contacto-card">
+          <h3>💻 Punto Digital</h3>
+          <p>Capacitaciones, ANSES y trámites online gratuitos.</p>
+        </div>
+      </div>
+    </section>
+
   </main>
 
-  <!-- MODAL DE GALERÍA DE IMÁGENES -->
+  <!-- MODAL DE GALERÍA DE IMÁGENES (LIGHTBOX) -->
   <div id="galleryModal" class="modal-overlay" style="display: none;">
     <div class="gallery-content">
       <span class="close-btn" onclick="cerrarGaleria()">&times;</span>
@@ -62,6 +115,11 @@
       </div>
     </div>
   </div>
+
+  <!-- PIE DE PÁGINA -->
+  <footer class="footer-municipal">
+    <p>&copy; Municipalidad de Tapso - Gestión y Desarrollo Local</p>
+  </footer>
 
   <script src="script.js"></script>
 </body>

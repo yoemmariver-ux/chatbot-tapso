@@ -33,29 +33,21 @@ body {
   min-height: 100vh;
 }
 
-/* Encabezado con Flexbox para el clima y logo */
+/* Encabezado */
 .header-municipal {
   background-color: var(--header-bg);
   color: var(--header-text);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 15px;
   padding: 15px 25px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-.clima-header-container {
-  flex: 0 0 auto;
-  max-width: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .logo-titulo-container {
   display: flex;
   align-items: center;
   gap: 15px;
-  flex: 1;
 }
 
 .logo-titulo-container h1 {

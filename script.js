@@ -7,7 +7,7 @@ let contadorConsultasTema = 0;
 let esperandoEleccionSubtema = null; // Guardará la categoría sobre la que se ofreció elegir
 
 // ----------------------------------------------------
-// SISTEMA DE AUDIO (Carpeta 'sounds/')
+// SISTEMA DE AUDIO LOCAL (Carpeta 'sounds/')
 // ----------------------------------------------------
 const soundClick = new Audio('sounds/click.mp3');
 const soundSend = new Audio('sounds/send.mp3');
@@ -24,24 +24,55 @@ function playSend() {
 }
 
 function playReceive() {
-  soundReceive.currentTime = 0;
   soundReceive.play().catch(() => {});
 }
 
 // ----------------------------------------------------
-// SÍNTESIS DE VOZ (TEXT-TO-SPEECH)
+// SÍNTESIS DE VOZ HIPERREALISTA (OPENAI TEXT-TO-SPEECH)
 // ----------------------------------------------------
-function hablarTexto(mensaje) {
-  if ('speechSynthesis' in window) {
-    // Cancelar cualquier audio anterior
-    window.speechSynthesis.cancel();
+async function hablarTexto(mensaje) {
+  // =========================================================
+  // PEGÁ TU CLAVE DE OPENAI AQUÍ ADENTRO DE LAS COMILLAS:
+  const OPENAI_API_KEY = "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";
+  // =========================================================
 
-    const utterance = new SpeechSynthesisUtterance(mensaje);
-    utterance.lang = 'es-AR'; // Voz en español
-    utterance.rate = 1.0;     // Velocidad de lectura
-    utterance.pitch = 1.0;    // Tono
+  // Si no pusiste la clave, usa la voz básica del navegador como respaldo
+  if (OPENAI_API_KEY.includes("PEGAR_AQUI_TU_API_KEY")) {
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(mensaje);
+      utterance.lang = 'es-AR';
+      window.speechSynthesis.speak(utterance);
+    }
+    return;
+  }
 
-    window.speechSynthesis.speak(utterance);
+  try {
+    const response = await fetch("https://api.openai.com/v1/audio/speech", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${OPENAI_API_KEY}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        model: "tts-1",
+        input: mensaje,
+        voice: "nova" // Opciones: 'nova', 'alloy', 'onyx', 'echo', 'fable', 'shimmer'
+      })
+    });
+
+    if (!response.ok) {
+      console.error("Error al generar voz con OpenAI:", response.status, response.statusText);
+      return;
+    }
+
+    const blob = await response.blob();
+    const audioUrl = URL.createObjectURL(blob);
+    const audio = new Audio(audioUrl);
+    audio.play();
+
+  } catch (error) {
+    console.error("Error al conectar con OpenAI:", error);
   }
 }
 
@@ -261,8 +292,8 @@ document.addEventListener("DOMContentLoaded", function() {
       modal.style.display = "none";
       mostrarSaludoInicial();
 
-      // Reproducir por voz únicamente "Bienvenido [Nombre]"
-      hablarTexto(`Bienvenido ${usuarioNombre}`);
+      // Saludo por voz actualizado de la Municipalidad de Tapso
+      hablarTexto(`¡Hola ${usuarioNombre}! Bienvenido al portal oficial de la Municipalidad de Tapso. Soy tu asistente virtual, ¿en qué te puedo ayudar hoy?`);
     });
   }
 
@@ -296,7 +327,7 @@ document.addEventListener("DOMContentLoaded", function() {
 function mostrarSaludoInicial() {
   const chatBox = document.getElementById("chatBox");
   chatBox.innerHTML = `
-    <p>🤖 <strong>Asistente:</strong> ¡Hola <strong>${usuarioNombre}</strong>! Bienvenido/a al portal de Tapso. ¿En qué te puedo ayudar hoy?</p>
+    <p>🤖 <strong>Asistente:</strong> ¡Hola <strong>${usuarioNombre}</strong>! Bienvenido/a al portal oficial de la Municipalidad de Tapso. Soy tu asistente virtual, ¿en qué te puedo ayudar hoy?</p>
   `;
   mostrarSugerenciasIniciales();
 }
@@ -332,7 +363,6 @@ function responder() {
 
   if (texto === "") return;
 
-  // Sonido de envío
   playSend();
 
   chatBox.innerHTML += `<p>👤 <strong>Tú:</strong> ${textoOriginal}</p>`;
@@ -411,7 +441,6 @@ function responder() {
     }
   }
 
-  // Simulación de delay y sonido de recepción
   setTimeout(() => {
     playReceive();
     chatBox.innerHTML += `<p>🤖 <strong>Asistente:</strong> ${formatearTexto(respuesta)}</p>`;

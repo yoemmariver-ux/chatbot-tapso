@@ -25,7 +25,8 @@ body.dark-mode {
 body.dark-mode .card-lateral,
 body.dark-mode .chat-card,
 body.dark-mode .card-evento,
-body.dark-mode .modal-content {
+body.dark-mode .modal-content,
+body.dark-mode .clima-container {
   background-color: #1e1e1e;
   color: #e0e0e0;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
@@ -142,7 +143,7 @@ body.dark-mode .chip-btn:hover {
 
 .banner-img {
   width: 100%;
-  height: 180px; /* Altura estilizada manteniendo el ancho completo */
+  height: 180px;
   object-fit: cover;
   display: block;
   animation: banderaOndeando 6s ease-in-out infinite;
@@ -187,15 +188,73 @@ body.dark-mode .chip-btn:hover {
   background: rgba(0, 0, 0, 0.7);
 }
 
+/* ====================================================
+   CONTENEDOR DE SUB-HEADER (CLIMA Y LOGO)
+   ==================================================== */
+.header-sub-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1300px;
+  margin: 10px auto 0 auto;
+  padding: 0 15px;
+}
+
+/* WIDGET CLIMA (Misma altura que el logo: 75px) */
+.clima-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 75px;
+  width: 280px; /* Alineado al ancho de "Conocé Tapso" */
+  background: #ffffff;
+  padding: 10px 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.clima-icono {
+  font-size: 2.2rem;
+  line-height: 1;
+}
+
+.clima-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.clima-temp {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #00838f;
+}
+
+body.dark-mode .clima-temp {
+  color: #4dd0e1;
+}
+
+.clima-ciudad {
+  font-size: 0.8rem;
+  color: #666666;
+}
+
+body.dark-mode .clima-ciudad {
+  color: #aaaaaa;
+}
+
 .logo-container-center {
   text-align: center;
-  padding: 15px 0 5px 0;
+  flex: 1;
 }
 
 .logo-img {
   height: 75px;
   width: auto;
   display: inline-block;
+}
+
+.header-spacer {
+  width: 280px; /* Equilibra la barra para centrar el logo en PC */
 }
 
 /* ====================================================
@@ -530,18 +589,34 @@ body.dark-mode .detalle-evento {
    DISEÑO RESPONSIVO Y ORDEN EN CELULARES
    ==================================================== */
 @media (max-width: 992px) {
+  .header-sub-container {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .header-spacer {
+    display: none;
+  }
+
+  .clima-container {
+    width: 100%;
+    max-width: 320px;
+    justify-content: center;
+    height: 65px;
+  }
+
+  .banner-img {
+    height: 120px;
+  }
+
   .main-layout {
     display: flex;
     flex-direction: column;
   }
 
-  .banner-img {
-    height: 120px; /* Ajuste proporcional de altura para celulares */
-  }
-
-  /* Orden de secciones en celular */
+  /* ORDEN ESPECÍFICO EN CELULARES */
   .columna-chat {
-    order: 1; /* 1º Asistente */
+    order: 1; /* 1º Asistente Municipal */
   }
 
   .main-layout > aside:first-of-type {

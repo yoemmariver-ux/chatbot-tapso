@@ -3,131 +3,117 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portal Oficial - Municipalidad de Tapso</title>
+  <title>Municipio de Tapso</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- MODAL DE INICIO (INGRESO DE NOMBRE) -->
-  <div id="loginModal" class="modal-overlay">
+  <!-- MODAL DE INICIO (LOGIN) -->
+  <div class="modal-overlay" id="modalInicio">
     <div class="modal-content">
-      <h2>Municipalidad de Tapso</h2>
-      <p>Por favor, ingresá tu nombre para comenzar:</p>
-      <input type="text" id="nombreInput" placeholder="Escribí tu nombre aquí..." autocomplete="off">
-      <button id="btnComenzar">Comenzar</button>
+      <h2>Bienvenido a Tapso</h2>
+      <p>Por favor, ingresá tu nombre para continuar</p>
+      <input type="text" id="inputNombre" placeholder="Tu nombre...">
+      <button id="btnIngresar">Ingresar</button>
     </div>
   </div>
 
-  <!-- BANNER SUPERIOR (A TODO LO ANCHO) -->
+  <!-- BANNER SUPERIOR DE PUNTA A PUNTA -->
   <header class="header-banner">
-    <button id="btnModo" class="btn-modo-top" onclick="toggleModo()">🌙 Modo Oscuro</button>
-    <img src="images/banner-tapso.png" alt="Municipalidad de Tapso - 200 Años" class="banner-img">
+    <button class="btn-modo-top" id="btnModoOscuro">🌙 Modo</button>
+    <img src="banner.jpg" alt="Banner Tapso" class="banner-img">
   </header>
 
-  <!-- LOGO MUNICIPAL CENTRADO DEBAJO DEL BANNER -->
-  <div class="logo-container-center">
-    <img src="images/logo-tapso.png" alt="Municipalidad de Tapso" class="logo-img">
+  <!-- SUB-HEADER: CLIMA Y LOGO MUNICIPAL -->
+  <div class="header-sub-container">
+    <!-- WIDGET CLIMA (Ubicado a la izquierda, sobre Conocé Tapso) -->
+    <div class="clima-container" id="climaContainer">
+      <div class="clima-icono" id="climaIcono">☀️</div>
+      <div class="clima-info">
+        <span class="clima-temp" id="climaTemp">--°C</span>
+        <span class="clima-ciudad">Tapso, Catamarca</span>
+      </div>
+    </div>
+
+    <!-- LOGO MUNICIPAL CENTRADO -->
+    <div class="logo-container-center">
+      <img src="logo.png" alt="Logo Municipio de Tapso" class="logo-img">
+    </div>
+
+    <!-- ESPACIO RESERVADO PARA MANTENER EL CENTRADO DEL LOGO EN PC -->
+    <div class="header-spacer"></div>
   </div>
 
-  <!-- CONTENEDOR PRINCIPAL EN 3 COLUMNAS -->
+  <!-- LAYOUT PRINCIPAL -->
   <main class="main-layout">
-    
     <!-- COLUMNA IZQUIERDA: CONOCÉ TAPSO -->
-    <aside class="columna-lateral">
+    <aside>
       <h2 class="titulo-seccion">Conocé Tapso</h2>
-      
       <div class="card-lateral">
-        <img src="images/tapsofc.jpg" alt="Club Tapso FC" class="card-img" onclick="abrirGaleria('tapsofc')">
-        <p class="card-texto">
-          <strong>Club Tapso FC</strong> 📷 <a href="#" onclick="abrirGaleria('tapsofc'); return false;">(Ver fotos)</a>
-        </p>
+        <img src="lugar1.jpg" alt="Lugar Turístico" class="card-img gallery-trigger" data-caption="Atractivos Turísticos de Tapso">
+        <div class="card-texto">
+          <p>Descubrí los rincones naturales e históricos de nuestra localidad.</p>
+        </div>
       </div>
-
       <div class="card-lateral">
-        <img src="images/hosteria.jpg" alt="La histórica hostería de Tapso" class="card-img" onclick="abrirGaleria('hosteria')">
-        <p class="card-texto">
-          <strong>La histórica hostería de Tapso</strong> 📷 <a href="#" onclick="abrirGaleria('hosteria'); return false;">(Ver fotos)</a>
-        </p>
-      </div>
-
-      <div class="card-lateral">
-        <img src="images/visita-tapso.jpg" alt="Visita a Tapso y Paisajes" class="card-img" onclick="abrirGaleria('turismo')">
-        <p class="card-texto">
-          <strong>Visita a Tapso y Paisajes</strong> 📷 <a href="#" onclick="abrirGaleria('turismo'); return false;">(Ver fotos)</a>
-        </p>
-      </div>
-
-      <div class="card-lateral">
-        <img src="images/festival.jpg" alt="Festivales y Eventos" class="card-img" onclick="abrirGaleria('festivales')">
-        <p class="card-texto">
-          <strong>Festivales y Eventos</strong> 📷 <a href="#" onclick="abrirGaleria('festivales'); return false;">(Ver fotos)</a>
-        </p>
+        <img src="lugar2.jpg" alt="Cultura y Tradición" class="card-img gallery-trigger" data-caption="Cultura y Tradición en Tapso">
+        <div class="card-texto">
+          <p>Conocé nuestras costumbres, eventos culturales y festividades.</p>
+        </div>
       </div>
     </aside>
 
-    <!-- COLUMNA CENTRAL: ASISTENTE MUNICIPAL -->
+    <!-- COLUMNA CENTRAL: ASISTENTE MUNICIPAL (CHAT) -->
     <section class="columna-chat">
       <div class="chat-card">
-        <h2 class="chat-titulo">Asistente Municipal</h2>
-        
-        <div id="chatBox" class="chat-box"></div>
+        <h2 class="chat-titulo">🤖 Asistente Municipal</h2>
+        <div class="chat-box" id="chatBox">
+          <div class="chat-mensaje asistente">
+            ¡Hola! Soy el asistente virtual del Municipio de Tapso. ¿En qué puedo ayudarte hoy?
+          </div>
+        </div>
 
-        <!-- SUGERENCIAS / FLUJO DE CONVERSACIÓN -->
-        <div id="sugerencias-container" class="sugerencias-container"></div>
+        <div class="sugerencias-container">
+          <button class="chip-btn" onclick="enviarSugerencia('Horarios de atención')">Horarios de atención</button>
+          <button class="chip-btn" onclick="enviarSugerencia('Trámites municipales')">Trámites municipales</button>
+          <button class="chip-btn" onclick="enviarSugerencia('Contacto')">Contacto</button>
+        </div>
 
-        <!-- ENTRADA DE MENSAJE -->
         <div class="input-container">
-          <input type="text" id="mensaje" placeholder="Escribí tu consulta..." autocomplete="off">
+          <input type="text" id="chatInput" placeholder="Escribí tu consulta aquí...">
           <button id="btnEnviar">Enviar</button>
         </div>
 
         <div class="controles-inferiores">
-          <button class="btn-limpiar" onclick="limpiarChat()">/ Limpiar chat</button>
+          <button class="btn-limpiar" id="btnLimpiarChat">Limpiar conversación</button>
         </div>
       </div>
     </section>
 
-    <!-- COLUMNA DERECHA: CALENDARIO / LIGA DE PÁDEL -->
-    <aside class="columna-lateral">
+    <!-- COLUMNA DERECHA: CALENDARIO DE EVENTOS -->
+    <aside>
       <h2 class="titulo-seccion">Calendario</h2>
-      
       <div class="card-evento">
-        <img src="images/padel-tapso.jpg" alt="Liga de Pádel" class="card-img-evento" onclick="abrirImagenUnica('images/padel-tapso.jpg', '¡ARRANCA LA LIGA DE PÁDEL!')">
+        <img src="evento.jpg" alt="Evento Próximo" class="card-img-evento gallery-trigger" data-caption="Próximos Eventos Municipales">
         <div class="evento-info">
-          <h3>🎾 ¡ARRANCA LA LIGA DE PÁDEL! 🔥</h3>
-          <p>🗓️ Comienza a finales de Septiembre</p>
-          <p>📌 1 fecha por semana</p>
-          <p>👥 16 parejas</p>
-          <p>💰 Inscripción: $20.000</p>
-          <p>Por consultas: 3854415855</p>
-
-          <p class="subtitulo-evento">CATEGORÍAS</p>
-          <p>🔵 Masculino: suma 13</p>
-          <p>🩷 Femenino: suma 15</p>
-
-          <p class="detalle-evento">A realizarse en cancha de Pádel ubicado en el predio del Complejo Deportivo, Tapso Catamarca.</p>
-
-          <p class="destacado-evento">🔥 ¡CUPOS LIMITADOS!</p>
-          <p>📲 Armá tu pareja e inscribite.</p>
+          <h3>Próximos Eventos</h3>
+          <p class="subtitulo-evento">Actividades Comunitarias</p>
+          <p class="detalle-evento">Consultá las fechas de reuniones, talleres y festivales en el municipio.</p>
+          <p class="destacado-evento">¡Sumate y participá!</p>
         </div>
       </div>
     </aside>
-
   </main>
 
-  <!-- MODAL / LIGHTBOX DE GALERÍA EN PANTALLA COMPLETA -->
-  <div id="galleryModal" class="modal-overlay-fullscreen" style="display: none;">
-    <span class="close-btn-fullscreen" onclick="cerrarGaleria()">&times;</span>
-    
-    <!-- Flechas laterales de navegación -->
-    <button class="nav-arrow nav-prev" onclick="cambiarImagen(-1)">&#10094;</button>
-
+  <!-- MODAL DE GALERÍA EN PANTALLA COMPLETA (LIGHTBOX) -->
+  <div class="modal-overlay-fullscreen" id="modalGaleria" style="display: none;">
+    <span class="close-btn-fullscreen" id="btnCerrarGaleria">&times;</span>
+    <button class="nav-arrow nav-prev" id="btnPrevGaleria">&#10094;</button>
     <div class="gallery-content-fullscreen">
-      <img id="imgGaleria" src="" alt="Imagen ampliada">
+      <img id="imgGaleriaFull" src="" alt="Imagen ampliada">
       <p id="captionGaleria"></p>
     </div>
-
-    <button class="nav-arrow nav-next" onclick="cambiarImagen(1)">&#10095;</button>
+    <button class="nav-arrow nav-next" id="btnNextGaleria">&#10095;</button>
   </div>
 
   <script src="script.js"></script>

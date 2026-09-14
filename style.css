@@ -25,8 +25,7 @@ body.dark-mode {
 body.dark-mode .card-lateral,
 body.dark-mode .chat-card,
 body.dark-mode .card-evento,
-body.dark-mode .modal-content,
-body.dark-mode .clima-container {
+body.dark-mode .modal-content {
   background-color: #1e1e1e;
   color: #e0e0e0;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
@@ -143,7 +142,7 @@ body.dark-mode .chip-btn:hover {
 
 .banner-img {
   width: 100%;
-  height: 180px;
+  height: 180px; /* Altura estilizada manteniendo el ancho completo */
   object-fit: cover;
   display: block;
   animation: banderaOndeando 6s ease-in-out infinite;
@@ -188,15 +187,26 @@ body.dark-mode .chip-btn:hover {
   background: rgba(0, 0, 0, 0.7);
 }
 
+.logo-container-center {
+  text-align: center;
+  padding: 15px 0 5px 0;
+}
+
+.logo-img {
+  height: 75px;
+  width: auto;
+  display: inline-block;
+}
+
 /* ====================================================
-   LAYOUT PRINCIPAL EN PC (3 COLUMNAS)
+   LAYOUT EN PC (3 COLUMNAS MANTENIDAS)
    ==================================================== */
 .main-layout {
   display: grid;
   grid-template-columns: 280px 1fr 300px;
   gap: 20px;
   max-width: 1300px;
-  margin: 15px auto 20px auto;
+  margin: 10px auto 20px auto;
   padding: 0 15px;
 }
 
@@ -211,70 +221,6 @@ body.dark-mode .chip-btn:hover {
 body.dark-mode .titulo-seccion {
   color: #4dd0e1;
   border-bottom-color: #4dd0e1;
-}
-
-/* ====================================================
-   WIDGET CLIMA (COLUMNA IZQUIERDA)
-   ==================================================== */
-.clima-container {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  height: 75px;
-  background: #ffffff;
-  padding: 10px 15px;
-  border-radius: 8px;
-  margin-bottom: 15px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  box-sizing: border-box;
-}
-
-.clima-icono {
-  font-size: 2.2rem;
-  line-height: 1;
-}
-
-.clima-info {
-  display: flex;
-  flex-direction: column;
-}
-
-.clima-temp {
-  font-size: 1.3rem;
-  font-weight: bold;
-  color: #00838f;
-}
-
-body.dark-mode .clima-temp {
-  color: #4dd0e1;
-}
-
-.clima-ciudad {
-  font-size: 0.8rem;
-  color: #666666;
-}
-
-body.dark-mode .clima-ciudad {
-  color: #aaaaaa;
-}
-
-/* ====================================================
-   LOGO (COLUMNA CENTRAL)
-   ==================================================== */
-.logo-container-center {
-  text-align: center;
-  margin-bottom: 15px;
-  height: 75px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.logo-img {
-  height: 75px;
-  width: auto;
-  max-width: 100%;
-  object-fit: contain;
 }
 
 /* ====================================================
@@ -304,6 +250,15 @@ body.dark-mode .clima-ciudad {
 .card-texto {
   margin-top: 8px;
   font-size: 0.9rem;
+}
+
+.card-texto a {
+  color: #00838f;
+  text-decoration: none;
+}
+
+body.dark-mode .card-texto a {
+  color: #80deea;
 }
 
 /* ====================================================
@@ -575,18 +530,18 @@ body.dark-mode .detalle-evento {
    DISEÑO RESPONSIVO Y ORDEN EN CELULARES
    ==================================================== */
 @media (max-width: 992px) {
-  .banner-img {
-    height: 120px;
-  }
-
   .main-layout {
     display: flex;
     flex-direction: column;
   }
 
-  /* ORDEN ESPECÍFICO EN CELULARES */
+  .banner-img {
+    height: 120px; /* Ajuste proporcional de altura para celulares */
+  }
+
+  /* Orden de secciones en celular */
   .columna-chat {
-    order: 1; /* 1º Asistente Municipal */
+    order: 1; /* 1º Asistente */
   }
 
   .main-layout > aside:first-of-type {

@@ -377,7 +377,7 @@ body.dark-mode .titulo-seccion {
 .card-img {
   width: 100%;
   height: 140px;
-  object-fit: cover;
+  object-fit: contain; /* Ajustado para mostrar la imagen completa */
   border-radius: 6px;
   cursor: pointer;
   transition: transform 0.2s;
